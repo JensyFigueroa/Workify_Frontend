@@ -14,14 +14,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </Provider>
 );
 
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   </Provider>,
-//   document.getElementById("root")
-// );
 // ReactDOM.createRoot(document.getElementById('root')).render(
 //     <React.StrictMode>
 //       <App />
