@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import SearchBar from '../searchBar/SearchBar';
 
 import { BsFillPersonLinesFill } from "react-icons/bs";
+import { MdHomeRepairService } from "react-icons/md";
 
 const Navbar = () => {
   const [clickBurguer, setClickBurguer] = useState(false);
@@ -31,16 +32,18 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.container}>
-        <div>
-          <h1>Logo</h1>
+        <div className={styles.logo}>
+          <MdHomeRepairService style={{fontSize:'63px'}}></MdHomeRepairService>
+          <h1>Workify</h1>
         </div>
 
-        <div>
+        <div className={styles.search}>
           <SearchBar />
         </div>
 
         <div className={`${styles.links} ${clickBurguer ? styles.show : ''} `}>
 
+          <NavLink to='/home' className={({ isActive }) => (isActive ? styles.active : styles.link)} onClick={handleClick}>Home</NavLink>
           <NavLink to='/about' className={({ isActive }) => (isActive ? styles.active : styles.link)} onClick={handleClick}>About</NavLink>
 
         </div>
