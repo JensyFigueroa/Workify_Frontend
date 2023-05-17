@@ -16,6 +16,7 @@ export function Cards (){
     <div className={style.container}>
         {allServices && allServices.map((serv, index) =>{
             return <Card
+            id = {serv.id}
             key = {index}
             name = {serv.name}
             username = {serv.username}
