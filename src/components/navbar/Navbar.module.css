@@ -1,0 +1,165 @@
+.container {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.logo {
+    margin-left: 200px;
+}
+
+h1 {
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+    color: black;
+}
+
+.links {
+    display: flex;
+    gap: 40px;
+    /* background-color: #009903; */
+    position: absolute;
+    top: -700px;
+    left: -2000px;
+    right: 0;
+    margin-right: 200px;
+    text-align: center;
+    transition: all .5s ease;
+}
+
+.link {
+    display: block;
+    font-size: 1rem;
+    color: black;
+    /* margin-right: 1rem; */
+    text-decoration: none;
+}
+
+.link:hover {
+    
+    color: #0D6EFD;
+}
+
+.active {
+    color: #0D6EFD;
+    text-decoration: none;
+
+}
+
+.show {
+    width: 100%;
+    display: block;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    top: 20%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+/* ###############  navIcon ##########################*/
+.navIcon {
+    width: 35px;
+    height: 30px;
+    margin: 10px 10px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.navIcon span {
+    background-color: black;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    width: 100%;
+    height: 4px;
+    transition-duration: 200ms
+}
+
+.navIcon span:nth-child(1) {
+    top: 0px;
+    left: 0px;
+}
+
+.navIcon span:nth-child(2) {
+    top: 13px;
+    left: 0px;
+    opacity: 1;
+}
+
+.navIcon span:nth-child(3) {
+    bottom: 0px;
+    left: 0px;
+}
+
+.navIcon:not(.open):hover span:nth-child(1) {
+    transform: rotate(-3deg) scaleY(1.1);
+}
+
+.navIcon:not(.open):hover span:nth-child(2) {
+    transform: rotate(3deg) scaleY(1.1);
+}
+
+.navIcon:not(.open):hover span:nth-child(3) {
+    transform: rotate(-4deg) scaleY(1.1);
+}
+
+.navIcon.open span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 13px;
+}
+
+.navIcon.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.navIcon.open span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 13px;
+}
+
+.curtain {
+    background-color: rgb(0, 85, 169);
+    position: absolute;
+    top: -900px;
+    left: -1000px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: all .6s ease;
+}
+
+.showCurtain {
+    border-radius: 0 0 80% 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.btn{
+    background-color: white;
+    border-radius: 100%;
+    border: 1px solid black;
+}
+
+@media(max-width: 1024px) {
+    .link{margin: 15px 0;}
+}
+
+@media(min-width: 1024px){
+    .links {
+        position: initial;
+    }
+
+    .btnBurguer {
+        display: none;
+    }
+
+
+}
