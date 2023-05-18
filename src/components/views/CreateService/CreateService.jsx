@@ -1,37 +1,88 @@
+import { useState } from "react";
 import style from "../CreateService/CreateService.module.css";
 
 export function CreateService(){
+
+    const [inputs, setInputs] = useState({
+        category: "",
+        image: "",
+        description: "",
+        price: "",
+        ubication: ""
+      });
+      const [touch, setTouch] = useState({
+        name: false,
+        difficulty:false,
+        duration: false,
+        season: false,
+        countries: false
+    })
+
+      const handleInputChange = (event) => {
+        const {name, value} = event.target;
+         setInputs({
+             ...inputs,
+             [name]: value
+         })
+         setErrors(validate({
+             ...inputs,
+             [name]: value
+         }))
+         setTouch({
+             ...touch,
+             [name]: true
+         })
+     }
+
+     const handleSubmit = async (event) => {
+        event.preventDefault();
+        // try {
+        //     await axios.post("/activities", inputs)
+        //     console.log("Agregado correctamente");
+        // } catch (error) {
+        //     console.log("Error al agregar la actividad", error.message);
+        // }
+       
+    }
     return (
 <div className={style.container}>
 <div className={style.form}>
     <h1>Crear Servicio</h1>
-    <form>
-     <div class="form-floating">
-     <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Categoria</span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+
+    <form className="row g-3 needs-validation" novalidate>
+     <div className="form-floating">
+
+     <div className="input-group mb-3">
+        <span for="validationDefault01" className="input-group-text" id="inputGroup-sizing-default">Category</span>
+        <input name = "category" value = {inputs.category} onChange={handleInputChange} type="text" className="form-control" id="validationDefault01" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required/>
     </div>
-    </div>
-    <div class="mb-3">
-        <label for="formFile" class="form-label">Imagen</label>
-        <input class="form-control" type="file" id="formFile"></input>
-    </div>
-    <div class="form-floating">
-      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-      <label for="floatingTextarea">Descripcion</label>
     </div>
 
-    <div class="input-group mb-3">
-        <span class="input-group-text">Costo de Revisión | $</span>
-        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"></input>
-    <span class="input-group-text">.00</span>
+    <div className="mb-3">
+        <label for="formFile" className="form-label">Image</label>
+        <input name = "image" value={inputs.image} onChange={handleInputChange} className="form-control" type="file" id="formFile" aria-label="file example" required/>
+        <div class="invalid-feedback">Example invalid form file feedback</div>
     </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Ubicación</span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+
+    <div className="form-floating">
+      <textarea  name = "description" value={inputs.description} onChange={handleInputChange}  id="validationTextarea" className="form-control" placeholder="Leave a comment here" required/>
+      <label for="validationTextarea" >Description</label>
+      
     </div>
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary">Crear Servicio</button>
+
+    <div className="input-group mb-3">
+        <span for="validationDefault01" className="input-group-text">Revisión Cost | $ </span>
+        <input name = "price" value={inputs.price} onChange={handleInputChange} id="validationDefault01" type="text" className="form-control" aria-label="Amount (to the nearest dollar)" required/>
+    <span className="input-group-text">.00</span>
+    </div>
+
+    <div className="input-group mb-3">
+        <span for="validationDefault01" className="input-group-text" id="inputGroup-sizing-default">Ubication</span>
+        <input name = "ubication" value={inputs.ubication} onChange={handleInputChange} id="validationDefault01"  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required/>
+    </div>
+
+    <div className="col-12">
+        <button type="submit" className="btn btn-primary">Create Service</button>
     </div>
     
     </form>
