@@ -90,7 +90,7 @@ export function CreateService(){
     </div>
 
     <div className="col-12">
-        <button type="submit" className="btn btn-primary">Create Service</button>
+        <button type="submit" className={`${style.myButton} btn btn-outline-secondary`}>Create Service</button>
     </div>
     
     </form>
