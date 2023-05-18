@@ -11,10 +11,9 @@ function App() {
   return (
     <>
       <Navbar />
-      <Home />
       <Routes>
-        <Route path={"/"} element={< LandingPage/>}/>
-        <Route exact path="/" element={<Landing/>}></Route>
+        <Route path={"/"} element={<LandingPage />} />
+        <Route path={"/home"} element={<Home />} />
         <Route path="/detail/:id" element={<Detail />}></Route>
         <Route path="/footer" element={<Footer />}></Route>
         <Route path="/createService" element={<CreateService />}></Route>
