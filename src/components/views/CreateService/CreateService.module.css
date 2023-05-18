@@ -1,0 +1,16 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+.form{
+    background-color: rgb(219, 219, 219);
+    padding: 50px;
+    width: 35em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.form h1{
+    padding-bottom: 30px;
+    text-align: center;
+}
