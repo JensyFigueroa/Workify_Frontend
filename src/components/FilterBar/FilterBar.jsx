@@ -1,7 +1,9 @@
 import styles from "./FilterBar.module.css";
-import { FaChevronLeft, FaChevronRight, FaFilter } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { MdFilterAlt, MdFilterAltOff, MdOutlineClose } from "react-icons/md";
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { clearFilter } from "../../redux/actions";
 
 const FilterBar = () => {
   const dispatch = useDispatch();
@@ -47,6 +49,10 @@ const FilterBar = () => {
   const handleOrderType = (e) => {
     const { value } = e.target;
     setOrderType(value);
+  };
+
+  const handleClearfilter = () => {
+    dispatch(clearFilter());
   };
 
   return (
@@ -200,9 +206,14 @@ const FilterBar = () => {
           <FaChevronRight />
         </button>
       </div>
-      <button className={styles.filterButton} onClick={handleToggleFilters}>
-        <FaFilter />
-      </button>
+      <div className={styles.filterButtonsContainer}>
+        <button className={styles.filterButton} onClick={handleToggleFilters}>
+          <MdFilterAlt />
+        </button>
+        <button className={styles.filterButton} onClick={handleClearfilter}>
+          <MdFilterAltOff />
+        </button>
+      </div>
       {isFiltersOpen && (
         <div className={styles.filterPopup}>
           <div className={styles.filterContent}>
@@ -237,7 +248,7 @@ const FilterBar = () => {
                 className={styles.closeButton}
                 onClick={handleCloseFilters}
               >
-                Close
+                <MdOutlineClose />
               </button>
             </div>
           </div>
