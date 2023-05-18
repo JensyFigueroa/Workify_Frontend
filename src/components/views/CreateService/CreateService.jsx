@@ -1,6 +1,6 @@
 import { useState } from "react";
 import style from "../CreateService/CreateService.module.css";
-
+import validate from "./validate";
 export function CreateService(){
 
     const [inputs, setInputs] = useState({
@@ -11,12 +11,19 @@ export function CreateService(){
         ubication: ""
       });
       const [touch, setTouch] = useState({
-        name: false,
-        difficulty:false,
-        duration: false,
-        season: false,
-        countries: false
+        category: false,
+        image: false,
+        description: false,
+        price: false,
+        ubication: false
     })
+    const [errors, setErrors] = useState({
+        category: "",
+        image: "",
+        description: "",
+        price: "",
+        ubication: ""
+    });
 
       const handleInputChange = (event) => {
         const {name, value} = event.target;
@@ -74,6 +81,7 @@ export function CreateService(){
         <span for="validationDefault01" className="input-group-text">Revisión Cost | $ </span>
         <input name = "price" value={inputs.price} onChange={handleInputChange} id="validationDefault01" type="text" className="form-control" aria-label="Amount (to the nearest dollar)" required/>
     <span className="input-group-text">.00</span>
+    {touch.price && errors.price && <p className="text-danger">{errors.price}</p>}
     </div>
 
     <div className="input-group mb-3">
