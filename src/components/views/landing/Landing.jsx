@@ -2,11 +2,12 @@ import React from "react";
 import "./Landing.css";
 
 const Landing = () => {
+  
+
   return (
     <div className="fondo">
       <h2 class="logo">
-        <span class="gray">WEB </span>
-        <span class="white">SERVICE</span>
+        <span class="gray">WORKIFY </span>
       </h2>
      
       <div 
@@ -22,20 +23,20 @@ const Landing = () => {
             role="button"
             aria-expanded="true"
           >
-            <span className="welcome">Welcome to</span>
-            <h1 class="logo">
-              <span class="gray">WEB </span>
-              <span class="white">SERVICE</span>
-            </h1>
+            <p className="welcome">Welcome to Workify</p>
+            {/* <h1 class="logo">
+              <span>Workify</span>
+            </h1> */}
             
           </a>
         </p>
         <div class="row">
-          <div>
+          <div className="container-descripcion">
             <div id="multiCollapseExample1">
-              <div class="card text-center  w-75 p-3 ">
-                ¡Obtén el mejor servicio para tus necesidades en nuestra página
-                'nombre de la pagina'! Ofrecemos una amplia variedad de
+            
+               <span className="description">
+                 ¡Obtén el mejor servicio para tus necesidades en nuestra página
+                 Workify! Ofrecemos una amplia variedad de
                 servicios y proveedores seleccionados cuidadosamente para
                 garantizar calidad y precios justos. Nuestro proceso de
                 contratación es sencillo, seguro y sin csomplicaciones, solo
@@ -43,13 +44,13 @@ const Landing = () => {
                 conectaremos con los proveedores que mejor se adapten a ti.
                 ¡Comienza hoy mismo y descubre lo fácil que puede ser obtener el
                 servicio que necesitas!
-              </div>
+                </span>
             </div>
           </div>
         </div>
         
       </div>
-      <a className="arrow" href="">
+      <a className="arrow" href="/home">
               <i class="bi bi-arrow-down-short "></i>
             </a>
     </div>

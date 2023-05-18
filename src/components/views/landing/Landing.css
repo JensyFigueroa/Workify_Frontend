@@ -14,8 +14,19 @@
 
 .gray {
     color: rgb(255, 255, 255);
+    
   }
-  
+
+.description{
+    color: white;
+    font-size: 1.3rem;
+}
+
+.container-descripcion{
+  background-color: rgba(255, 255, 255, 0.13);
+  padding: 20px 40px;
+}
+
 .white {
     color: rgba(3, 2, 2, 0.679);
   }
@@ -26,9 +37,21 @@
   font-size: 50px;
   color: white;
   background-color: rgba(230, 230, 230, 0.221);
+  transition: #171616 0.3s;
+  transition-duration: 2s; 
  
 }
 #contenedor-principal{
   margin-top: 20vh;
   text-decoration: none;
+}
+.welcome{
+  font-size: 2.5rem;
+  text-decoration: none;
+  color: white;
+  font-family: "Roboto Condensed", sans-serif;
+}
+.arrow:hover {
+  background-color: rgba(189, 189, 189, 0.314);
+  transition-delay: 0s; /* Cambiamos el color al pasar el mouse */
 }

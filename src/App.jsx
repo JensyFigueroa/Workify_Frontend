@@ -5,6 +5,7 @@ import Navbar from "./components/navbar/Navbar";
 import LandingPage from "./components/views/landing/Landing";
 import { Route, Routes } from "react-router-dom";
 import Landing from "./components/views/landing/Landing";
+import Footer from "./components/views/footer/footer";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path={"/"} element={< LandingPage/>}/>
         <Route exact path="/" element={<Landing/>}></Route>
         <Route path="/detail/:id" element={<Detail />}></Route>
+        <Route path="/footer" element={<Footer />}></Route>
         <Route path="/createService" element={<CreateService />}></Route>
       </Routes>
     </>
