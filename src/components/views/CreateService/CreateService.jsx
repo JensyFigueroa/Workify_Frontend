@@ -43,6 +43,7 @@ export function CreateService(){
 
      const handleSubmit = async (event) => {
         event.preventDefault();
+        //<---RUTA DEL POST--->
         // try {
         //     await axios.post("/activities", inputs)
         //     console.log("Agregado correctamente");
