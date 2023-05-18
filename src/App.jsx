@@ -10,7 +10,7 @@ function App() {
     <>
       <Navbar />
       <Home />
-
+      <CreateService/>
       <Routes>
         <Route exact path="/" element={<Landing/>}></Route>
         <Route path="/detail/:id" element={<Detail />}></Route>
