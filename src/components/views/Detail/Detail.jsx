@@ -15,7 +15,8 @@ export function Detail() {
   }, [dispatch, id])
 
   const serviceDetail = useSelector(state => state.serviceDetail);
-
+  let arrImage = [serviceDetail.imageUrl];
+  
   return (
     <div>
       <div className="container d-flex flex-column">
@@ -26,7 +27,9 @@ export function Detail() {
         </div>
         <div className={style.mediumContainer}>
           <p>Trabajos realizados</p>
-          <img src={serviceDetail.imageUrl[0]} alt="img" />
+          {arrImage.length > 0 && arrImage.map(image => <img src={image} alt={`${image}`} /> )}
+          {/* <img src={serviceDetail.imageUrl} alt="img" /> */}
+          
         </div>
       </div>
       <div className={style.largeContainer}>
