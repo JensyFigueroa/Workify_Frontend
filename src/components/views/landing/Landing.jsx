@@ -1,5 +1,6 @@
 import React from "react";
 import "./Landing.css";
+import { MdHomeRepairService } from "react-icons/md";
 
 const Landing = () => {
   
@@ -7,6 +8,9 @@ const Landing = () => {
   return (
     <div className="fondo">
       <h2 class="logo">
+      <MdHomeRepairService
+              style={{ fontSize: "63px" }}
+            ></MdHomeRepairService>
         <span class="gray">WORKIFY </span>
       </h2>
      
