@@ -42,14 +42,11 @@ const Navbar = () => {
             <h1>Workify</h1>
           </div>
 
-
           <div className={styles.search}>
             <SearchBar />
           </div>
 
-          <div
-            className={`${styles.links} ${clickBurguer ? styles.show : ""} `}
-          >
+          <div className={`${styles.links} ${clickBurguer ? styles.show : ""} `}>
             <NavLink
               to="/home"
               className={({ isActive }) =>

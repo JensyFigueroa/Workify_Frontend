@@ -1,5 +1,5 @@
 .container {
-    background-color: white;
+    background-color: #F7F7F7;
     /* background-color: #0D6EFD; */
     display: flex;
     align-items: center;
@@ -14,14 +14,13 @@
 }
 
 h1 {
-    font-family: 'Lobster', cursive;
     font-size: 50px;
     color: black;
 }
 
-.search{
-    display: flex;
-    align-items: flex-end;
+.search {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .links {
@@ -32,8 +31,8 @@ h1 {
     top: -700px;
     left: -2000px;
     right: 0;
-    margin-left: 20px;
-    margin-right: 200px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     transition: all .5s ease;
 }
@@ -47,7 +46,7 @@ h1 {
 }
 
 .link:hover {
-    
+
     color: #0D6EFD;
 }
 
@@ -154,27 +153,29 @@ h1 {
 
 }
 
-.btn{
+.btn {
     width: 40px;
     background-color: #F8F9FA;
     border-radius: 50px;
-    margin-right: 40px;
+    margin-right: 13px;
     border: .5px solid #DEE2E6;
 }
 
-.loginIco{
-    color: black;
+.loginIco {
+    color: #717171;
 }
 
-.loginIco:hover{
+.loginIco:hover {
     color: #0D6EFD;
 }
 
 @media(max-width: 1024px) {
-    .link{margin: 15px 0;}
+    .link {
+        margin: 15px 0;
+    }
 }
 
-@media(min-width: 1024px){
+@media(min-width: 1024px) {
     .links {
         position: initial;
     }

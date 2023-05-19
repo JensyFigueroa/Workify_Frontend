@@ -45,6 +45,7 @@ export const getServiceDetail = (id) => {
     try {
       const response = await axios.get(`http://localhost:3001/service/${id}`);
       const data = response.data;
+      console.log(data,'action')
       return dispatch({
         type: GET_SERVICESDETAIL,
         payload: data,
