@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+
+}
+.form{
+    background-color: rgb(219, 219, 219);
+    padding: 50px;
+    width: 35em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form h1{
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.myButton{
+    color: black;
+    background-color: white;
+}
+
+.myButton:hover{
+    background-color: black;
+}
+
+.priceInput{
+    width: 10em
+}

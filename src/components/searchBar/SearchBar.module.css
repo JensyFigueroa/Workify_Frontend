@@ -1,0 +1,13 @@
+.search{
+    display: flex;
+    align-items: center;
+}
+
+.location{
+    background: transparent;
+    border: none;
+}
+
+.linkLocation{
+    text-decoration: none;
+}
