@@ -18,9 +18,9 @@ export function Cards (){
             return <Card
             id = {serv.id}
             key = {index}
-            name = {serv.name}
-            username = {serv.username}
-            email = {serv.email}
+            image = {serv.imageUrl}
+            nameService = {serv.nameService}
+            typeService = {serv.typeService}
             />
         } )}
     </div>

@@ -12,7 +12,7 @@ export const getServices = () => {
   return async (dispatch) => {
     try {
       const response = await axios(
-        "https://jsonplaceholder.typicode.com/users"
+        "http://localhost:3001/service/"
       );
       const data = response.data;
       return dispatch({
