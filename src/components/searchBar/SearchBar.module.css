@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.inputGroupText{
+    border-radius: 5.375rem;
+}
+
 .location{
     background: transparent;
     border: none;
@@ -10,4 +14,8 @@
 
 .linkLocation{
     text-decoration: none;
+}
+
+.inputSearch{
+    width: 200px;
 }

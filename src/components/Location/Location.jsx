@@ -3,7 +3,6 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { API_KEY } from '../searchBar/apiKey';
 
 const Location = (props) => {
-    console.log(props)
 
     const containerStyle = {
         width: '100%',
