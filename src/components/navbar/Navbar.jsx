@@ -74,8 +74,8 @@ const Navbar = () => {
                 isActive ? styles.active : styles.link
               }
               onClick={handleClick}
-            >
-              Home
+            ><span>Home</span>
+              
             </NavLink>
             <NavLink
               to="/about"
