@@ -28,6 +28,8 @@ const SearchBar = () => {
         }
     }
 
+    console.log(address)
+
     const handleChange = (event) => {
       setAddress(event.target.value);
     };
@@ -36,7 +38,7 @@ const SearchBar = () => {
     const getAddressFromCoordinates = async (latitude, longitude) => {
         try {
             const response = await fetch(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBT-R7lOIPDD6feX6Q_xIM2qyysZ9ELSS0`
             );
             const data = await response.json();
             console.log(data)
