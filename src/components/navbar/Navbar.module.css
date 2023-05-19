@@ -1,11 +1,35 @@
-.container {
+/* .container {
     background-color: #F7F7F7;
-    /* background-color: #0D6EFD; */
+     background-color: #0D6EFD; 
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-}
+} */
+
+
+.container {
+    position: static;
+    top: 0;
+    width: 100%;
+    background-color: #F7F7F7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #F7F7F7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    padding: 1rem;
+  }
 
 .logo {
     display: flex;
