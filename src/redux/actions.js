@@ -42,7 +42,7 @@ export const getServicesByName = (name) => {
 export const getServiceDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`/detail/${id}`);
+      const response = await axios.get(`http://localhost:3001/service/${id}`);
       const data = response.data;
       return dispatch({
         type: GET_SERVICESDETAIL,

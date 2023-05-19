@@ -1,28 +1,39 @@
 import { useState } from "react";
 import style from "../CreateService/CreateService.module.css";
 import validate from "./validate";
+import services from "./Services";
+
 export function CreateService(){
 
     const [inputs, setInputs] = useState({
-        category: "",
-        image: "",
-        description: "",
-        price: "",
-        ubication: ""
+        nameService: "",
+        location: {
+            pais: "",
+            ciudad: ""
+        },
+        imageUrl: [],
+        pricePerHour: 0,
+        typeService: ""
       });
       const [touch, setTouch] = useState({
-        category: false,
-        image: false,
-        description: false,
-        price: false,
-        ubication: false
+        nameService: false,
+        location: {
+            pais: false,
+            ciudad:  false
+        },
+        imageUrl: false,
+        pricePerHour: false,
+        typeService: false
     })
     const [errors, setErrors] = useState({
-        category: "",
-        image: "",
-        description: "",
-        price: "",
-        ubication: ""
+        nameService: "",
+        location: {
+            pais: "",
+            ciudad: ""
+        },
+        imageUrl: [],
+        pricePerHour: 0,
+        typeService: ""
     });
 
       const handleInputChange = (event) => {
@@ -58,18 +69,27 @@ export function CreateService(){
     <h1>Crear Servicio</h1>
 
     <form className="row g-3 needs-validation" novalidate>
-     <div className="form-floating">
-
-     <div className="input-group mb-3">
-        <span for="validationDefault01" className="input-group-text" id="inputGroup-sizing-default">Category</span>
-        <input name = "category" value = {inputs.category} onChange={handleInputChange} type="text" className="form-control" id="validationDefault01" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required/>
+     
+    <div className="mb-3">
+        <label for="validationDefault04" className="form-label">Categories</label>
+        <select className="form-select" name = "category" value={inputs.category} onChange={handleInputChange} id="validationDefault04" required>
+            <option selected disabled value="">Select a category</option>
+            {services.map((serv, index) => (<option key={index} value={serv}>{serv}</option>))}
+    </select>
+    <div class="invalid-feedback">Example invalid select feedback</div>
     </div>
+
+    <div className="input-group mb-3">
+        <span for="validationDefault01" className="input-group-text" id="inputGroup-sizing-default">Ubication</span>
+        <input name = "ubication" value={inputs.ubication} onChange={handleInputChange} id="validationDefault01"  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required/>
     </div>
 
     <div className="mb-3">
-        <label for="formFile" className="form-label">Image</label>
-        <input name = "image" value={inputs.image} onChange={handleInputChange} className="form-control" type="file" id="formFile" aria-label="file example" required/>
-        <div class="invalid-feedback">Example invalid form file feedback</div>
+        <label for="basic-url" class="form-label">Your image URL</label>
+        <div class="input-group">
+    <span class="input-group-text" id="basic-addon3">https://...</span>
+        <input name = "image" value={inputs.image} onChange={handleInputChange} className="form-control" type="text" id="basic-url" aria-describedby="basic-addon3 basic-addon4" required/>
+    </div>
     </div>
 
     <div className="form-floating">
@@ -78,17 +98,20 @@ export function CreateService(){
       
     </div>
 
+    <label for="basic-url" class="form-label">Price per hour</label>
     <div className="input-group mb-3">
-        <span for="validationDefault01" className="input-group-text">Revisión Cost | $ </span>
+        <span for="validationDefault01" className="input-group-text">$</span>
         <input name = "price" value={inputs.price} onChange={handleInputChange} id="validationDefault01" type="text" className="form-control" aria-label="Amount (to the nearest dollar)" required/>
     <span className="input-group-text">.00</span>
     {touch.price && errors.price && <p className="text-danger">{errors.price}</p>}
     </div>
 
     <div className="input-group mb-3">
-        <span for="validationDefault01" className="input-group-text" id="inputGroup-sizing-default">Ubication</span>
-        <input name = "ubication" value={inputs.ubication} onChange={handleInputChange} id="validationDefault01"  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required/>
+        <span for="validationDefault01" className="input-group-text" id="inputGroup-sizing-default">Type of service</span>
+        <input name = "ubication" value={inputs.type} onChange={handleInputChange} id="validationDefault01"  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required/>
     </div>
+
+    
 
     <div className="col-12">
         <button type="submit" className={`${style.myButton} btn btn-outline-secondary`}>Create Service</button>
