@@ -68,6 +68,15 @@ const Navbar = () => {
             >
               About
             </NavLink>
+            <NavLink
+              to="/createService"
+              className={({ isActive }) =>
+                isActive ? styles.active : styles.link
+              }
+              onClick={handleClick}
+            >
+              Create Service
+            </NavLink>
           </div>
 
           <div className="btn-group " role="group">

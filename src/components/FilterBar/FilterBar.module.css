@@ -3,11 +3,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin: 10px;
 }
 .carouselContainer {
+  width: 70%;
   position: relative;
-  width: 80%;
   overflow: hidden;
+  margin: 10px;
 }
 
 .carouselButton {
@@ -21,6 +23,8 @@
   font-size: 16px;
   padding: 4px;
   z-index: 2;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .carouselButton:first-child {
@@ -32,14 +36,14 @@
 }
 
 .itemContainer {
-  width: 65%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   overflow: hidden;
   white-space: nowrap;
+  margin: 10px;
   margin-left: 30px;
 }
 
@@ -62,6 +66,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin-top: 10px;
+}
+
+.buttonIcon:hover {
+  transform: translateY(-5px);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
 .icon {
@@ -69,11 +79,11 @@
   height: 25px;
 }
 
-.orderContainer {
-  width: 35%;
+.filterButtonsContainer {
+  width: 30%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  /* justify-content: space-between; */
 }
 
 .filterPopup {
@@ -122,18 +132,13 @@
   background-color: transparent;
   border: none;
   outline: none;
-  cursor: pointer;
-  font-size: 16px;
   padding: 4px;
-  margin-left: 10px;
-}
-
-.filterButton:focus {
-  outline: none;
+  margin-left: 5px;
 }
 
 .filterButton:hover {
-  color: blue;
+  transform: translateY(-5px);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
 .closeButton {
