@@ -5,27 +5,30 @@ import { useEffect } from "react";
 import style from "./Detail.module.css";
 
 export function Detail(){
-    // const {id} = useParams();
-    // const dispatch = useDispatch();
-    // const serviceDetail = useSelector(state => state.serviceDetail);
+    const {id} = useParams();
+    const dispatch = useDispatch();
+    const serviceDetail = useSelector(state => state.serviceDetail);
 
-    // useEffect(() => {
-    //     useDispatch(getServiceDetail(id));
-    // }, [dispatch, id])
+    useEffect(() => {
+        dispatch(getServiceDetail(id));
+    }, [dispatch])
+
     return (
     <div>
     <div className="container d-flex flex-column">
       <div className={style.smallContainer}>
-        <p>Nombre</p>
-        <p>Ubicación</p>
+        <p>Service: {serviceDetail.nameService}</p>
+        <p>Type: {serviceDetail.typeService}</p>
+        <p>Location: {serviceDetail.location?.pais}</p>
       </div>
       <div className={style.mediumContainer}>
         <p>Trabajos realizados</p>
+       <img src={serviceDetail.imageUrl[0]} alt="img"/>
       </div>
       <div className={style.largeContainer}>
         <div className={style.abilities}>
-            <p>Habilidades</p>
-            <p>Reseñas</p>
+            <p>Description: {serviceDetail.description}</p>
+            <p>Reviews: {serviceDetail.reviews}</p>
         </div>
         <div className={style.reserv}>
             <p>Reserva</p>

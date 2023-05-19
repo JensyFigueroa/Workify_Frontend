@@ -4,7 +4,7 @@ import { GrLocation } from 'react-icons/gr'
 import { Link } from 'react-router-dom'
 import { FaLocationArrow } from "react-icons/fa";
 import Location from '../Location/Location';
-import { API_KEY } from './apiKey';
+// import { API_KEY } from './apiKey';
 
 const SearchBar = () => {
     const [currentLocation, setCurrentLocation] = useState({ latitude: 0, longitude: 0 });
