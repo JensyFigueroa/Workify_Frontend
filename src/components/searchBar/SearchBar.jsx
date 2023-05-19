@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './SearchBar.module.css'
 import { GrLocation } from 'react-icons/gr'
 import { Link } from 'react-router-dom'
 import { FaLocationArrow } from "react-icons/fa";
 import Location from '../Location/Location';
+import { API_KEY } from './apiKey';
 
 const SearchBar = () => {
     const [currentLocation, setCurrentLocation] = useState({ latitude:0, longitude:0 });
@@ -30,7 +31,7 @@ const SearchBar = () => {
     const getAddressFromCoordinates = async (latitude, longitude) => {
       try {
         const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyBT-R7lOIPDD6feX6Q_xIM2qyysZ9ELSS0`
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
         );
         const data = await response.json();
         console.log(data)
