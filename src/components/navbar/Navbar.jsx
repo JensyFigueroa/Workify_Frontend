@@ -30,6 +30,7 @@ const Navbar = () => {
   const handleClick = () => {
     setClickBurguer(!clickBurguer);
   };
+
   return (
     location.pathname !== "/" && (
       <>
@@ -40,6 +41,7 @@ const Navbar = () => {
             ></MdHomeRepairService>
             <h1>Workify</h1>
           </div>
+
 
           <div className={styles.search}>
             <SearchBar />
@@ -77,15 +79,15 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          <div className="btn-group btn" role="group">
+          <div className="btn-group " role="group">
             <button
               type="button"
-              className={`${styles.btn} btn btn-primary dropdown-toggle`}
+              className={`${styles.btn} `}
               style={{ color: "black" }}
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <BsFillPersonLinesFill style={{ color: "black" }} />
+              <BsFillPersonLinesFill className={styles.loginIco} />
             </button>
             <ul className="dropdown-menu">
               <li>
@@ -102,9 +104,8 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`${styles.btnBurguer} ${styles.navIcon} ${
-              clickBurguer ? styles.open : ""
-            }`}
+            className={`${styles.btnBurguer} ${styles.navIcon} ${clickBurguer ? styles.open : ""
+              }`}
             onClick={handleClick}
           >
             <span></span>
@@ -113,9 +114,8 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`${styles.curtain} ${
-              clickBurguer ? styles.showCurtain : ""
-            }`}
+            className={`${styles.curtain} ${clickBurguer ? styles.showCurtain : ""
+              }`}
           ></div>
         </nav>
       </>
