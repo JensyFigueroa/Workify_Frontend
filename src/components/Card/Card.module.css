@@ -9,17 +9,29 @@
   padding: 8px;
   background-color: var(--skyBlue);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  /* text-align: start; */
 }
 
 .info {
-  margin-top: 5px;
+  padding: 10px;
+}
+
+.info p {
+  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Manrope", sans-serif;
+  font-family: "Noto Sans", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   text-align: start;
+  margin: 5px 0;
+  color: #252525;
+  font-weight: 500;
 }
 
 .img {
-  max-width: 13em;
+  max-width: 100%;
+  height: auto;
   border-radius: 6px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn {
