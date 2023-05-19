@@ -36,3 +36,10 @@ body {
 @media (min-width: 992px) {
   /* Estilos para pantallas con ancho mínimo de 992px */
 }
+
+*{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
