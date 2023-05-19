@@ -23,7 +23,7 @@ export function Detail(){
       </div>
       <div className={style.mediumContainer}>
         <p>Trabajos realizados</p>
-        <p>{serviceDetail.imageUrl}</p>
+       <img src={serviceDetail.imageUrl[0]} alt="img"/>
       </div>
       <div className={style.largeContainer}>
         <div className={style.abilities}>

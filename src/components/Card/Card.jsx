@@ -6,7 +6,7 @@ export function Card({id, nameService, image, typeService}){
     <div className = {style.container}>
         <div className={style.card}>
     <Link className={style.card} to={`/detail/${id}`}>
-        <p>Image: {image}</p>
+        <img src={image} alt="img"/>
     </Link>
         <p>Service: {nameService}</p>
         <p>Type: {typeService}</p>

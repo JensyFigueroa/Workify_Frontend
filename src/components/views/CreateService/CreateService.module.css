@@ -26,3 +26,7 @@
 .myButton:hover{
     background-color: black;
 }
+
+.priceInput{
+    width: 10em
+}

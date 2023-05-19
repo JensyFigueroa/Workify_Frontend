@@ -24,6 +24,7 @@ export const getServices = () => {
     }
   };
 };
+
 export const getServicesByName = (name) => {
   return async (dispatch) => {
     try {
