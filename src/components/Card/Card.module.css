@@ -9,6 +9,7 @@
   border-radius: 10px;
   border: solid 1px #ddd;
   text-decoration: none;
+  padding: 8px;
 }
 .img {
   max-width: 13em;
