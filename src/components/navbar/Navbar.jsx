@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 const Navbar = () => {
   let location = useLocation();
   const [clickBurguer, setClickBurguer] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const [screenSize, setScreenSize] = useState({
     width: window.innerWidth,
@@ -31,10 +32,30 @@ const Navbar = () => {
     setClickBurguer(!clickBurguer);
   };
 
+  /* Fijamos el navbar */
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const navbarClasses = `${isScrolled ? styles.fixed : styles.container}`;
+
+
   return (
     location.pathname !== "/" && (
       <>
-        <nav className={styles.container}>
+        <nav className={navbarClasses}>
           <div className={styles.logo}>
             <MdHomeRepairService
               style={{ fontSize: "63px" }}
