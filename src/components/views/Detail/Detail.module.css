@@ -1,35 +1,36 @@
 .smallContainer {
-    height: 6.25em;
-    background-color: rgb(194, 194, 194);
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .mediumContainer {
-    height: 12.5em;
-    background-color: rgb(194, 194, 194);
-    margin-bottom: 20px;
-    text-align: center;
+  height: 6.25em;
+  background-color: rgb(194, 194, 194);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
 
-  }
-  
-  .largeContainer {
-    height: 18em;
-    background-color: rgb(194, 194, 194);
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-around;
-    padding-top: 80px;
-  }
+.mediumContainer {
+  height: 12.5em;
+  background-color: rgb(194, 194, 194);
+  margin-bottom: 20px;
+  text-align: center;
+}
 
-  .abilities{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .reserv{
-    width: 5em;
-    height: 5em;
-    
-  }
+.largeContainer {
+  height: 18em;
+  background-color: rgb(194, 194, 194);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 80px;
+}
+
+.abilities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.reserv {
+  width: 5em;
+  height: 5em;
+}
+.img {
+  max-width: 13em;
+}
