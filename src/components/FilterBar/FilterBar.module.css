@@ -1,12 +1,14 @@
 .filterBarContainer {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px;
+  /* margin: 10px; */
+  background-color: #F1F4FB;
 }
 .carouselContainer {
-  width: 70%;
+  width: 85%;
   position: relative;
   overflow: hidden;
   margin: 10px;
@@ -28,11 +30,11 @@
 }
 
 .carouselButton:first-child {
-  left: 10px;
+  left: 300px;
 }
 
 .carouselButton:last-child {
-  right: 10px;
+  right: 300px;
 }
 
 .itemContainer {
@@ -80,7 +82,7 @@
 }
 
 .filterButtonsContainer {
-  width: 30%;
+  width: 15%;
   display: flex;
   align-items: center;
   /* justify-content: space-between; */

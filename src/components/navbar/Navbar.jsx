@@ -1,10 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import { MdHomeRepairService } from "react-icons/md";
 import { useLocation } from "react-router-dom";
+import logo from '../views/landing/img/logo.png'
 
 const Navbar = () => {
   let location = useLocation();
@@ -56,12 +56,8 @@ const Navbar = () => {
     location.pathname !== "/" && (
       <>
         <nav className={navbarClasses}>
-          <div className={styles.logo}>
-            <MdHomeRepairService
-              style={{ fontSize: "63px" }}
-            ></MdHomeRepairService>
-            <h1>Workify</h1>
-          </div>
+
+          <Link to='/' className={styles.logo}><img src={logo} alt="logo" /></Link>
 
           <div className={styles.search}>
             <SearchBar />
@@ -75,7 +71,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             ><span>Home</span>
-              
+
             </NavLink>
             <NavLink
               to="/about"

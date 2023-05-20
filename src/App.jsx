@@ -1,10 +1,9 @@
 import { CreateService } from "./components/views/CreateService/CreateService";
 import { Detail } from "./components/views/Detail/Detail";
 import Home from "./components/views/Home/Home";
-import Navbar from "./components/navbar/Navbar";
-import LandingPage from "./components/views/landing/Landing";
+import Navbar from "./components/navbar/Navbar";  
 import { Route, Routes } from "react-router-dom";
-import Landing from "./components/views/landing/Landing";
+import LandingPage from "./components/views/landing/LandingPage";
 import Footer from "./components/views/footer/footer";
 
 function App() {
@@ -15,9 +14,9 @@ function App() {
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/home"} element={<Home />} />
         <Route path="/detail/:id" element={<Detail />}></Route>
-        <Route path="/footer" element={<Footer />}></Route>
         <Route path="/createService" element={<CreateService />}></Route>
       </Routes>
+      {/* <Footer /> */}
     </>
   );
 }
