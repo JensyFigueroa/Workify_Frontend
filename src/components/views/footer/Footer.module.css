@@ -9,25 +9,26 @@ footer {
     text-align: center;
   }
   
-  .footer-links a {
+  .footerLinks a {
     margin-right: 10px;
     color: #777;
     text-decoration: none;
 
   }
   
-  .footer-contact {
+  .footerContact {
     margin-top: 20px;
     color: #777;
   }
   
-  .footer-bottom {
+  .footerBottom {
     margin-top: 20px;
     color: #777;
     font-size: 12px;
     text-align: center;
+    
   }
-  .footer-links a:hover {
+  .footerLinks a:hover {
     color: #fe2054; /* Cambiamos el color al pasar el mouse */
   }
 
