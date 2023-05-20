@@ -17,10 +17,12 @@ export function Detail() {
   let arrImage = [serviceDetail.imageUrl];
 
   return (
-    <div>
-      <div className="container d-flex flex-column">
+    <div className={`${style.container} `}>
+      <div>
         <div className={style.smallContainer}>
-          <p>Service: {serviceDetail.nameService}</p>
+          <p className={style.nameService}>
+            Service: {serviceDetail.nameService}
+          </p>
           <p>Type: {serviceDetail.typeService}</p>
           <p>Location: {serviceDetail.location?.pais}</p>
         </div>
@@ -38,7 +40,7 @@ export function Detail() {
           <p>Description: {serviceDetail.description}</p>
           <p>Reviews: {serviceDetail.reviews}</p>
         </div>
-        <div className={style.reserv}>
+        <div className={`${style.reserv} btn btn-outline-secondary`}>
           <p>Reserva</p>
         </div>
       </div>
