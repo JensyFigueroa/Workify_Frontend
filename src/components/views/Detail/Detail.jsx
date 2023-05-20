@@ -3,10 +3,15 @@ import { clearFilter, getServiceDetail } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import style from "./Detail.module.css";
+import toast, { Toaster } from "react-hot-toast";
 
 export function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const notify = () =>
+    toast.success(
+      "Your reservation has been successfully completed. We have sent you a confirmation email with the details of your reservation."
+    );
 
   useEffect(() => {
     dispatch(getServiceDetail(id));
@@ -41,7 +46,19 @@ export function Detail() {
           <p>Reviews: {serviceDetail.reviews}</p>
         </div>
         <div className={`${style.reserv} btn btn-outline-secondary`}>
-          <p>Reserva</p>
+          <p onClick={notify}>Reserva</p>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              className: "",
+              duration: 6000,
+              style: {
+                border: "1px solid #713200",
+                padding: "16px",
+                color: "#713200",
+              },
+            }}
+          />
         </div>
       </div>
     </div>
