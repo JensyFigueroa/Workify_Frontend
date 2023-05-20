@@ -4,10 +4,11 @@ import validate from "./validate";
 import services from "./Services";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export function CreateService() {
   const navigate = useNavigate();
-
+  const [notification, setNotification] = useState("");
   const [inputs, setInputs] = useState({
     nameService: "",
     location: {
@@ -82,18 +83,21 @@ export function CreateService() {
     event.preventDefault();
     //<---RUTA DEL POST--->
     try {
-      await axios.post("http://localhost:3001/service/", inputs);
-      console.log("Agregado correctamente");
-      navigate("/home");
+      await axios
+        .post("http://localhost:3001/service/", inputs)
+        .then((response) => toast.success(response.data));
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
     } catch (error) {
-      console.log("Error al agregar la actividad", error.message);
+      toast.error(error.message);
     }
   };
+  console.log(notification);
   return (
     <div className={style.container}>
       <div className={style.form}>
         <h1>Crear Servicio</h1>
-
         <form
           className="row g-3 needs-validation"
           onSubmit={handleSubmit}
@@ -250,6 +254,7 @@ export function CreateService() {
               Create Service
             </button>
           </div>
+          <Toaster />
         </form>
       </div>
     </div>
