@@ -254,7 +254,7 @@ export function CreateService() {
               Create Service
             </button>
           </div>
-          <Toaster />
+          <Toaster position="bottom-right" reverseOrder={false} />
         </form>
       </div>
     </div>
