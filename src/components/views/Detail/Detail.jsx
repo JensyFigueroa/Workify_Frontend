@@ -9,9 +9,7 @@ export function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const notify = () =>
-    toast.success(
-      "Your reservation has been successfully completed. We have sent you a confirmation email with the details of your reservation."
-    );
+    toast.success("Your reservation has been successfully completed.");
 
   useEffect(() => {
     dispatch(getServiceDetail(id));
@@ -51,7 +49,7 @@ export function Detail() {
             position="bottom-right"
             toastOptions={{
               className: "",
-              duration: 6000,
+              // duration: 6000,
               style: {
                 border: "1px solid #713200",
                 padding: "16px",
