@@ -1,16 +1,20 @@
 import styles from "./FilterBar.module.css";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { MdFilterAlt, MdFilterAltOff, MdOutlineClose } from "react-icons/md";
+import { MdOutlineClose } from "react-icons/md";
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearFilter, selectItem, selectLocation } from "../../redux/actions";
+import {
+  clearFilter,
+  selectItem,
+  selectLocation,
+  orderResult,
+} from "../../redux/actions";
 
 const FilterBar = () => {
   const dispatch = useDispatch();
   const [items, setItems] = useState("ALL");
   const [location, setLocation] = useState("ALL");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [orderBy, setOrderBy] = useState("rating");
+  const [orderBy, setOrderBy] = useState("nameService");
   const [orderType, setOrderType] = useState("up");
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
@@ -25,6 +29,10 @@ const FilterBar = () => {
   useEffect(() => {
     dispatch(selectLocation(location));
   }, [location, dispatch]);
+
+  useEffect(() => {
+    dispatch(orderResult(orderBy, orderType));
+  }, [orderBy, orderType, dispatch]);
 
   const handleItemChange = (e) => {
     const { value } = e.target;
@@ -105,11 +113,9 @@ const FilterBar = () => {
       </div>
       <div className={styles.filterButtonsContainer}>
         <button className={styles.filterButton} onClick={handleToggleFilters}>
-          <MdFilterAlt />
+          Order
         </button>
-        <button className={styles.filterButton} onClick={handleClearfilter}>
-          <MdFilterAltOff />
-        </button>
+
         <select
           id="location"
           value={location}
@@ -140,8 +146,8 @@ const FilterBar = () => {
                 onChange={handleOrderByName}
                 className={styles.select}
               >
-                <option value="name">Name</option>
-                <option value="rating">Rating</option>
+                <option value="nameService">Name</option>
+                <option value="typeService">Type Service</option>
               </select>
             </div>
             <div className={styles.selectContainer}>

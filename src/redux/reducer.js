@@ -17,7 +17,7 @@ const initialState = {
   serviceDetail: {},
   selectedItem: null,
   selectedLocation: null,
-  orderBy: "rating",
+  orderBy: "name",
   orderType: "up",
 };
 
@@ -59,11 +59,11 @@ const rootReducer = (state = initialState, action) => {
 
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
-      const sortedResults = [...state.results].sort((a, b) => {
+      const sortedResults = [...state.allServices].sort((a, b) => {
         //ascendentemente o descendentemente?
         const order = orderType === "up" ? 1 : -1;
 
-        if (orderBy === "name") {
+        if (orderBy === "nameService") {
           if (a[orderBy] > b[orderBy]) {
             //ascendente
             return order;
@@ -73,7 +73,7 @@ const rootReducer = (state = initialState, action) => {
             return -order;
           }
           return 0;
-        } else if (orderBy === "rating") {
+        } else if (orderBy === "typeService") {
           if (a[orderBy] > b[orderBy]) {
             return -order;
           }
@@ -103,8 +103,8 @@ const rootReducer = (state = initialState, action) => {
         };
       }
       if (action.payload === "ALL" && state.selectedItem) {
-        let items = state.allServices.filter(
-          (service) => service.location.ciudad === action.payload
+        let items = state.allServicesCache.filter(
+          (service) => service.typeService === state.selectedItem
         );
         return {
           ...state,
@@ -113,19 +113,20 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-      state.allServices = state.allServicesCache;
-      let location = state.allServices.filter(
+      let location = state.allServicesCache.filter(
         (service) => service.location.ciudad === action.payload
       );
-      if (state.selectedItem)
-        location.filter(
+      if (state.selectedItem && state.selectedItem !== "ALL")
+        location = location.filter(
           (service) => service.typeService === state.selectedItem
         );
+      console.log(location, "location en locationCase");
       return {
         ...state,
         selectedLocation: action.payload,
         allServices: location,
       };
+
     case SELECT_ITEM:
       if (
         action.payload === "ALL" &&
@@ -137,10 +138,11 @@ const rootReducer = (state = initialState, action) => {
           allServices: state.allServicesCache,
         };
       }
-      if (action.payload === "ALL" && state.selectedItem) {
-        let items = state.allServices.filter(
-          (service) => service.location.ciudad === action.payload
+      if (action.payload === "ALL" && state.selectedLocation) {
+        let items = state.allServicesCache.filter(
+          (service) => service.location.ciudad === state.selectedLocation
         );
+        console.log(items, "items en ItemCase");
         return {
           ...state,
           selectedItem: null,
@@ -148,12 +150,15 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-      state.allServices = state.allServicesCache;
-      let service = state.allServices.filter(
+      let service = state.allServicesCache.filter(
         (service) => service.typeService === action.payload
       );
-      if (state.selectedLocation) {
-        service.filter((service) => service.location.ciudad === action.payload);
+
+      if (state.selectedLocation && state.selectedLocation !== "ALL") {
+        service = service.filter(
+          (service) => service.location.ciudad === state.selectedLocation
+        );
+        console.log(service, "service en itemCase");
       }
       return {
         ...state,
@@ -165,7 +170,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allServices: state.allServicesCache,
-        orderBy: "rating",
+        orderBy: "nameService",
         orderType: "up",
         selectedItem: null,
         selectedLocation: null,

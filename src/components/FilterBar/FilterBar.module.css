@@ -12,29 +12,6 @@
   margin: 10px;
 }
 
-.carouselButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
-  z-index: 2;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.carouselButton:first-child {
-  left: 10px;
-}
-
-.carouselButton:last-child {
-  right: 10px;
-}
-
 .itemContainer {
   display: flex;
   justify-content: center;
