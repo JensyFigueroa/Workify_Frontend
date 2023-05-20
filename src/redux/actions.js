@@ -3,7 +3,8 @@ import {
   GET_SERVICESBYNAME,
   GET_SERVICESDETAIL,
   ORDER_RESULT,
-  FILTER_ITEM,
+  SELECT_ITEM,
+  SELECT_LOCATION,
   CLEAR_FILTER,
 } from "./types";
 import axios from "axios";
@@ -11,16 +12,15 @@ import axios from "axios";
 export const getServices = () => {
   return async (dispatch) => {
     try {
-      const response = await axios(
-        "http://localhost:3001/service/"
-      );
+      const response = await axios("http://localhost:3001/service/");
       const data = response.data;
       return dispatch({
         type: GET_SERVICES,
         payload: data,
       });
     } catch (error) {
-      throw new Error(error.message);
+      //throw new Error(error.message);
+      console.log(error.message);
     }
   };
 };
@@ -45,7 +45,7 @@ export const getServiceDetail = (id) => {
     try {
       const response = await axios.get(`http://localhost:3001/service/${id}`);
       const data = response.data;
-      console.log(data,'action')
+      console.log(data, "action");
       return dispatch({
         type: GET_SERVICESDETAIL,
         payload: data,
@@ -66,10 +66,18 @@ export const orderResult = (orderBy, orderType) => {
   };
 };
 
-export const filterItem = (selectedItem) => {
+export const selectItem = (items) => {
+  console.log(items, "actions");
   return {
-    type: FILTER_ITEM,
-    payload: selectedItem,
+    type: SELECT_ITEM,
+    payload: items,
+  };
+};
+
+export const selectLocation = (location) => {
+  return {
+    type: SELECT_LOCATION,
+    payload: location,
   };
 };
 

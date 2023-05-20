@@ -3,24 +3,48 @@ import {
   GET_SERVICESBYNAME,
   GET_SERVICESDETAIL,
   ORDER_RESULT,
-  FILTER_ITEM,
+  SELECT_LOCATION,
+  SELECT_ITEM,
   CLEAR_FILTER,
 } from "./types";
 
 const initialState = {
   allServices: [],
+  allServicesCache: [],
+  allItems: [],
+  allCountries: [],
+  allCities: [],
   serviceDetail: {},
+  selectedItem: null,
+  selectedLocation: null,
   orderBy: "rating",
   orderType: "up",
-  filterItem: "",
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SERVICES:
+      let services = action.payload;
+
+      const items = Array.from(
+        new Set(services.map((service) => service.typeService))
+      );
+
+      const countries = Array.from(
+        new Set(services.map((service) => service.location.pais))
+      );
+
+      const cities = Array.from(
+        new Set(services.map((service) => service.location.ciudad))
+      );
+      console.log(services);
       return {
         ...state,
-        allServices: action.payload,
+        allServices: services,
+        allServicesCache: services,
+        allItems: items,
+        allCountries: countries,
+        allCities: cities,
       };
     case GET_SERVICESBYNAME:
       return {
@@ -62,43 +86,94 @@ const rootReducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        //falta aplicarselo a las cards e igualarlo a sortedResults
+        allServices: sortedResults,
         orderBy,
         orderType,
       };
 
-    case FILTER_ITEM:
-      let filterItem = [];
-      if (action.payload === "") {
+    case SELECT_LOCATION:
+      if (
+        action.payload === "ALL" &&
+        (!state.selectedItem || state.selectedItem === "ALL")
+      ) {
         return {
           ...state,
-          //copyAllServices: allServices,
+          selectedLocation: null,
+          allServices: state.allServicesCache,
         };
       }
-      const { selectedItem } = action.payload;
+      if (action.payload === "ALL" && state.selectedItem) {
+        let items = state.allServices.filter(
+          (service) => service.location.ciudad === action.payload
+        );
+        return {
+          ...state,
+          selectedLocation: null,
+          allServices: items,
+        };
+      }
 
-      filterItem = state.allServices.filter(
-        (service) => service.name === selectedItem
+      state.allServices = state.allServicesCache;
+      let location = state.allServices.filter(
+        (service) => service.location.ciudad === action.payload
       );
-
+      if (state.selectedItem)
+        location.filter(
+          (service) => service.typeService === state.selectedItem
+        );
       return {
         ...state,
-        filterItem: selectedItem,
-        //copyAllServices: filterItem,
+        selectedLocation: action.payload,
+        allServices: location,
+      };
+    case SELECT_ITEM:
+      if (
+        action.payload === "ALL" &&
+        (!state.selectedLocation || state.selectedLocation === "ALL")
+      ) {
+        return {
+          ...state,
+          selectedItem: null,
+          allServices: state.allServicesCache,
+        };
+      }
+      if (action.payload === "ALL" && state.selectedItem) {
+        let items = state.allServices.filter(
+          (service) => service.location.ciudad === action.payload
+        );
+        return {
+          ...state,
+          selectedItem: null,
+          allServices: items,
+        };
+      }
+
+      state.allServices = state.allServicesCache;
+      let service = state.allServices.filter(
+        (service) => service.typeService === action.payload
+      );
+      if (state.selectedLocation) {
+        service.filter((service) => service.location.ciudad === action.payload);
+      }
+      return {
+        ...state,
+        selectedItem: action.payload,
+        allServices: service,
       };
 
     case CLEAR_FILTER:
       return {
         ...state,
+        allServices: state.allServicesCache,
+        orderBy: "rating",
+        orderType: "up",
+        selectedItem: null,
+        selectedLocation: null,
       };
 
     default:
       return {
         ...state,
-        //copyAllServices: allServices,
-        orderBy: "rating",
-        orderType: "up",
-        filterItem: "",
       };
   }
 };
