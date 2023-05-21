@@ -1,21 +1,28 @@
-.search{
+.search {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
-.inputGroupText{
+.inputGroupText {
     border-radius: 5.375rem;
 }
 
-.location{
+.location {
     background: transparent;
     border: none;
 }
 
-.linkLocation{
+.linkLocation {
     text-decoration: none;
 }
 
-.inputSearch{
-    width: 200px;
+.inputSearch {
+    width: 70%;
+    height: 50px;
+    border-radius: 20px;
+    border: none;
+}
+.inputSearch::placeholder {
+  border: none;
 }

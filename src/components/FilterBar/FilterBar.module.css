@@ -1,15 +1,41 @@
 .filterBarContainer {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px;
+  /* margin: 10px; */
+  background-color: #F1F4FB;
 }
 .carouselContainer {
+  width: 85%;
   width: 90%;
   position: relative;
   overflow: hidden;
   margin: 10px;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  z-index: 2;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.carouselButton:first-child {
+  left: 300px;
+}
+
+.carouselButton:last-child {
+  right: 300px;
 }
 
 .itemContainer {
@@ -57,6 +83,7 @@
 }
 
 .filterButtonsContainer {
+  width: 15%;
   width: 10%;
   display: flex;
   align-items: center;

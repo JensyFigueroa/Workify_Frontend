@@ -1,22 +1,22 @@
 import React from "react";
-import style from "../footer/Footer.module.css";
+import "./Footer.css";
 
 const Footer = () => {
 return (
-    <footer>
-  <div className={style.container}>
-    <div className={style.footerLinks}>
+    <footer className="container-principal">
+  <div class="container">
+    <div class="footer-links">
       <a href="#">Inicio</a>
       <a href="#">Servicios</a>
       <a href="#">Productos</a>
       <a href="#">Contacto</a>
     </div>
-    <div className={style.footerContact}>
+    <div class="footer-contact">
       <p>Teléfono: (123) 456-7890</p>
       <p>Email: info@tuecommerce.com</p>
     </div>
   </div>
-  <div class={style.footerBottom}>
+  <div class="footer-bottom">
     <p>&copy; 2023 Workify. Todos los derechos reservados.</p>
   </div>
 </footer>
