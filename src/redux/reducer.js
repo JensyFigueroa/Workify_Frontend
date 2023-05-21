@@ -3,24 +3,48 @@ import {
   GET_SERVICESBYNAME,
   GET_SERVICESDETAIL,
   ORDER_RESULT,
-  FILTER_ITEM,
+  SELECT_LOCATION,
+  SELECT_ITEM,
   CLEAR_FILTER,
 } from "./types";
 
 const initialState = {
   allServices: [],
+  allServicesCache: [],
+  allItems: [],
+  allCountries: [],
+  allCities: [],
   serviceDetail: {},
-  orderBy: "rating",
+  selectedItem: null,
+  selectedLocation: null,
+  orderBy: "name",
   orderType: "up",
-  filterItem: "",
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SERVICES:
+      let services = action.payload;
+
+      const items = Array.from(
+        new Set(services.map((service) => service.typeService))
+      );
+
+      const countries = Array.from(
+        new Set(services.map((service) => service.location.pais))
+      );
+
+      const cities = Array.from(
+        new Set(services.map((service) => service.location.ciudad))
+      );
+      console.log(services);
       return {
         ...state,
-        allServices: action.payload,
+        allServices: services,
+        allServicesCache: services,
+        allItems: items,
+        allCountries: countries,
+        allCities: cities,
       };
     case GET_SERVICESBYNAME:
       return {
@@ -35,11 +59,11 @@ const rootReducer = (state = initialState, action) => {
 
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
-      const sortedResults = [...state.results].sort((a, b) => {
+      const sortedResults = [...state.allServices].sort((a, b) => {
         //ascendentemente o descendentemente?
         const order = orderType === "up" ? 1 : -1;
 
-        if (orderBy === "name") {
+        if (orderBy === "nameService") {
           if (a[orderBy] > b[orderBy]) {
             //ascendente
             return order;
@@ -49,7 +73,7 @@ const rootReducer = (state = initialState, action) => {
             return -order;
           }
           return 0;
-        } else if (orderBy === "rating") {
+        } else if (orderBy === "typeService") {
           if (a[orderBy] > b[orderBy]) {
             return -order;
           }
@@ -62,43 +86,99 @@ const rootReducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        //falta aplicarselo a las cards e igualarlo a sortedResults
+        allServices: sortedResults,
         orderBy,
         orderType,
       };
 
-    case FILTER_ITEM:
-      let filterItem = [];
-      if (action.payload === "") {
+    case SELECT_LOCATION:
+      if (
+        action.payload === "ALL" &&
+        (!state.selectedItem || state.selectedItem === "ALL")
+      ) {
         return {
           ...state,
-          //copyAllServices: allServices,
+          selectedLocation: null,
+          allServices: state.allServicesCache,
         };
       }
-      const { selectedItem } = action.payload;
+      if (action.payload === "ALL" && state.selectedItem) {
+        let items = state.allServicesCache.filter(
+          (service) => service.typeService === state.selectedItem
+        );
+        return {
+          ...state,
+          selectedLocation: null,
+          allServices: items,
+        };
+      }
 
-      filterItem = state.allServices.filter(
-        (service) => service.name === selectedItem
+      let location = state.allServicesCache.filter(
+        (service) => service.location.ciudad === action.payload
       );
-
+      if (state.selectedItem && state.selectedItem !== "ALL")
+        location = location.filter(
+          (service) => service.typeService === state.selectedItem
+        );
+      console.log(location, "location en locationCase");
       return {
         ...state,
-        filterItem: selectedItem,
-        //copyAllServices: filterItem,
+        selectedLocation: action.payload,
+        allServices: location,
+      };
+
+    case SELECT_ITEM:
+      if (
+        action.payload === "ALL" &&
+        (!state.selectedLocation || state.selectedLocation === "ALL")
+      ) {
+        return {
+          ...state,
+          selectedItem: null,
+          allServices: state.allServicesCache,
+        };
+      }
+      if (action.payload === "ALL" && state.selectedLocation) {
+        let items = state.allServicesCache.filter(
+          (service) => service.location.ciudad === state.selectedLocation
+        );
+        console.log(items, "items en ItemCase");
+        return {
+          ...state,
+          selectedItem: null,
+          allServices: items,
+        };
+      }
+
+      let service = state.allServicesCache.filter(
+        (service) => service.typeService === action.payload
+      );
+
+      if (state.selectedLocation && state.selectedLocation !== "ALL") {
+        service = service.filter(
+          (service) => service.location.ciudad === state.selectedLocation
+        );
+        console.log(service, "service en itemCase");
+      }
+      return {
+        ...state,
+        selectedItem: action.payload,
+        allServices: service,
       };
 
     case CLEAR_FILTER:
       return {
         ...state,
+        allServices: state.allServicesCache,
+        orderBy: "nameService",
+        orderType: "up",
+        selectedItem: null,
+        selectedLocation: null,
       };
 
     default:
       return {
         ...state,
-        //copyAllServices: allServices,
-        orderBy: "rating",
-        orderType: "up",
-        filterItem: "",
       };
   }
 };

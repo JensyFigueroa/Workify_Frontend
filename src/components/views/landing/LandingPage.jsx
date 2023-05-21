@@ -19,8 +19,8 @@ const LandingPage = () => {
                     <Link to='#' id="menu" className={styles.menu} onClick={handleClick}>Menu</Link>
                     <div className={`${styles.links} ${clickMenu ? styles.open : styles.close }  ${styles.close}`} id='links'  >
                         <Link to='/home' className={`${styles.link} ${styles.top}`}>Home</Link>
-                        <Link to='/about' className={styles.link}>about</Link>
-                        <Link to='/contacto' className={styles.link}>contacto </Link>
+                        <Link to='/about' className={styles.link}>About</Link>
+                        <Link to='/contacto' className={styles.link}>Contacto </Link>
                     </div>
                 </nav>
 
