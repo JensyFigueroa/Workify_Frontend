@@ -231,7 +231,7 @@ export function CreateService() {
               className="input-group-text"
               id="inputGroup-sizing-default"
             >
-              Type of service
+              Title:
             </span>
             <input
               name="typeService"

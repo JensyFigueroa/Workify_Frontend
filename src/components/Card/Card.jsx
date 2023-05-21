@@ -7,7 +7,7 @@ export function Card({ id, nameService, image, typeService }) {
         <img className={styles.img} src={image} alt="img" />
         <div className={styles.info}>
           <p>{nameService}</p>
-          <p>{typeService}</p>
+          <p>Category: {typeService}</p>
         </div>
         <button className={styles.btn}>More info...</button>
       </Link>

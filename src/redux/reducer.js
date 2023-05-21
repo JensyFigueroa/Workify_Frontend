@@ -37,7 +37,7 @@ const rootReducer = (state = initialState, action) => {
       const cities = Array.from(
         new Set(services.map((service) => service.location.ciudad))
       );
-      console.log(services);
+      // console.log(services);
       return {
         ...state,
         allServices: services,
