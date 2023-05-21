@@ -26,6 +26,7 @@ export const getServices = () => {
 };
 
 export const getServicesByName = (name) => {
+  console.log(name,'Actions')
   return async (dispatch) => {
     try {
       const response = await axios(
@@ -70,7 +71,6 @@ export const orderResult = (orderBy, orderType) => {
 };
 
 export const selectItem = (items) => {
-  console.log(items, "actions");
   return {
     type: SELECT_ITEM,
     payload: items,
