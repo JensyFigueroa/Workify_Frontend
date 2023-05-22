@@ -6,6 +6,7 @@ import {
   SELECT_ITEM,
   SELECT_LOCATION,
   CLEAR_FILTER,
+  CLEAN_DETAIL,
 } from "./types";
 import axios from "axios";
 
@@ -26,7 +27,7 @@ export const getServices = () => {
 };
 
 export const getServicesByName = (name) => {
-  console.log(name,'Actions')
+  console.log(name, "Actions");
   return async (dispatch) => {
     try {
       const response = await axios(
@@ -87,5 +88,11 @@ export const selectLocation = (location) => {
 export const clearFilter = () => {
   return {
     type: CLEAR_FILTER,
+  };
+};
+
+export const cleanDetail = () => {
+  return {
+    type: CLEAN_DETAIL,
   };
 };

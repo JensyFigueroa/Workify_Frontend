@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { clearFilter, getServiceDetail } from "../../../redux/actions";
+import { getServiceDetail, cleanDetail } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import style from "./Detail.module.css";
@@ -13,7 +13,9 @@ export function Detail() {
 
   useEffect(() => {
     dispatch(getServiceDetail(id));
-    console.log("UseEffect");
+    return () => {
+      dispatch(cleanDetail());
+    };
   }, [dispatch, id]);
 
   const serviceDetail = useSelector((state) => state.serviceDetail);

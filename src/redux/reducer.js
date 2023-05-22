@@ -6,6 +6,7 @@ import {
   SELECT_LOCATION,
   SELECT_ITEM,
   CLEAR_FILTER,
+  CLEAN_DETAIL,
 } from "./types";
 
 const initialState = {
@@ -173,6 +174,12 @@ const rootReducer = (state = initialState, action) => {
         orderType: "up",
         selectedItem: null,
         selectedLocation: null,
+      };
+
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        serviceDetail: {},
       };
 
     default:
