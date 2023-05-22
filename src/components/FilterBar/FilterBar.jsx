@@ -1,5 +1,6 @@
 import styles from "./FilterBar.module.css";
 import { MdOutlineClose } from "react-icons/md";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -20,9 +21,9 @@ const FilterBar = () => {
   const allItems = useSelector((state) => state.allItems);
 
   const carouselRef = useRef(null);
+  const popupRef = useRef(null);
 
   useEffect(() => {
-    console.log(items);
     dispatch(selectItem(items));
   }, [items, dispatch]);
 
@@ -36,8 +37,13 @@ const FilterBar = () => {
 
   const handleItemChange = (e) => {
     const { value } = e.target;
-    console.log(value, "handler");
     setItems(value);
+    const buttons = document.getElementsByClassName(styles.buttonItem);
+
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove(styles.selected);
+    }
+    e.target.classList.add(styles.selected);
   };
 
   const handleToggleFilters = () => {
@@ -81,12 +87,16 @@ const FilterBar = () => {
     setLocation(value);
   };
 
+  const handlePopupClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <div className={styles.filterBarContainer}>
       <div className={styles.carouselContainer}>
-        {/* <button className={styles.carouselButton} onClick={handleCarouselLeft}>
+        <button className={styles.buttonItem} onClick={handleCarouselLeft}>
           <FaChevronLeft />
-        </button> */}
+        </button>
         <div className={styles.itemContainer} ref={carouselRef}>
           <button
             className={styles.buttonItem}
@@ -94,7 +104,7 @@ const FilterBar = () => {
             value="ALL"
             onClick={handleItemChange}
           >
-            ALL
+            All
           </button>
           {allItems?.map((item, index) => (
             <button
@@ -107,15 +117,11 @@ const FilterBar = () => {
             </button>
           ))}
         </div>
-        {/* <button className={styles.carouselButton} onClick={handleCarouselRight}>
+        <button className={styles.buttonItem} onClick={handleCarouselRight}>
           <FaChevronRight />
-        </button> */}
+        </button>
       </div>
       <div className={styles.filterButtonsContainer}>
-        <button className={styles.filterButton} onClick={handleToggleFilters}>
-          Order
-        </button>
-
         <select
           id="location"
           value={location}
@@ -132,10 +138,19 @@ const FilterBar = () => {
             </option>
           ))}
         </select>
+        <button className={styles.filterButton} onClick={handleToggleFilters}>
+          Order
+        </button>
+        <button className={styles.filterButton} onClick={handleClearfilter}>
+          Clean
+        </button>
       </div>
       {isFiltersOpen && (
-        <div className={styles.filterPopup}>
-          <div className={styles.filterContent}>
+        <div className={styles.filterPopup} onClick={handleCloseFilters}>
+          <div className={styles.filterContent} onClick={handlePopupClick}>
+            <button className={styles.closeButton} onClick={handleCloseFilters}>
+              <MdOutlineClose />
+            </button>
             <div className={styles.selectContainer}>
               <label className={styles.selectLabel} htmlFor="orderBy">
                 Order by:
@@ -163,12 +178,6 @@ const FilterBar = () => {
                 <option value="up">Up</option>
                 <option value="down">Down</option>
               </select>
-              <button
-                className={styles.closeButton}
-                onClick={handleCloseFilters}
-              >
-                <MdOutlineClose />
-              </button>
             </div>
           </div>
         </div>

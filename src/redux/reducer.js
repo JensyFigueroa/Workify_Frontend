@@ -6,6 +6,7 @@ import {
   SELECT_LOCATION,
   SELECT_ITEM,
   CLEAR_FILTER,
+  CLEAN_DETAIL,
 } from "./types";
 
 const initialState = {
@@ -37,7 +38,7 @@ const rootReducer = (state = initialState, action) => {
       const cities = Array.from(
         new Set(services.map((service) => service.location.ciudad))
       );
-      // console.log(services);
+
       return {
         ...state,
         allServices: services,
@@ -120,7 +121,7 @@ const rootReducer = (state = initialState, action) => {
         location = location.filter(
           (service) => service.typeService === state.selectedItem
         );
-      console.log(location, "location en locationCase");
+
       return {
         ...state,
         selectedLocation: action.payload,
@@ -142,7 +143,7 @@ const rootReducer = (state = initialState, action) => {
         let items = state.allServicesCache.filter(
           (service) => service.location.ciudad === state.selectedLocation
         );
-        console.log(items, "items en ItemCase");
+
         return {
           ...state,
           selectedItem: null,
@@ -158,7 +159,6 @@ const rootReducer = (state = initialState, action) => {
         service = service.filter(
           (service) => service.location.ciudad === state.selectedLocation
         );
-        console.log(service, "service en itemCase");
       }
       return {
         ...state,
@@ -174,6 +174,12 @@ const rootReducer = (state = initialState, action) => {
         orderType: "up",
         selectedItem: null,
         selectedLocation: null,
+      };
+
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        serviceDetail: {},
       };
 
     default:
