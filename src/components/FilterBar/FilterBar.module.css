@@ -1,15 +1,17 @@
 .filterBarContainer {
   width: 100%;
+  height: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* margin: 10px; */
-  background-color: #f1f4fb;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.4);
 }
+
 .carouselContainer {
   display: flex;
-  width: 90%;
+  width: 80%;
+  justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -57,12 +59,14 @@
   padding: 0;
   cursor: pointer;
   outline: none;
-  margin-right: 8px;
-  margin-top: 10px;
+  margin-right: 20px;
   border-bottom: 2px solid transparent;
+  color: #0D5890;
 }
+
 .buttonItem.selected {
-  border-bottom-color: #000;
+  border-bottom-color: #1CB5E0;
+  color: #0D6EFD;
 }
 
 .buttonItem:hover {
@@ -89,16 +93,16 @@
 }
 
 .icon {
-  width: 25px;
+  width: 20px;
   height: 25px;
   margin-bottom: 4px;
 }
 
 .filterButtonsContainer {
-  width: 10%;
+  width: 30%;
   display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
+
+  justify-content: center;
 }
 
 .filterPopup {
@@ -112,6 +116,7 @@
   justify-content: center;
   z-index: 999;
 }
+
 .filterContent {
   position: relative;
   max-width: 400px;
@@ -128,7 +133,6 @@
 .selectContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .selectLabel {
@@ -137,10 +141,13 @@
 }
 
 .select {
+  height: 40px;
   padding: 5px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .filterButton {
