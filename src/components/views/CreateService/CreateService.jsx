@@ -109,8 +109,8 @@ export function CreateService() {
             </label>
             <select
               className="form-select"
-              name="nameService"
-              value={inputs.nameService}
+              name="typeService"
+              value={inputs.typeService}
               onChange={handleInputChange}
               id="validationDefault04"
               required
@@ -231,11 +231,11 @@ export function CreateService() {
               className="input-group-text"
               id="inputGroup-sizing-default"
             >
-              Title:
+              Name of Service:
             </span>
             <input
-              name="typeService"
-              value={inputs.typeService}
+              name="nameService"
+              value={inputs.nameService}
               onChange={handleInputChange}
               id="validationDefault01"
               type="text"
