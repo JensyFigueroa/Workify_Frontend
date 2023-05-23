@@ -1,8 +1,9 @@
-import style from "../Cards/Cards.module.css";
+import styles from "./Cards.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
 import { useEffect } from "react";
+import faceThink from './face-think.png'
 
 export function Cards() {
   const dispatch = useDispatch();
@@ -12,9 +13,11 @@ export function Cards() {
     dispatch(getServices());
   }, [dispatch]);
 
+  console.log(allServices)
+
   return (
-    <div className={style.container}>
-      {allServices &&
+    <div className={styles.container}>
+      {allServices.length > 0 ? 
         allServices.map((serv, index) => {
           return (
             <Card
@@ -25,7 +28,10 @@ export function Cards() {
               typeService={serv.typeService}
             />
           );
-        })}
+        }): <div className={styles.msgBox}>
+              <p className={styles.msg}>No services found with that name</p>
+              <img src={faceThink} alt="" />
+            </div> }
     </div>
   );
 }

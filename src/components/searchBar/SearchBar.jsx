@@ -27,7 +27,6 @@ const SearchBar = () => {
         </div>
       </form>
 
-
     </>
   )
 }
