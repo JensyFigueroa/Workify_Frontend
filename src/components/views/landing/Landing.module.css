@@ -1,5 +1,5 @@
 .fondo{
-    background-image: url(img/img-4.jpg);
+    background-image: url(img/img.jpeg);
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -27,7 +27,7 @@
     font-size: 1.3rem;
 }
 
-.container-descripcion{
+.containerDescripcion{
   background-color: rgba(255, 255, 255, 0.13);
   padding: 20px 40px;
 }
@@ -44,13 +44,17 @@
   background-color: rgba(230, 230, 230, 0.221);
   transition: #171616 0.3s;
   transition-duration: 2s; 
+  margin-top: 6rem;
  
 }
-#contenedor-principal{
+.contenedorPrincipal{
   margin-top: 20vh;
   text-decoration: none;
+
+ 
 }
 .welcome{
+  text-align: center;
   font-size: 2.5rem;
   text-decoration: none;
   color: white;

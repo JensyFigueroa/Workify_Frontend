@@ -1,16 +1,16 @@
-import style from "../Card/Card.module.css";
+import styles from "../Card/Card.module.css";
 import { Link } from "react-router-dom";
-export function Card({id, nameService, image, typeService}){
-
-    return (
-    <div className = {style.container}>
-        <div className={style.card}>
-    <Link className={style.card} to={`/detail/${id}`}>
-        <img src={image} alt="img"/>
-    </Link>
-        <p>Service: {nameService}</p>
-        <p>Type: {typeService}</p>
+export function Card({ id, nameService, image, typeService }) {
+  return (
+    <div className={styles.container}>
+      <Link className={styles.card} to={`/detail/${id}`}>
+        <img className={styles.img} src={image} alt="img" />
+        <div className={styles.info}>
+          <p>{nameService}</p>
+          <p>Category: {typeService}</p>
         </div>
+        <button className={styles.btn}>More info...</button>
+      </Link>
     </div>
-    );
+  );
 }
