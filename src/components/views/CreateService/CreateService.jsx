@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 export function CreateService() {
   const navigate = useNavigate();
   const [notification, setNotification] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
   const [inputs, setInputs] = useState({
     nameService: "",
     location: {
@@ -43,14 +44,33 @@ export function CreateService() {
     typeService: "",
   });
 
-  const handleInputChange = (event) => {
+  const handleInputChange = async (event) => {
     const { name, value } = event.target;
     if (name === "imageUrl") {
-      const imageUrlArray = value.split(",");
-      setInputs({
-        ...inputs,
-        [name]: imageUrlArray,
-      });
+      const file = event.target.files[0];
+      const files = Array.from(event.target.files);
+      const imagesSelected = files.map((file) => URL.createObjectURL(file));
+      setSelectedImages(imagesSelected);
+      
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'services_wfy');
+        formData.append('api_key', '168773883428854');
+  
+        // Realiza una solicitud a Cloudinary para cargar la imagen
+        try {
+          const response = await axios.post('https://api.cloudinary.com/v1_1/Joaquin/image/upload', formData);
+          const imageUrl = response.data.secure_url;
+          setInputs({
+            ...inputs,
+            imageUrl: [imageUrl],
+          });
+        } catch (error) {
+          console.error('Error uploading image:', error);
+        }
+      }
+
     } else {
       setInputs({
         ...inputs,
@@ -93,11 +113,12 @@ export function CreateService() {
       toast.error(error.message);
     }
   };
-  console.log(notification);
+
+  
   return (
     <div className={style.container}>
       <div className={style.form}>
-        <h1>Crear Servicio</h1>
+        <h1>Create Service</h1>
         <form
           className="row g-3 needs-validation"
           onSubmit={handleSubmit}
@@ -115,7 +136,7 @@ export function CreateService() {
               id="validationDefault04"
               required
             >
-              <option disabled value="">
+              <option disabled value="" >
                 Select a category
               </option>
               {services.map((serv, index) => (
@@ -169,25 +190,25 @@ export function CreateService() {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="basic-url" className="form-label">
-              Your image URL
-            </label>
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon3">
-                https://...
-              </span>
-              <input
-                name="imageUrl"
-                value={inputs.imageUrl.join(",")}
-                onChange={handleInputChange}
-                className="form-control"
-                type="text"
-                id="basic-url"
-                aria-describedby="basic-addon3 basic-addon4"
-                required
-              />
-            </div>
+             <label htmlFor="formFileMultiple" className="form-label">Your image or images</label>
+             <input 
+             name="imageUrl" 
+             onChange={handleInputChange} 
+             className="form-control" 
+             type="file" 
+             id="formFileMultiple" 
+             multiple 
+             required/>
           </div>
+          {selectedImages.length > 0 && (
+            <div>
+
+            <p>Preview:</p>
+            {selectedImages.map((imageUrl, index) => (
+            <img className = {style.preview} key={index} src={imageUrl} alt="preview" />
+                 ))}
+          </div>
+      )} 
 
           <div className="form-floating">
             <textarea
