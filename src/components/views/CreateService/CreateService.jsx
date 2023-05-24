@@ -6,7 +6,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
+
+
 export function CreateService() {
+
+  
+  
   const navigate = useNavigate();
   const [notification, setNotification] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
@@ -188,7 +193,7 @@ export function CreateService() {
               required
             />
           </div>
-
+        
           <div className="mb-3">
              <label htmlFor="formFileMultiple" className="form-label">Your image or images</label>
              <input 
@@ -200,6 +205,7 @@ export function CreateService() {
              multiple 
              required/>
           </div>
+       
           {selectedImages.length > 0 && (
             <div>
 
