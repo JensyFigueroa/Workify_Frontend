@@ -27,14 +27,12 @@ export const getServices = () => {
 };
 
 export const getServicesByName = (name) => {
-  console.log(name, "Actions");
   return async (dispatch) => {
     try {
       const response = await axios(
         `http://localhost:3001/service/name?name=${name}`
       );
       const data = response.data;
-      console.log(data);
       return dispatch({
         type: GET_SERVICESBYNAME,
         payload: data,

@@ -20,7 +20,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <form onClick={handleSearch } className={styles.search}>
+      <form onSubmit={handleSearch } className={styles.search}>
         <div className="input-group">
           <input type="text" className={`${styles.inputSearch} form-control`} placeholder="Search service" aria-label="Server" onChange={handleChange} />
           <span className={`${styles.inputGroupText} input-group-text`}><button className={styles.location} type='submit'><i className="fa-solid fa-magnifying-glass"></i></button></span>

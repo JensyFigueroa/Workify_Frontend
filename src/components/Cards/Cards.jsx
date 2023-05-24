@@ -13,8 +13,6 @@ export function Cards() {
     dispatch(getServices());
   }, [dispatch]);
 
-  console.log(allServices)
-
   return (
     <div className={styles.container}>
       {allServices.length > 0 ? 
