@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.18.1",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.53.0",
     "animate.css": "^4.1.1",
     "axios": "^1.4.0",
     "cloudinary-react": "^1.8.1",
