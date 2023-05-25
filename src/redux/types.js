@@ -6,3 +6,5 @@ export const SELECT_ITEM = "SELECT_ITEM";
 export const SELECT_LOCATION = "SELECT_LOCATION";
 export const CLEAR_FILTER = "CLEAR_FILTER";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const ADD_SERVICE_IN_CART = "ADD_SERVICE_IN_CART";
+export const GET_CART = "GET_CART";

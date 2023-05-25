@@ -7,6 +7,8 @@ import {
   SELECT_ITEM,
   CLEAR_FILTER,
   CLEAN_DETAIL,
+  ADD_SERVICE_IN_CART,
+  GET_CART,
 } from "./types";
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   selectedLocation: null,
   orderBy: "name",
   orderType: "up",
+  cart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -180,6 +183,17 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         serviceDetail: {},
+      };
+
+    case ADD_SERVICE_IN_CART:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+      };
+    case GET_CART:
+      return {
+        ...state,
+        cart: [...state.cart],
       };
 
     default:

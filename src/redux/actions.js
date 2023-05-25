@@ -7,6 +7,8 @@ import {
   SELECT_LOCATION,
   CLEAR_FILTER,
   CLEAN_DETAIL,
+  ADD_SERVICE_IN_CART,
+  GET_CART,
 } from "./types";
 import axios from "axios";
 
@@ -92,5 +94,17 @@ export const clearFilter = () => {
 export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
+  };
+};
+
+export const addServiceInCart = (id) => {
+  return {
+    type: ADD_SERVICE_IN_CART,
+    payload: id,
+  };
+};
+export const getCart = () => {
+  return {
+    type: GET_CART,
   };
 };
