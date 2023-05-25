@@ -19,7 +19,7 @@ const Cart = () => {
           cart.map((elem, i) => (
             <div className={style.containerCart} key={elem.id}>
               <h1>{elem.nameService}</h1>
-              <h3>Price Per Hour:{elem.pricePerHour}</h3>
+              <h3>Price Per Hour:$ {elem.pricePerHour}</h3>
             </div>
           ))}
       </div>

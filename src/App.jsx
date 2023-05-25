@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./components/views/landing/LandingPage";
 import Footer from "./components/views/footer/Footer";
 import Cart from "./components/Cart/Cart";
-
+//
 function App() {
   return (
     <>
