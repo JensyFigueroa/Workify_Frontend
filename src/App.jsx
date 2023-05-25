@@ -6,11 +6,12 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./components/views/landing/LandingPage";
 import Footer from "./components/views/footer/Footer";
 import Error404 from "./components/views/Error404/Error404";
+import Cart from "./components/Cart/Cart";
 
+//
 function App() {
   return (
     <>
-    
       <Navbar />
       <Routes>
         <Route path={"/"} element={<LandingPage />} />
@@ -18,6 +19,7 @@ function App() {
         <Route path="/detail/:id" element={<Detail />}></Route>
         <Route path="/createService" element={<CreateService />}></Route>
         <Route path={"*"} element={<Error404 />} />
+        <Route path={"/cart"} element={<Cart />} />
       </Routes>
       <Footer />
     </>
