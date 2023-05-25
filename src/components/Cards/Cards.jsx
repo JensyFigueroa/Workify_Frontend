@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
 import { useEffect } from "react";
-import faceThink from './face-think.png'
+import faceThink from "./face-think.png";
+import { addServiceInCart } from "../../redux/actions";
 
 export function Cards() {
   const dispatch = useDispatch();
@@ -13,11 +14,15 @@ export function Cards() {
     dispatch(getServices());
   }, [dispatch]);
 
-  console.log(allServices)
+  const handleSelect = (id, nameService, pricePerHour) => {
+    dispatch(addServiceInCart({ id, nameService, pricePerHour }));
+  };
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
 
   return (
     <div className={styles.container}>
-      {allServices.length > 0 ? 
+      {allServices.length > 0 ? (
         allServices.map((serv, index) => {
           return (
             <Card
@@ -26,12 +31,17 @@ export function Cards() {
               image={serv.imageUrl}
               nameService={serv.nameService}
               typeService={serv.typeService}
+              pricePerHour={serv.pricePerHour}
+              handleSelect={handleSelect}
             />
           );
-        }): <div className={styles.msgBox}>
-              <p className={styles.msg}>No services found with that name</p>
-              <img src={faceThink} alt="" />
-            </div> }
+        })
+      ) : (
+        <div className={styles.msgBox}>
+          <p className={styles.msg}>No services found with that name</p>
+          <img src={faceThink} alt="" />
+        </div>
+      )}
     </div>
   );
 }

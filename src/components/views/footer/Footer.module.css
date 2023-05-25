@@ -1,35 +1,47 @@
+
 footer {
-    background-color: var(--blue);
+
+    background: -webkit-linear-gradient(to right, #1CB5E0, #000046);
+    background: linear-gradient(to right, #1CB5E0, #000046);
     padding: 20px;
+    position:static;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
   }
   
   .container {
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
+    
   }
   
   .footerLinks a {
-    margin-right: 10px;
-    color: #777;
+    margin-right: 20px;
+    color: #ffffff;
     text-decoration: none;
 
   }
   
   .footerContact {
     margin-top: 20px;
-    color: #777;
+    color: #ffffff;
   }
   
   .footerBottom {
     margin-top: 20px;
-    color: #777;
+    color: #d7d7d7;
     font-size: 12px;
     text-align: center;
     
   }
-  .footerLinks a:hover {
-    color: #fe2054; /* Cambiamos el color al pasar el mouse */
-  }
 
-  
+
+
+/* .contenedor{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+} */

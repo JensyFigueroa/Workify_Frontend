@@ -7,6 +7,8 @@ import {
   SELECT_LOCATION,
   CLEAR_FILTER,
   CLEAN_DETAIL,
+  ADD_SERVICE_IN_CART,
+  GET_CART,
 } from "./types";
 import axios from "axios";
 
@@ -27,14 +29,12 @@ export const getServices = () => {
 };
 
 export const getServicesByName = (name) => {
-  console.log(name, "Actions");
   return async (dispatch) => {
     try {
       const response = await axios(
         `http://localhost:3001/service/name?name=${name}`
       );
       const data = response.data;
-      console.log(data);
       return dispatch({
         type: GET_SERVICESBYNAME,
         payload: data,
@@ -94,5 +94,17 @@ export const clearFilter = () => {
 export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
+  };
+};
+
+export const addServiceInCart = (id) => {
+  return {
+    type: ADD_SERVICE_IN_CART,
+    payload: id,
+  };
+};
+export const getCart = () => {
+  return {
+    type: GET_CART,
   };
 };
