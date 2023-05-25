@@ -9,16 +9,19 @@ import { addServiceInCart } from "../../redux/actions";
 export function Cards() {
   const dispatch = useDispatch();
   const allServices = useSelector((state) => state.allServices);
+  const filterLocation = useSelector((state) => state.selectedLocation);
+  const filterItem = useSelector((state) => state.selectedItem);
 
   useEffect(() => {
-    dispatch(getServices());
-  }, [dispatch]);
+    if (filterLocation === null && filterItem === null) {
+      dispatch(getServices());
+    }
+  }, []);
 
   const handleSelect = (id, nameService, pricePerHour) => {
     dispatch(addServiceInCart({ id, nameService, pricePerHour }));
   };
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
 
   return (
     <div className={styles.container}>

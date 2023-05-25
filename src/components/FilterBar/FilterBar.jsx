@@ -1,7 +1,6 @@
-import styles from "./FilterBar.module.css";
+import React, { useEffect, useState, useRef } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearFilter,
@@ -9,41 +8,74 @@ import {
   selectLocation,
   orderResult,
 } from "../../redux/actions";
+import styles from "./FilterBar.module.css";
 
 const FilterBar = () => {
   const dispatch = useDispatch();
-  const [items, setItems] = useState("ALL");
-  const [location, setLocation] = useState("ALL");
+
+  const [items, setItems] = useState(null);
+  const [location, setLocation] = useState(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [orderBy, setOrderBy] = useState("nameService");
   const [orderType, setOrderType] = useState("up");
+  const [isFiltersCleared, setIsFiltersCleared] = useState(false);
+  const [carouselPosition, setCarouselPosition] = useState(0);
+  const [buttonWidth, setButtonWidth] = useState(100);
+  const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(false);
+  const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
+
+  const itemContainerRef = useRef(null);
+
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
 
-  const carouselRef = useRef(null);
-  const popupRef = useRef(null);
-
   useEffect(() => {
-    dispatch(selectItem(items));
-  }, [items, dispatch]);
+    const updateButtonWidth = () => {
+      if (itemContainerRef.current) {
+        const containerWidth = itemContainerRef.current.offsetWidth;
+        const buttonCount = Math.floor(containerWidth / 100);
 
-  useEffect(() => {
-    dispatch(selectLocation(location));
-  }, [location, dispatch]);
+        if (buttonCount === 0) {
+          setButtonWidth(100);
+        } else {
+          setButtonWidth(containerWidth / buttonCount);
+        }
+      }
+    };
 
-  useEffect(() => {
-    dispatch(orderResult(orderBy, orderType));
-  }, [orderBy, orderType, dispatch]);
+    window.addEventListener("resize", updateButtonWidth);
+    updateButtonWidth();
+
+    return () => {
+      window.removeEventListener("resize", updateButtonWidth);
+    };
+  }, []);
+
+  const visibleItems = allItems
+    .sort()
+    .slice(carouselPosition, carouselPosition + 4);
 
   const handleItemChange = (e) => {
     const { value } = e.target;
     setItems(value);
-    const buttons = document.getElementsByClassName(styles.buttonItem);
+    dispatch(selectItem(value));
+  };
 
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].classList.remove(styles.selected);
+  const handleCarouselLeft = () => {
+    setCarouselPosition(carouselPosition - 1);
+    setIsRightArrowVisible(true);
+    if (carouselPosition - 1 === 0) {
+      setIsLeftArrowVisible(false);
     }
-    e.target.classList.add(styles.selected);
+  };
+
+  const handleCarouselRight = () => {
+    setCarouselPosition(carouselPosition + 1);
+    setIsLeftArrowVisible(true);
+
+    if (carouselPosition + 1 === allItems.length - 4) {
+      setIsRightArrowVisible(false);
+    }
   };
 
   const handleToggleFilters = () => {
@@ -54,37 +86,29 @@ const FilterBar = () => {
     setIsFiltersOpen(false);
   };
 
-  const handleCarouselLeft = () => {
-    carouselRef.current.scrollBy({
-      left: -carouselRef.current.offsetWidth,
-      behavior: "smooth",
-    });
-  };
-
-  const handleCarouselRight = () => {
-    carouselRef.current.scrollBy({
-      left: carouselRef.current.offsetWidth,
-      behavior: "smooth",
-    });
-  };
-
   const handleOrderByName = (e) => {
     const { value } = e.target;
     setOrderBy(value);
+    dispatch(orderResult(value, orderType));
   };
 
   const handleOrderType = (e) => {
     const { value } = e.target;
     setOrderType(value);
+    dispatch(orderResult(orderBy, value));
   };
 
   const handleClearfilter = () => {
     dispatch(clearFilter());
+    setLocation("ALL");
+    setItems("ALL");
+    setIsFiltersCleared(!isFiltersCleared);
   };
 
   const handleLocation = (e) => {
     const { value } = e.target;
     setLocation(value);
+    dispatch(selectLocation(value));
   };
 
   const handlePopupClick = (e) => {
@@ -94,21 +118,27 @@ const FilterBar = () => {
   return (
     <div className={styles.filterBarContainer}>
       <div className={styles.carouselContainer}>
-        <button className={styles.buttonItem} onClick={handleCarouselLeft}>
-          <FaChevronLeft />
+        <div className={styles.buttonArrowContainer}>
+          {isLeftArrowVisible && (
+            <button className={styles.buttonArrow} onClick={handleCarouselLeft}>
+              <FaChevronLeft />
+            </button>
+          )}
+        </div>
+        <button
+          className={styles.buttonItem}
+          key="ALL"
+          value="ALL"
+          onClick={handleItemChange}
+        >
+          All
         </button>
-        <div className={styles.itemContainer} ref={carouselRef}>
-          <button
-            className={styles.buttonItem}
-            key="ALL"
-            value="ALL"
-            onClick={handleItemChange}
-          >
-            All
-          </button>
-          {allItems?.map((item, index) => (
+        <div className={styles.itemContainer} ref={itemContainerRef}>
+          {visibleItems?.map((item, index) => (
             <button
-              className={styles.buttonItem}
+              className={`${styles.buttonItem} ${
+                item === items ? styles.selected : ""
+              }`}
               key={index}
               value={item}
               onClick={handleItemChange}
@@ -117,14 +147,21 @@ const FilterBar = () => {
             </button>
           ))}
         </div>
-        <button className={styles.buttonItem} onClick={handleCarouselRight}>
-          <FaChevronRight />
-        </button>
+        <div className={styles.buttonArrowContainer}>
+          {isRightArrowVisible && (
+            <button
+              className={styles.buttonArrow}
+              onClick={handleCarouselRight}
+            >
+              <FaChevronRight />
+            </button>
+          )}
+        </div>
       </div>
       <div className={styles.filterButtonsContainer}>
         <select
           id="location"
-          value={location}
+          value={isFiltersCleared ? "ALL" : location || ""}
           onChange={handleLocation}
           className={styles.select}
         >
@@ -151,33 +188,35 @@ const FilterBar = () => {
             <button className={styles.closeButton} onClick={handleCloseFilters}>
               <MdOutlineClose />
             </button>
-            <div className={styles.selectContainer}>
-              <label className={styles.selectLabel} htmlFor="orderBy">
-                Order by:
-              </label>
-              <select
-                id="orderBy"
-                value={orderBy}
-                onChange={handleOrderByName}
-                className={styles.select}
-              >
-                <option value="nameService">Name</option>
-                <option value="typeService">Type Service</option>
-              </select>
-            </div>
-            <div className={styles.selectContainer}>
-              <label className={styles.selectLabel} htmlFor="orderType">
-                Order direction:
-              </label>
-              <select
-                id="orderType"
-                value={orderType}
-                onChange={handleOrderType}
-                className={styles.select}
-              >
-                <option value="up">Up</option>
-                <option value="down">Down</option>
-              </select>
+            <div className={styles.orderContainer}>
+              <div className={styles.selectContainer}>
+                <label className={styles.selectLabel} htmlFor="orderBy">
+                  Order by:
+                </label>
+                <select
+                  id="orderBy"
+                  value={orderBy}
+                  onChange={handleOrderByName}
+                  className={styles.select}
+                >
+                  <option value="nameService">Name</option>
+                  <option value="typeService">Type Service</option>
+                </select>
+              </div>
+              <div className={styles.selectContainer}>
+                <label className={styles.selectLabel} htmlFor="orderType">
+                  Order direction:
+                </label>
+                <select
+                  id="orderType"
+                  value={orderType}
+                  onChange={handleOrderType}
+                  className={styles.select}
+                >
+                  <option value="up">Up</option>
+                  <option value="down">Down</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>

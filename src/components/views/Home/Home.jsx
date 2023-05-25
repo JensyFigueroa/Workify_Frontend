@@ -6,21 +6,21 @@ import { Loading } from "../../Loading/Loading";
 const Home = () => {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { 
+  useEffect(() => {
     setTimeout(() => setLoading(false), 3000);
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className={styles.container}>
-             {loading ? (
-                <Loading/>
+      {loading ? (
+        <Loading />
       ) : (
-    <div className={styles.container}>
-      <FilterBar />
-      <Cards />
-    </div>
-    )}
+        <div className={styles.container}>
+          <FilterBar />
+          <Cards />
+        </div>
+      )}
     </div>
   );
 };
