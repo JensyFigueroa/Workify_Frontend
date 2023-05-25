@@ -5,16 +5,19 @@ import Navbar from "./components/navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./components/views/landing/LandingPage";
 import Footer from "./components/views/footer/Footer";
+import Error404 from "./components/views/Error404/Error404"
 
 function App() {
   return (
     <>
+    
       <Navbar />
       <Routes>
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/home"} element={<Home />} />
         <Route path="/detail/:id" element={<Detail />}></Route>
         <Route path="/createService" element={<CreateService />}></Route>
+        <Route path={"*"} element={<Error404 />} />
       </Routes>
       <Footer />
 

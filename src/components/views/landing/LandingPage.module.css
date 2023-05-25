@@ -135,6 +135,29 @@
     background: -webkit-linear-gradient(to right, #1CB5E0, #000046);
     background: linear-gradient(to right, #1CB5E0, #000046);     
 }
+.carouselContainer {
+    position: absolute;
+    bottom: 0;
+    right: 12%;
+    width: 30%;
+    margin: 1rem;
+    background-color: #ffffffa2;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    color: rgb(10, 10, 9);
+    border: 1px solid rgba(0, 0, 0, 0.142);
+  }
+  
+  .comment {
+  font-size: 1.2rem;
+
+}
+  
+  .author {
+    font-size: 14px;
+    font-style: italic;
+  }
+  
 
 @keyframes moveLeft {
     0%{
