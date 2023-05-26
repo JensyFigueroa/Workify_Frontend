@@ -64,16 +64,13 @@ const rootReducer = (state = initialState, action) => {
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
       const sortedResults = [...state.allServices].sort((a, b) => {
-        //ascendentemente o descendentemente?
         const order = orderType === "up" ? 1 : -1;
 
         if (orderBy === "nameService") {
           if (a[orderBy] > b[orderBy]) {
-            //ascendente
             return order;
           }
           if (a[orderBy] < b[orderBy]) {
-            //descendente
             return -order;
           }
           return 0;
@@ -175,8 +172,8 @@ const rootReducer = (state = initialState, action) => {
         allServices: state.allServicesCache,
         orderBy: "nameService",
         orderType: "up",
-        selectedItem: null,
-        selectedLocation: null,
+        selectedItem: "ALL",
+        selectedLocation: "ALL",
       };
 
     case CLEAN_DETAIL:

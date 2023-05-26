@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../CreateService/CreateService.module.css";
 import validate from "./validate";
 import services from "./Services";
@@ -13,6 +13,9 @@ export function CreateService() {
   
   
   const navigate = useNavigate();
+  const [countries, setCountries] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cities, setCities] = useState([]);
   const [notification, setNotification] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
   const [inputs, setInputs] = useState({
@@ -23,7 +26,7 @@ export function CreateService() {
     },
     imageUrl: [],
     description: "",
-    pricePerHour: 0,
+    pricePerHour: "",
     typeService: "",
   });
   const [touch, setTouch] = useState({
@@ -45,10 +48,60 @@ export function CreateService() {
     },
     imageUrl: [],
     description: "",
-    pricePerHour: 0,
+    pricePerHour: "",
     typeService: "",
   });
 
+//<---SE MONTAN LOS PAISES-->
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get('http://api.geonames.org/countryInfoJSON', {
+          params: {
+            username: 'joaquinsgro',
+            type: 'json'
+          }
+        });
+        const countries = response.data.geonames.map(country => ({
+          name: country.countryName
+        }));
+        console.log(countries);
+        setCountries(countries);
+      } catch (error) {
+        console.error('Error al obtener la lista de países', error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
+  const searchCities = async (countryName) => {
+    try {
+      const response = await axios.get('http://api.geonames.org/searchJSON', {
+        params: {
+          q: countryName,
+          username: 'joaquinsgro',
+          type: 'json',
+        },
+      });
+  
+      const city = response.data.geonames.map(state => ({
+        name: state.name,
+      }));
+      console.log(city);
+      setCities(city);
+    } catch (error) {
+      console.error('Error al obtener la lista de estados', error);
+    }
+  };
+
+//<-- FUNCIÓN PARA ASIGNAR EL PAIS A LAS CIUDADES-->
+const handleCountryClick = (countryName) => {
+  searchCities(countryName);
+};
+
+//<--MANEJADOR DE INPUTS Y CLOUDINARY-->
   const handleInputChange = async (event) => {
     const { name, value } = event.target;
     if (name === "imageUrl") {
@@ -76,6 +129,10 @@ export function CreateService() {
         }
       }
 
+    } else if (name === 'pricePerHour' && parseFloat(value) < 0 ){
+        // No actualizar el estado si el valor es menor a 0
+        return;
+      
     } else {
       setInputs({
         ...inputs,
@@ -93,6 +150,8 @@ export function CreateService() {
       [name]: true,
     });
   };
+
+  //<--MANEJADOR DE INPUT LOCATION-->
   const handleInputLocation = (event) => {
     const { name, value } = event.target;
     setInputs((prevState) => ({
@@ -104,19 +163,23 @@ export function CreateService() {
     }));
   };
 
+  //<--FUNCIÓN SUBMIT-->
   const handleSubmit = async (event) => {
     event.preventDefault();
+   
     //<---RUTA DEL POST--->
     try {
       await axios
         .post("http://localhost:3001/service/", inputs)
         .then((response) => toast.success(response.data));
+        setIsSubmitting(true);
       setTimeout(() => {
         navigate("/home");
       }, 2000);
     } catch (error) {
       toast.error(error.message);
     }
+    
   };
 
   
@@ -163,17 +226,26 @@ export function CreateService() {
             >
               Country
             </span>
-            <input
-              name="pais"
-              value={inputs.location.pais}
-              onChange={handleInputLocation}
-              id="validationDefault01"
-              type="text"
-              className="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              required
-            />
+            <select
+            name="pais"
+            value={inputs.location.pais}
+            onChange={handleInputLocation}
+            id="validationDefault01"
+            type="select"
+            className="form-select"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+            onClick={() => {handleCountryClick(inputs.location.pais)}} 
+            required>
+              <option disabled value="" >
+              Your country
+              </option>
+               {countries.map((country, index) => (
+                <option key={index} value={country.name}>
+                      {country.name}
+                </option>
+              ))}
+            </select>
             <span
               htmlFor="validationDefault01"
               className="input-group-text"
@@ -181,17 +253,24 @@ export function CreateService() {
             >
               City
             </span>
-            <input
+            <select
               name="ciudad"
               value={inputs.location.ciudad}
               onChange={handleInputLocation}
               id="validationDefault01"
-              type="text"
-              className="form-control"
+              type="select"
+              className="form-select"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-default"
-              required
-            />
+              required>
+            <option disabled value="" >
+              Your city
+              </option>
+              {cities.length > 0 &&
+              cities.map((city, index) => (
+               <option key={index}>{city.name}</option>
+                ))}
+            </select>
           </div>
         
           <div className="mb-3">
@@ -227,6 +306,9 @@ export function CreateService() {
               required
             />
             <label htmlFor="validationTextarea">Description</label>
+            {touch.description && errors.description && (
+              <p className="text-danger">{errors.description}</p>
+            )}
           </div>
 
           <label htmlFor="basic-url" className="form-label">
@@ -238,7 +320,7 @@ export function CreateService() {
             </span>
             <input
               name="pricePerHour"
-              value={inputs.pricePerHour}
+              value={inputs.pricePerHour === "0" ? "" : inputs.pricePerHour}
               onChange={handleInputChange}
               id="validationDefault01"
               type="number"
@@ -276,9 +358,9 @@ export function CreateService() {
           <div className="col-12">
             <button
               type="submit"
-              className={`${style.myButton} btn btn-outline-secondary`}
-            >
-              Create Service
+              className={`${style.myButton} btn btn-outline-secondary`} 
+              disabled={isSubmitting}>
+               {isSubmitting ? "Enviando..." : "Enviar"}
             </button>
           </div>
           <Toaster position="bottom-right" reverseOrder={false} />
