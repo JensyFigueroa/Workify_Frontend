@@ -1,5 +1,6 @@
 import styles from "../Card/Card.module.css";
 import { Link } from "react-router-dom";
+
 export function Card({
   id,
   nameService,
@@ -7,6 +8,7 @@ export function Card({
   typeService,
   handleSelect,
   pricePerHour,
+  addToCart,
 }) {
   return (
     <div className={styles.container}>
@@ -17,7 +19,7 @@ export function Card({
           <p>Category: {typeService}</p>
         </div>
         <div>
-          <button onClick={() => handleSelect(id, nameService, pricePerHour)}>
+          <button onClick={() => addToCart({ id, nameService, pricePerHour })}>
             Add to cart
           </button>
           <Link to={`/detail/${id}`}>

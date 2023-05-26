@@ -2,11 +2,16 @@ import styles from "./Cards.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import faceThink from "./face-think.png";
 import { addServiceInCart } from "../../redux/actions";
 
+const cartFromLocalStorage = JSON.parse(
+  window.localStorage.getItem("cart") || "[]"
+);
+
 export function Cards() {
+  const [cart, setCart] = useState(cartFromLocalStorage);
   const dispatch = useDispatch();
   const allServices = useSelector((state) => state.allServices);
   const filterLocation = useSelector((state) => state.selectedLocation);
@@ -18,10 +23,16 @@ export function Cards() {
     }
   }, []);
 
-  const handleSelect = (id, nameService, pricePerHour) => {
-    dispatch(addServiceInCart({ id, nameService, pricePerHour }));
+  useEffect(() => {
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  const addToCart = (newItem) => {
+    setCart((prevCart) => [...prevCart, newItem]);
   };
-  const cart = useSelector((state) => state.cart);
+  console.log(cart);
+  console.log(cartFromLocalStorage);
+  console.log(window.localStorage);
 
   return (
     <div className={styles.container}>
@@ -35,7 +46,7 @@ export function Cards() {
               nameService={serv.nameService}
               typeService={serv.typeService}
               pricePerHour={serv.pricePerHour}
-              handleSelect={handleSelect}
+              addToCart={addToCart}
             />
           );
         })
