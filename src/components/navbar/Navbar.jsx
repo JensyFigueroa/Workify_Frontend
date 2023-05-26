@@ -2,9 +2,11 @@ import { Link, NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
+import { BsFillPersonLinesFill } from "react-icons/bs";
+import {BsFillCartFill} from 'react-icons/bs'
 import { useLocation } from "react-router-dom";
 import logo from '../views/landing/img/logo.png'
-import Login from "../Login/Login";
+import Login from '../Login/Login'
 
 const Navbar = () => {
   let location = useLocation();
@@ -43,35 +45,37 @@ const Navbar = () => {
         setIsScrolled(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const navbarClasses = `${isScrolled ? styles.fixed : styles.container}`;
 
-
   return (
     location.pathname !== "/" && (
       <>
         <nav className={navbarClasses}>
-
-          <Link to='/' className={styles.logo}><img src={logo} alt="logo" /></Link>
+          <Link to="/" className={styles.logo}>
+            <img src={logo} alt="logo" />
+          </Link>
 
           <div className={styles.search}>
             <SearchBar />
           </div>
 
-          <div className={`${styles.links} ${clickBurguer ? styles.show : ""} `}>
+          <div
+            className={`${styles.links} ${clickBurguer ? styles.show : ""} `}
+          >
             <NavLink
               to="/home"
               className={({ isActive }) =>
                 isActive ? styles.active : styles.link
               }
               onClick={handleClick}
-            ><span>Home</span>
-
+            >
+              <span>Home</span>
             </NavLink>
             <NavLink
               to="/about"
@@ -91,6 +95,15 @@ const Navbar = () => {
             >
               Create Service
             </NavLink>
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                isActive ? styles.active : styles.link
+              }
+              onClick={handleClick}
+            >
+              <BsFillCartFill />
+            </NavLink>
           </div>
 
          <div>
@@ -98,8 +111,9 @@ const Navbar = () => {
          </div>
 
           <div
-            className={`${styles.btnBurguer} ${styles.navIcon} ${clickBurguer ? styles.open : ""
-              }`}
+            className={`${styles.btnBurguer} ${styles.navIcon} ${
+              clickBurguer ? styles.open : ""
+            }`}
             onClick={handleClick}
           >
             <span></span>
@@ -108,8 +122,9 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`${styles.curtain} ${clickBurguer ? styles.showCurtain : ""
-              }`}
+            className={`${styles.curtain} ${
+              clickBurguer ? styles.showCurtain : ""
+            }`}
           ></div>
         </nav>
       </>
