@@ -4,7 +4,6 @@ import { getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
 import { useEffect, useState } from "react";
 import faceThink from "./face-think.png";
-import { addServiceInCart } from "../../redux/actions";
 
 const cartFromLocalStorage = JSON.parse(
   window.localStorage.getItem("cart") || "[]"
@@ -30,9 +29,6 @@ export function Cards() {
   const addToCart = (newItem) => {
     setCart((prevCart) => [...prevCart, newItem]);
   };
-  console.log(cart);
-  console.log(cartFromLocalStorage);
-  console.log(window.localStorage);
 
   return (
     <div className={styles.container}>
