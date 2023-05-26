@@ -67,7 +67,7 @@ const Cart = () => {
               </div>
               <div>
                 {" "}
-                <h2>Sub Total: S{item.pricePerHour} </h2>
+                <h2>Sub Total: ${item.pricePerHour} </h2>
               </div>
             </div>
           ))
