@@ -3,9 +3,10 @@ import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import { BsFillCartFill } from "react-icons/bs";
+import {BsFillCartFill} from 'react-icons/bs'
 import { useLocation } from "react-router-dom";
-import logo from "../views/landing/img/logo.png";
+import logo from '../views/landing/img/logo.png'
+import Login from '../Login/Login'
 
 const Navbar = () => {
   let location = useLocation();
@@ -105,29 +106,9 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          <div className="btn-group " role="group">
-            <button
-              type="button"
-              className={`${styles.btn} `}
-              style={{ color: "black" }}
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <BsFillPersonLinesFill className={styles.loginIco} />
-            </button>
-            <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Login
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Log Out
-                </a>
-              </li>
-            </ul>
-          </div>
+         <div>
+              <Login />
+         </div>
 
           <div
             className={`${styles.btnBurguer} ${styles.navIcon} ${
