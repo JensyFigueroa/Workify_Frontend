@@ -18,9 +18,9 @@ const Cart = () => {
     window.location.reload();
   };
 
-  const total = cartFromLocalStorage.map((ele) => {
-    return (ele.pricePerHour = +ele.pricePerHour);
-  });
+  const total = cartFromLocalStorage.reduce((accumulator, currentItem) => {
+    return accumulator + currentItem.pricePerHour;
+  }, 0);
 
   console.log(total);
 
