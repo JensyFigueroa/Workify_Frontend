@@ -67,7 +67,7 @@ const Cart = () => {
               </div>
               <div>
                 {" "}
-                <h2>Sub Total: {item.pricePerHour} </h2>
+                <h2>Sub Total: S{item.pricePerHour} </h2>
               </div>
             </div>
           ))
@@ -76,7 +76,7 @@ const Cart = () => {
         )}
       </div>
       <div className={style.totalContainer}>
-        <h2>Total: {total}</h2>
+        <h2>Total: ${total}</h2>
         <button> Pagar </button>
       </div>
     </div>
