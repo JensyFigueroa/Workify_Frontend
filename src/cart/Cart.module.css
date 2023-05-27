@@ -27,3 +27,11 @@
   justify-content: center;
   gap: 2em;
 }
+
+.pasarela {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 3em 0em;
+}

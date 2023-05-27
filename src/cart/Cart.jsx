@@ -148,14 +148,13 @@ const Cart = () => {
           <p>No items in the cart</p>
         )}
       </div>
-      <Elements stripe={promiseStripe}>
-        <Pasarela />
-      </Elements>
-      
       <div className={style.totalContainer}>
-
         <h2>Total: ${calculateTotal()}</h2>
-        <button> Pagar </button>
+      </div>
+      <div className={style.pasarela}>
+        <Elements stripe={promiseStripe}>
+          <Pasarela />
+        </Elements>
       </div>
     </div>
   );
