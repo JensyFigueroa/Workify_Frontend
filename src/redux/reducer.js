@@ -10,6 +10,7 @@ import {
   ADD_SERVICE_IN_CART,
   GET_CART,
   UPDATE_CART,
+  LOGIN_USER
 } from "./types";
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   orderBy: "name",
   orderType: "up",
   cart: [],
+  currentUserIdLoggedIn: ''
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -212,6 +214,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
+      };
+      case LOGIN_USER:
+      return {
+        ...state,
+        currentUserIdLoggedIn: action.payload,
       };
 
     default:

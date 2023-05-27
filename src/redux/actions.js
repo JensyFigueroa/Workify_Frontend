@@ -10,6 +10,7 @@ import {
   ADD_SERVICE_IN_CART,
   GET_CART,
   UPDATE_CART,
+  LOGIN_USER
 } from "./types";
 import axios from "axios";
 
@@ -114,5 +115,12 @@ export const updateCart = (cartItems) => {
   return {
     type: UPDATE_CART,
     payload: cartItems,
+  };
+};
+
+export const loginUser = (uid) => {
+  return {
+    type: LOGIN_USER,
+    payload: uid,
   };
 };
