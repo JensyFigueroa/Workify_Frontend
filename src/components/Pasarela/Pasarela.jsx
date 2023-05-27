@@ -25,7 +25,7 @@ const cardStyle = {
   },
 };
 
-const Pasarela = () => {
+const Pasarela = ({ totalPay, cartItems, userId }) => {
   const stripe = useStripe();
 
   const elements = useElements();
@@ -36,13 +36,15 @@ const Pasarela = () => {
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
+      cartItems: cartItems,
+      userId: userId,
     });
 
     if (!error) {
       const { id } = paymentMethod;
       const { data } = await axios.post("http://localhost:3001/payment", {
         id,
-        amount: 10000,
+        amount: totalPay * 100,
       });
       console.log("Message error: ", data);
     }

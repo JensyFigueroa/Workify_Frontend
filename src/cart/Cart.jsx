@@ -15,6 +15,8 @@ const promiseStripe = loadStripe(
 const Cart = () => {
   const dispatch = useDispatch();
   const cartRedux = useSelector((state) => state.cart);
+  const userId = useSelector((state) => state.currentUserIdLoggedIn);
+
   const [cartItems, setCartItems] = useState(() => {
     const localStorageData = window.localStorage.getItem("cart");
     if (localStorageData) {
@@ -150,10 +152,15 @@ const Cart = () => {
       </div>
       <div className={style.totalContainer}>
         <h2>Total: ${calculateTotal()}</h2>
+        {userId ? <button>Pay</button> : <button>Login</button>}
       </div>
       <div className={style.pasarela}>
         <Elements stripe={promiseStripe}>
-          <Pasarela />
+          <Pasarela
+            userId={userId}
+            cartItems={cartItems}
+            totalPay={calculateTotal()}
+          />
         </Elements>
       </div>
     </div>
