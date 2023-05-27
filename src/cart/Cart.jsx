@@ -12,27 +12,28 @@ const Cart = () => {
     dispatch(getCart());
   }, []);
 
-  const cartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart"));
+  // const cartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart"));
 
-  const [cartItems, setCartItems] = useState(cartFromLocalStorage);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    let data = window.localStorage.getItem("cart");
+    if (data) {
+      setCartItems(JSON.parse(data));
+    }
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, []);
+  }, [cartItems]);
 
   const handleCleanCart = () => {
     window.localStorage.removeItem("cart");
     window.location.reload();
   };
 
-  // const total = cartFromLocalStorage.reduce((accumulator, currentItem) => {
-  //   return accumulator + currentItem.pricePerHour;
-  // }, 0);
-
   const handleChange = (e) => {};
 
-  console.log(cartItems);
-  console.log(cartRedux);
 
   return (
     <div className={style.container}>
@@ -51,15 +52,13 @@ const Cart = () => {
               <div>
                 <button>-</button>
                 <input
-                  value={item.quantity}
+                  value={''}
                   onChange={handleChange}
                   type="number"
                   min="1"
                 />
                 <button
-                  onClick={() => {
-                    item.pricePerHour += item.pricePerHour;
-                  }}
+                  onClick={() => {}}
                 >
                   +
                 </button>
