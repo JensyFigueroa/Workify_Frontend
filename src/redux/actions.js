@@ -97,10 +97,10 @@ export const cleanDetail = () => {
   };
 };
 
-export const addServiceInCart = (id) => {
+export const addServiceInCart = (obj) => {
   return {
     type: ADD_SERVICE_IN_CART,
-    payload: id,
+    payload: obj,
   };
 };
 export const getCart = () => {

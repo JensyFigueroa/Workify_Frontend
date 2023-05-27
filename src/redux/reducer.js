@@ -183,6 +183,8 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_SERVICE_IN_CART:
+      let data = state.cart.push(action.payload);
+      window.localStorage.setItem("cart", JSON.stringify(data));
       return {
         ...state,
         cart: [...state.cart, action.payload],

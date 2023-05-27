@@ -1,33 +1,38 @@
 import { useState } from "react";
 import style from "./Cart.module.css";
 import { useEffect } from "react";
+import { getCart } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
-  const cartFromLocalStorage = JSON.parse(
-    window.localStorage.getItem("cart") || "[]"
-  );
+  const cartRedux = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
+  const cartFromLocalStorage = JSON.parse(window.localStorage.getItem("cart"));
 
   const [cartItems, setCartItems] = useState(cartFromLocalStorage);
 
   useEffect(() => {
     window.localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
+  }, []);
 
   const handleCleanCart = () => {
     window.localStorage.removeItem("cart");
     window.location.reload();
   };
 
-  const total = cartFromLocalStorage.reduce((accumulator, currentItem) => {
-    return accumulator + currentItem.pricePerHour;
-  }, 0);
-
-  console.log(total);
+  // const total = cartFromLocalStorage.reduce((accumulator, currentItem) => {
+  //   return accumulator + currentItem.pricePerHour;
+  // }, 0);
 
   const handleChange = (e) => {};
 
-  console.log(cartFromLocalStorage);
   console.log(cartItems);
+  console.log(cartRedux);
 
   return (
     <div className={style.container}>
@@ -44,13 +49,7 @@ const Cart = () => {
                 <h3>Price Per Hour: ${item.pricePerHour}</h3>
               </div>
               <div>
-                <button
-                // onClick={() => {
-                //   item.pricePerHour -= item.pricePerHour;
-                // }}
-                >
-                  -
-                </button>
+                <button>-</button>
                 <input
                   value={item.quantity}
                   onChange={handleChange}
@@ -76,7 +75,7 @@ const Cart = () => {
         )}
       </div>
       <div className={style.totalContainer}>
-        <h2>Total: ${total}</h2>
+        {/* <h2>Total: ${total}</h2> */}
         <button> Pagar </button>
       </div>
     </div>
