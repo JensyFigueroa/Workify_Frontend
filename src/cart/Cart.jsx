@@ -4,6 +4,13 @@ import { useEffect } from "react";
 import { getCart } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../redux/actions";
+import Pasarela from "../components/Pasarela/Pasarela";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const promiseStripe = loadStripe(
+  "pk_test_51NBQA0BpeRt7rcmet7zt0iDB39vFiEWAF1fC9g0mXU9UWuG5E50VE5j5o8AgcsZkeUv9iD4fWK4cUu9kKOqwhzKn00aWDy85Vh"
+);
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -141,7 +148,12 @@ const Cart = () => {
           <p>No items in the cart</p>
         )}
       </div>
+      <Elements stripe={promiseStripe}>
+        <Pasarela />
+      </Elements>
+      
       <div className={style.totalContainer}>
+
         <h2>Total: ${calculateTotal()}</h2>
         <button> Pagar </button>
       </div>
