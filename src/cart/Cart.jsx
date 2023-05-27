@@ -3,23 +3,34 @@ import style from "./Cart.module.css";
 import { useEffect } from "react";
 import { getCart } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { updateCart } from "../redux/actions";
 
 const Cart = () => {
-  // const cartRedux = useSelector((state) => state.cart);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getCart());
-  // }, []);
-
-  const [cartItems, setCartItems] = useState([]);
+  const dispatch = useDispatch();
+  const cartRedux = useSelector((state) => state.cart);
+  const [cartItems, setCartItems] = useState(() => {
+    const localStorageData = window.localStorage.getItem("cart");
+    if (localStorageData) {
+      return JSON.parse(localStorageData);
+    } else {
+      return [];
+    }
+  });
 
   useEffect(() => {
-    let data = window.localStorage.getItem("cart");
-    if (data) {
-      setCartItems(JSON.parse(data));
-    }
+    dispatch(getCart());
   }, []);
+
+  useEffect(() => {
+    const data = cartRedux;
+
+    if (data.length === 0) {
+      const localStorage = JSON.parse(window.localStorage.getItem("cart"));
+      setCartItems(localStorage);
+    } else {
+      setCartItems(data);
+    }
+  }, [cartRedux]);
 
   useEffect(() => {
     window.localStorage.setItem("cart", JSON.stringify(cartItems));
@@ -40,7 +51,11 @@ const Cart = () => {
       }
       return item;
     });
+    console.log(updatedCartItems, "updatedCartItems");
+
     setCartItems(updatedCartItems);
+    window.localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    dispatch(updateCart(updatedCartItems));
   };
 
   const handleDecrement = (itemId) => {
@@ -53,7 +68,10 @@ const Cart = () => {
       }
       return item;
     });
+
     setCartItems(updatedCartItems);
+    window.localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    dispatch(updateCart(updatedCartItems));
   };
 
   const handleChange = (e, itemId) => {
@@ -67,11 +85,15 @@ const Cart = () => {
       return item;
     });
     setCartItems(updatedCartItems);
+    window.localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    dispatch(updateCart(updatedCartItems));
   };
 
   const handleRemoveItem = (itemId) => {
     const updatedCartItems = cartItems.filter((item) => item.id !== itemId);
     setCartItems(updatedCartItems);
+    window.localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    dispatch(updateCart(updatedCartItems));
   };
 
   const calculateSubTotal = (item) => {
