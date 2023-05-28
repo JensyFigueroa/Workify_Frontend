@@ -1,14 +1,30 @@
 export default function validateInputs(inputs) {
     let errors = {}
 
-    if (inputs.email.length > 0 && !/\S+@\S+\.\S+/.test(inputs.email) || inputs.email.length >= 35) errors.email = 'Must be a email';
-    // if (inputs.password.length >0  && !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z]{6,10}$/.test(inputs.password)) errors.password = 'Must be more than 6 characters with 1 uppercase character 1 lowercase character and 1 special character'
-    if (inputs.password.length >0  && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(inputs.password)) errors.password = 'Must be more than 6 characters with 1 uppercase character 1 lowercase character and 1 special character'
-   /*  It must contain at least 8 characters.
-    Must contain at least one lowercase letter.
-    Must contain at least one capital letter.
-    Must contain at least one digit.
-    Must contain at least one of the following special characters: @$!%*?&. */
+    console.log(inputs)
+
+    if (inputs.email || inputs.password) {
+        if (inputs.email.length > 0 && !/\S+@\S+\.\S+/.test(inputs.email) || inputs.email.length >= 35) errors.email = 'Must be a email';
+        if (inputs.password.length > 0  && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(inputs.password)) errors.password = 'Must be more than 6 characters with 1 uppercase character 1 lowercase character and 1 special character'
+    }
+
+    if (inputs.firstName > 0 && !/^[A-Za-z]+$/.test(inputs.firstName)) errors.firstName = 'The field must not contain foreign characters' 
+    if (inputs.lastName > 0 && !/^[A-Za-z]+$/.test(inputs.lastName)) errors.lastName = 'The field must not contain foreign characters' 
+    if (inputs.phoneNumber > 0 && /^\(\d{3}\)\s\d{3}-\d{4}$/.test(inputs.phoneNumber)) errors.phoneNumber = 'The field must not contain foreign characters' 
+    if (inputs.emailUser.length > 0 && !/\S+@\S+\.\S+/.test(inputs.emailUser) || inputs.emailUser.length >= 35) errors.emailUser = 'Must be a email';
+    if (inputs.emailConfirm.length > 0 && !/\S+@\S+\.\S+/.test(inputs.emailConfirm) || inputs.emailConfirm.length >= 35) errors.emailConfirm = 'Must be a email';
+    
+    if (inputs.emailUser || inputs.emailConfirm) {
+        if (inputs.emailUser !== inputs.emailConfirm) errors.emailConfirm = 'Email cannot be different'
+    }
+
+    if (inputs.passwordUser || inputs.passwordConfirm) {
+        
+        if (inputs.passwordUser.length >= 1  && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(inputs.passwordUser)) errors.passwordUser = 'Must be more than 6 characters with 1 uppercase character 1 lowercase character and 1 special character'
+        if (inputs.passwordUser.length > 1 &&  inputs.passwordUser !== inputs.passwordConfirm) errors.passwordConfirm = 'Passwords cannot be different'
+    }
+
+
     return errors
 }
 

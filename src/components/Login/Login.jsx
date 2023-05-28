@@ -2,46 +2,104 @@ import { Link } from 'react-router-dom'
 import styles from './Login.module.css'
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import validate from './validate'
 
 const Login = () => {
-    const [formLogin, setFormLogin] = useState(null);
-    const [formUser, setFormUser] = useState(null);
+    const [countries, setCountries] = useState([]);
+    const [cities, setCities] = useState([]);
+
+    const [currentForm, setCurrentForm] = useState('');
+    const handleFormChange = (formName) => {
+        setCurrentForm(formName);
+    };
+
+    const [formLogin, setFormLogin] = useState({ email: '', password: '' });
+    const [formUser, setFormUser] = useState({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' });
     const [errors, setErrors] = useState({});
+
+
+    //<---SE MONTAN LOS PAISES-->
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await axios.get('http://api.geonames.org/countryInfoJSON', {
+                    params: {
+                        username: 'joaquinsgro',
+                        type: 'json'
+                    }
+                });
+                const countries = response.data.geonames.map(country => ({
+                    name: country.countryName
+                }));
+                // console.log(countries);
+                setCountries(countries);
+            } catch (error) {
+                console.error('Error al obtener la lista de países', error);
+            }
+        };
+
+        fetchCountries();
+    }, []);
+
+    //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
+    const searchCities = async (countryName) => {
+        try {
+            const response = await axios.get('http://api.geonames.org/searchJSON', {
+                params: {
+                    q: countryName,
+                    username: 'joaquinsgro',
+                    type: 'json',
+                },
+            });
+
+            const city = response.data.geonames.map(state => ({
+                name: state.name,
+            }));
+            // console.log(city);
+            setCities(city);
+        } catch (error) {
+            console.error('Error al obtener la lista de estados', error);
+        }
+    };
+
+    //<-- FUNCIÓN PARA ASIGNAR EL PAIS A LAS CIUDADES-->
+    const handleCountryClick = (countryName) => {
+        searchCities(countryName);
+    };
+
 
     const handleInputChangeLogin = (e) => {
         const { name, value } = e.target
         setFormLogin({ ...formLogin, [name]: value })
-        setFormUser(null)
     }
 
     const handleInputChangeUser = (e) => {
         const { name, value } = e.target
         setFormUser({ ...formUser, [name]: value })
-        setFormLogin(null)
     }
 
     const handleBlur = (e) => {
         handleInputChangeLogin(e);
-        console.log(formLogin,formUser)
-        console.log(formLogin)
-        if (formLogin) setErrors(validate(formLogin));
-        if (formUser) setErrors(validate(formUser));
-        console.log('estoy en el blur')
+        if (currentForm === 'formLogin') setErrors(validate(formLogin));
+        if (currentForm === 'formUser') setErrors(validate(formUser));
+        // console.log('estoy en el blur')
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Enviar el form Login ', formLogin);
+        console.log('Enviando el form Login ', formLogin);
+        setFormLogin({ email: '', password: '' })
     }
 
     const handleSubmitUser = (e) => {
         e.preventDefault();
-        console.log('Enviar el form User', formUser);
-    }
+        console.log('Enviando el form User', formUser);
+        setFormUser({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
 
+    }
 
     return (
         <div className="btn-group " role="group">
@@ -56,7 +114,7 @@ const Login = () => {
             </button>
             <ul className="dropdown-menu">
                 <li>
-                    <Link className="dropdown-item" to="#" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                    <Link className="dropdown-item" to="#" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" onClick={() => handleFormChange('formLogin')}>
                         Login
                     </Link>
                 </li>
@@ -66,10 +124,10 @@ const Login = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link className="dropdown-item" to="#" style={{ color: 'blue' }} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >
+                    <Link className="dropdown-item" to="#" style={{ color: 'blue' }} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onClick={() => handleFormChange('formUser')} >
                         Create User
                     </Link>
-            
+
                 </li>
             </ul>
 
@@ -79,19 +137,20 @@ const Login = () => {
 
                     <div className={`${styles.wrapper} modal-content`}>
                         <div className={`${styles.titleLogin} modal-header`}>
+
                             <h1 className="modal-title fs-5" id="exampleModalToggleLabel">Login Workify</h1>
-                            <button type="button" className="btn" style={{ color: 'white', fontWeight: '600', fontSize: '30px' }} data-bs-dismiss="modal" name='btnLogin' >X</button>
+                            <button type="button" className="btn" style={{ color: 'white', fontWeight: '600', fontSize: '30px' }} data-bs-dismiss="modal" name='btnLogin'>X</button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-6">
                                 <form onSubmit={handleSubmit}>
                                     <div className={styles.field}>
-                                        <input type="text" name='email' onChange={handleInputChangeLogin} onBlur={handleBlur} required />
+                                        <input type="text" name='email' onChange={handleInputChangeLogin} onBlur={handleBlur} value={formLogin.email} required />
                                         <label htmlFor="">Email address</label>
                                     </div>
                                     {errors.email && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.email}</p>}
                                     <div className={styles.field}>
-                                        <input type="password" name='passwordLogin' onChange={handleInputChangeLogin} onBlur={handleBlur} required />
+                                        <input type="password" name='password' onChange={handleInputChangeLogin} onBlur={handleBlur} value={formLogin.password} required />
                                         <label htmlFor="">Password</label>
                                     </div>
                                     {errors.password && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.password}</p>}
@@ -114,7 +173,7 @@ const Login = () => {
                                     <div className={styles.signUpLink}>
                                         Don`t have an account?
                                         <div className={styles.typeAccount}>
-                                            <Link to={'#'} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >SignUp User</Link>
+                                            <Link to={'#'} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onClick={() => handleFormChange('formUser')}>SignUp User</Link>
                                         </div>
                                     </div>
                                 </form>
@@ -139,94 +198,101 @@ const Login = () => {
                         <div className="modal-body">
                             <form onSubmit={handleSubmitUser}>
                                 <div className={styles.field}>
-                                    <input type="text" name='firstName' onChange={handleInputChangeUser} onBlur={handleBlur} required />
+                                    <input type="text" name='firstName' onChange={handleInputChangeUser} onBlur={handleBlur} value={formUser.firstName} required />
                                     <label htmlFor="">Firstname </label>
                                 </div>
+                                {errors.firstName && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.firstName}</p>}
                                 <div className={styles.field}>
-                                    <input type="text" name='lastName' onChange={handleInputChangeUser} onBlur={handleBlur} required />
+                                    <input type="text" name='lastName' onChange={handleInputChangeUser} onBlur={handleBlur} value={formUser.lastName} required />
                                     <label htmlFor="">Lastname</label>
                                 </div>
+                                {errors.lastName && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.lastName}</p>}
                                 <div className={styles.field}>
-                                    <input type="text" name='phoneNumber' onChange={handleInputChangeUser} onBlur={handleBlur} required />
+                                    <input type="text" name='phoneNumber' onChange={handleInputChangeUser} onBlur={handleBlur} required value={formUser.phoneNumber} />
                                     <label htmlFor="">Phone number</label>
                                 </div>
+                                {errors.phoneNumber && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.phoneNumber}</p>}
+
                                 <div className={styles.field}>
-                                    <input type="text" name='country' onChange={handleInputChangeUser} onBlur={handleBlur} required />
-                                    <label htmlFor="">Country</label>
+                                    <div className="input-group mb-3">
+                                        <span
+                                            htmlFor="validationDefault01"
+                                            className="input-group-text"
+                                            id="inputGroup-sizing-default"
+                                        >
+                                            Country
+                                        </span>
+                                        <select
+                                            name="country"
+                                            value={formUser.country}
+                                            onChange={handleInputChangeUser}
+                                            id="validationDefault01"
+                                            type="select"
+                                            className="form-select"
+                                            aria-label="Sizing example input"
+                                            aria-describedby="inputGroup-sizing-default"
+                                            onClick={() => { handleCountryClick(formUser.country) }}
+                                            required>
+                                            <option  value="" >
+                                                {formUser.country}
+                                            </option>
+                                            {countries.map((country, index) => (
+                                                <option key={index} value={country.name}>
+                                                    {country.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <span
+                                            htmlFor="validationDefault01"
+                                            className="input-group-text"
+                                            id="inputGroup-sizing-default"
+                                        >
+                                            City
+                                        </span>
+                                        <select
+                                            name="city"
+                                            value={formUser.city}
+                                            onChange={handleInputChangeUser}
+                                            id="validationDefault02"
+                                            type="select"
+                                            className="form-select"
+                                            aria-label="Sizing example input"
+                                            aria-describedby="inputGroup-sizing-default"
+                                            required>
+                                            <option value="" >
+                                                {formUser.city}
+                                            </option>
+                                            {cities.length > 0 &&
+                                                cities.map((city, index) => (
+                                                    <option key={index}>{city.name}</option>
+                                                ))}
+                                        </select>
+                                    </div>
                                 </div>
+
                                 <div className={styles.field}>
-                                    <input type="text" name='city' onChange={handleInputChangeUser} onBlur={handleBlur} required />
-                                    <label htmlFor="">City</label>
+                                    <input type="text" name='emailUser' onChange={handleInputChangeUser} onBlur={handleBlur} value={formUser.emailUser} required />
+                                    <label htmlFor="">Email address</label>
                                 </div>
+                                {errors.emailUser && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.emailUser}</p>}
+
                                 <div className={styles.field}>
-                                    <input type="password" name='passwordUser' onChange={handleInputChangeUser} onBlur={handleBlur} required />
+                                    <input type="text" name='emailConfirm' onChange={handleInputChangeUser} onBlur={handleBlur} value={formUser.emailConfirm} required />
+                                    <label htmlFor="">Confirm email address</label>
+                                </div>
+                                {errors.emailConfirm && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.emailConfirm}</p>}
+
+                                <div className={styles.field}>
+                                    <input type="password" name='passwordUser' onChange={handleInputChangeUser} onBlur={handleBlur} required value={formUser.passwordUser}/>
                                     <label htmlFor="">Password</label>
                                 </div>
+                                {errors.passwordUser && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.passwordUser}</p>}
                                 <div className={styles.field}>
-                                    <input type="passwordConfirmUser" required />
+                                    <input type="password" name='passwordConfirm' onChange={handleInputChangeUser} onBlur={handleBlur} required value={formUser.passwordConfirm} />
                                     <label htmlFor="">Confirm Password</label>
                                 </div>
+                                {errors.passwordConfirm && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.passwordConfirm}</p>}
                                 <button type="submit" className={`btn btn-primary ${styles.field}`}>Create User</button>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div className="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabIndex="-1">
-                <div className="modal-dialog modal-dialog-centered modal-lg">
-                    <div className={`${styles.wrapper} modal-content`}>
-                        <div className={`${styles.titleLogin} modal-header`}>
-                            <h1 className="modal-title fs-5" id="exampleModalToggleLabel">Create Lender</h1>
-                            <button type="button" className="btn" style={{ color: 'white', fontWeight: '600', fontSize: '30px' }} data-bs-dismiss="modal" name='btnLender' >X</button>
-                        </div>
-
-                        <div className="modal-body">
-                            <form action="">
-                                <div className={styles.boxCompany}>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Company name </label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Company address</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Company email</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Company phone</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Country of the company</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">City of the company</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Contact Fullname</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="text" required />
-                                        <label htmlFor="">Contact phone number</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="passwordLender" required />
-                                        <label htmlFor="">Password</label>
-                                    </div>
-                                    <div className={styles.fieldC}>
-                                        <input type="passwordConfirmLender" required />
-                                        <label htmlFor="">Confirm Password</label>
-                                    </div>
-                                </div>
-                                <button type="submit" className={`btn btn-primary ${styles.field}`}>Create Lender</button>
                             </form>
                         </div>
 
