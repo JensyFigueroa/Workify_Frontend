@@ -175,8 +175,8 @@ const loginWithGoogle = async () => {
         if (res && res.user) {
             
             const uid = res.user.uid;
-            setUID(uid);
-            window.localStorage.setItem('uid', res.user.uid);
+            // setUID(uid);
+            // window.localStorage.setItem('uid', res.user.uid);
             console.log(res.user.displayName, "usuario logeado");
             const inputs = {
                 id: res.user.uid,
