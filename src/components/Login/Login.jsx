@@ -4,12 +4,13 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { useEffect, useState } from 'react';
 import { auth, googleProvider } from '../../config/firebase-config.js'
-import { createUserWithEmailAndPassword, signInWithPopup, signOut, setPersistence, browserSessionPersistence } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, setPersistence, browserSessionPersistence } from 'firebase/auth'
 
 import validate from './validate'
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/actions';
+import toast, { Toaster } from "react-hot-toast";
 
 
 const Login = () => {
@@ -28,28 +29,16 @@ const Login = () => {
     const [formLogin, setFormLogin] = useState({ email: '', password: '' });
     const [formUser, setFormUser] = useState({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' });
     const [errors, setErrors] = useState({});
-    const [uid, setUID] = useState(
-        '' || window.localStorage.getItem('uid')
-    );
+    
 
+// NOTAS PARA JENSY DE DANIEL
+// - Cambiar palabras de boton de "Create User" y poner "Create User and Login"
+// - Cuando alguien de de click a "LOGIN" O "Create User and Login" O "CONTINUE WITH GOOGLE" se deberia salir del POPUP Y MANDARLO AL HOME. 
+// - No sirve el popup del login, cuando estamos en el view de CREATE USER
+// - Si alguien intetna rear otra cuenta con un correoq ue ya existe no deberia limpiarle todo el formulario. debe quedarse para que el puedo solo cambiar el email.
+// - mostrar el usuario que este logeado en el navmbar
 
-    useEffect(() => {
-
-        const user = auth.currentUser;
-        if (user) {
-            const storedUID = window.localStorage.getItem('uid');
-            if (storedUID) {
-                setUID(storedUID);
-                dispatch(loginUser(storedUID));
-            } else {
-                setUID(user.uid);
-                dispatch(loginUser(user.uid));
-                window.localStorage.setItem('uid', user.uid);
-            }
-        }
-    }, [dispatch]);
-
-
+    
     //<---SE MONTAN LOS PAISES-->
     useEffect(() => {
         const fetchCountries = async () => {
@@ -69,10 +58,10 @@ const Login = () => {
                 console.error('Error al obtener la lista de países', error);
             }
         };
-
+        
         fetchCountries();
     }, []);
-
+    
     //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
     const searchCities = async (countryName) => {
         try {
@@ -83,7 +72,7 @@ const Login = () => {
                     type: 'json',
                 },
             });
-
+            
             const city = response.data.geonames.map(state => ({
                 name: state.name,
             }));
@@ -93,7 +82,7 @@ const Login = () => {
             console.error('Error al obtener la lista de estados', error);
         }
     };
-
+    
     //<-- FUNCIÓN PARA ASIGNAR EL PAIS A LAS CIUDADES-->
     const handleCountryClick = (countryName) => {
         searchCities(countryName);
@@ -101,96 +90,138 @@ const Login = () => {
     const handleInputChangeLogin = (e) => {
         const { name, value } = e.target
         setFormLogin({ ...formLogin, [name]: value })
-
+        
     }
-
+    
     const handleInputChangeUser = (e) => {
         const { name, value } = e.target
         setFormUser({ ...formUser, [name]: value })
-
+        
     }
-
+    
     const handleBlur = (e) => {
         handleInputChangeLogin(e);
         if (currentForm === 'formLogin') setErrors(validate(formLogin));
         if (currentForm === 'formUser') setErrors(validate(formUser));
         // console.log('estoy en el blur')
     }
-
-    const handleSubmit = (e) => {
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Enviando el form Login ', formLogin);
         setFormLogin({ email: '', password: '' })
+        
+        try {
+            const res = await signInWithEmailAndPassword(auth, formLogin.email, formLogin.password);
+            if (res && res.user) {
+                const uid = res.user.uid;
+                dispatch(loginUser(uid))
+                console.log(res.user, "user en el signin with email and password");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        
+        
     }
-
-    const handleSubmitUser = (e) => {
+    
+    const handleSubmitUser = async (e) => {
         e.preventDefault();
         console.log('Enviando el form User', formUser);
         setFormUser({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
-    }
-
-    // const emailDaniel = "docampoc95@gmail.com";
-    // const constraseñaDaniel = "123456";
-
-
-    const loginWithGoogle = async () => {
         try {
+            const res = await createUserWithEmailAndPassword(auth, formUser.emailUser, formUser.passwordUser);
+            // console.log("entro al try")
+        if(res && res.user){
+            const uid = res.user.uid;
+            // setUID(uid);
+            // console.log("entro al if");
+            
+            const inputs = {
+                id: res.user.uid,
+                name: formUser.firstName + " " + formUser.lastName,
+                email: formUser.emailUser,
+                country: formUser.country,
+                city: formUser.city,
+                phone: formUser.phoneNumber,
+                credential: [""],
+                imagePublicId: "",
+                imageUrl: "",
+                adminStatus: false,
+                description: "",
+                google: false,
+            };
+            await axios.post("http://localhost:3001/login/", inputs);
+            toast.success('User Created!!')
+            dispatch(loginUser(uid));
+            console.log(res.user, "user en el signin with email and password")
+        }
+    } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+            // Handle the specific error when email is already in use
+            toast.error('Email already in use')
+            // Display an error message to the user
+        }
+    }
+    
+}
 
-            await setPersistence(auth, browserSessionPersistence);
-            const res = await signInWithPopup(auth, googleProvider);
-            if (res && res.user) {
 
-                const uid = res.user.uid;
-                setUID(uid);
-                window.localStorage.setItem('uid', res.user.uid);
-                console.log(res.user.displayName, "usuario logeado");
-                const inputs = {
-                    id: res.user.uid,
-                    name: res.user.displayName,
-                    email: res.user.email,
-                    country: "",
-                    city: "",
-                    phone: res.user.providerData[0].phoneNumber,
-                    credential: [""],
-                    imagePublicId: "",
-                    imageUrl: res.user.photoURL,
-                    adminStatus: false,
-                    description: "",
-                    google: true,
-                };
-                await axios.post("http://localhost:3001/login/", inputs);
+const loginWithGoogle = async () => {
+    try {
+        
+        await setPersistence(auth, browserSessionPersistence);
+        const res = await signInWithPopup(auth, googleProvider);
+        if (res && res.user) {
+            
+            const uid = res.user.uid;
+            // setUID(uid);
+            // window.localStorage.setItem('uid', res.user.uid);
+            console.log(res.user.displayName, "usuario logeado");
+            const inputs = {
+                id: res.user.uid,
+                name: res.user.displayName,
+                email: res.user.email,
+                country: "",
+                city: "",
+                phone: res.user.providerData[0].phoneNumber,
+                credential: [""],
+                imagePublicId: "",
+                imageUrl: res.user.photoURL,
+                adminStatus: false,
+                description: "",
+                google: true,
+            };
+            await axios.post("http://localhost:3001/login/", inputs);
                 dispatch(loginUser(uid));
-                setTimeout(() => {
-                    navigate("/home");
-                }, 1500);
-
+                
             }
         } catch (error) {
             console.log(error, "que gonorrea");
         }
     };
-
-
+    
+    
     if (auth?.currentUser) {
         console.log("usuario esta logeado")
     }
-
-
-
+    
+    
+    
     const logOut = async () => {
         try {
             await signOut(auth)
-                .then((res) => {
-                    setUID('');
-                    window.localStorage.removeItem('uid');
-                    console.log('log out');
-                })
+            // .then((res) => {
+            //     setUID('');
+            //     window.localStorage.removeItem('uid');
+            // })
+                 console.log('logged out');
             dispatch(loginUser(''))
         } catch (error) {
             console.log(error);
         }
     };
-
+    
     return (
         <div className="btn-group " role="group">
             <button
@@ -199,7 +230,7 @@ const Login = () => {
                 style={{ color: "black" }}
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-            >
+                >
                 <BsFillPersonLinesFill className={styles.loginIco} />
             </button>
             <ul className="dropdown-menu">
@@ -310,7 +341,7 @@ const Login = () => {
                                             htmlFor="validationDefault01"
                                             className="input-group-text"
                                             id="inputGroup-sizing-default"
-                                        >
+                                            >
                                             Country
                                         </span>
                                         <select
@@ -337,7 +368,7 @@ const Login = () => {
                                             htmlFor="validationDefault01"
                                             className="input-group-text"
                                             id="inputGroup-sizing-default"
-                                        >
+                                            >
                                             City
                                         </span>
                                         <select
@@ -356,7 +387,7 @@ const Login = () => {
                                             {cities.length > 0 &&
                                                 cities.map((city, index) => (
                                                     <option key={index}>{city.name}</option>
-                                                ))}
+                                                    ))}
                                         </select>
                                     </div>
                                 </div>
@@ -384,6 +415,7 @@ const Login = () => {
                                 </div>
                                 {errors.passwordConfirm && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.passwordConfirm}</p>}
                                 <button type="submit" className={`btn btn-primary ${styles.field}`}>Create User</button>
+                                <Toaster position="bottom-right" reverseOrder={false} />
                             </form>
                         </div>
 
@@ -395,3 +427,30 @@ const Login = () => {
 }
 
 export default Login
+
+
+
+// ---- ESTOS SON FUNCUONES DEL LOCAL STORAGE PERO NO SEVANA ANECESITAR LOS VOY A DEJAR AQUI POR SI LAS MOSMAS
+
+
+    // const [uid, setUID] = useState(
+    //     '' || window.localStorage.getItem('uid')
+    // );
+
+
+
+// useEffect(() => {
+
+//     const user = auth.currentUser;
+//     if (user) {
+//         const storedUID = window.localStorage.getItem('uid');
+//         if (storedUID) {
+//             setUID(storedUID);
+//             dispatch(loginUser(storedUID));
+//         } else {
+//             setUID(user.uid);
+//             dispatch(loginUser(user.uid));
+//             window.localStorage.setItem('uid', user.uid);
+//         }
+//     }
+// }, [dispatch]);
