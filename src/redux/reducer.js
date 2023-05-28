@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import {
   GET_SERVICES,
   GET_SERVICESBYNAME,
@@ -10,7 +11,7 @@ import {
   ADD_SERVICE_IN_CART,
   GET_CART,
   UPDATE_CART,
-  LOGIN_USER
+  LOGIN_USER,
 } from "./types";
 
 const initialState = {
@@ -25,7 +26,7 @@ const initialState = {
   orderBy: "name",
   orderType: "up",
   cart: [],
-  currentUserIdLoggedIn: ''
+  currentUserIdLoggedIn: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -190,15 +191,17 @@ const rootReducer = (state = initialState, action) => {
 
       const inServ = (e) => e.id === action.payload.id;
 
-      if (state.cart.some(inServ))
+      if (state.cart.some(inServ)) {
+        toast.error("This product is already in your cart!");
         return {
           ...state,
         };
+      }
 
       let data = [...state.cart, action.payload];
 
       window.localStorage.setItem("cart", JSON.stringify(data));
-
+      toast.success("Product added to cart!");
       return {
         ...state,
         cart: data,
@@ -215,7 +218,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
-      case LOGIN_USER:
+    case LOGIN_USER:
       return {
         ...state,
         currentUserIdLoggedIn: action.payload,
