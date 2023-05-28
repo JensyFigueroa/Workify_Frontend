@@ -9,6 +9,8 @@ import {
   CLEAN_DETAIL,
   ADD_SERVICE_IN_CART,
   GET_CART,
+  UPDATE_CART,
+  LOGIN_USER
 } from "./types";
 import axios from "axios";
 
@@ -97,14 +99,28 @@ export const cleanDetail = () => {
   };
 };
 
-export const addServiceInCart = (id) => {
+export const addServiceInCart = (obj) => {
   return {
     type: ADD_SERVICE_IN_CART,
-    payload: id,
+    payload: obj,
   };
 };
 export const getCart = () => {
   return {
     type: GET_CART,
+  };
+};
+
+export const updateCart = (cartItems) => {
+  return {
+    type: UPDATE_CART,
+    payload: cartItems,
+  };
+};
+
+export const loginUser = (uid) => {
+  return {
+    type: LOGIN_USER,
+    payload: uid,
   };
 };

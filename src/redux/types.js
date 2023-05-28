@@ -8,3 +8,5 @@ export const CLEAR_FILTER = "CLEAR_FILTER";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const ADD_SERVICE_IN_CART = "ADD_SERVICE_IN_CART";
 export const GET_CART = "GET_CART";
+export const UPDATE_CART = "UPDATE_CART";
+export const LOGIN_USER = "LOGIN_USER";

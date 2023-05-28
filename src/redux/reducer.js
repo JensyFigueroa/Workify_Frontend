@@ -9,6 +9,8 @@ import {
   CLEAN_DETAIL,
   ADD_SERVICE_IN_CART,
   GET_CART,
+  UPDATE_CART,
+  LOGIN_USER
 } from "./types";
 
 const initialState = {
@@ -23,6 +25,7 @@ const initialState = {
   orderBy: "name",
   orderType: "up",
   cart: [],
+  currentUserIdLoggedIn: ''
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -183,14 +186,39 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_SERVICE_IN_CART:
+      action.payload.quantity = 1;
+
+      const inServ = (e) => e.id === action.payload.id;
+
+      if (state.cart.some(inServ))
+        return {
+          ...state,
+        };
+
+      let data = [...state.cart, action.payload];
+
+      window.localStorage.setItem("cart", JSON.stringify(data));
+
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: data,
       };
     case GET_CART:
       return {
         ...state,
         cart: [...state.cart],
+      };
+
+    case UPDATE_CART:
+      console.log(action.payload, "update reducer");
+      return {
+        ...state,
+        cart: action.payload,
+      };
+      case LOGIN_USER:
+      return {
+        ...state,
+        currentUserIdLoggedIn: action.payload,
       };
 
     default:

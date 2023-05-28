@@ -25,5 +25,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 2em;
+}
+
+.pasarela {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 3em 0em;
+}
+
+.popUp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
 }

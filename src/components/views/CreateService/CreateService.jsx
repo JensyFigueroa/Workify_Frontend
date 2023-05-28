@@ -5,12 +5,13 @@ import services from "./Services";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 
 
 export function CreateService() {
 
-  
+
   
   const navigate = useNavigate();
   const [countries, setCountries] = useState([]);
@@ -18,6 +19,9 @@ export function CreateService() {
   const [cities, setCities] = useState([]);
   const [notification, setNotification] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
+  //daniel toco linea 23 y 24
+    const uidService = useSelector((state) => state.currentUserIdLoggedIn);
+    console.log(uidService, 'uid desde createservice con use selector');
   const [inputs, setInputs] = useState({
     nameService: "",
     location: {
@@ -28,6 +32,7 @@ export function CreateService() {
     description: "",
     pricePerHour: "",
     typeService: "",
+    UserId: uidService,
   });
   const [touch, setTouch] = useState({
     nameService: false,
@@ -166,9 +171,12 @@ const handleCountryClick = (countryName) => {
   //<--FUNCIÓN SUBMIT-->
   const handleSubmit = async (event) => {
     event.preventDefault();
-   
+   if(uidService.length === 0){
+  toast.error('Must be logged in to create a Service')
+  
+   }else{
     //<---RUTA DEL POST--->
-    try {
+     try {
       await axios
         .post("http://localhost:3001/service/", inputs)
         .then((response) => toast.success(response.data));
@@ -179,6 +187,9 @@ const handleCountryClick = (countryName) => {
     } catch (error) {
       toast.error(error.message);
     }
+   }
+    
+   
     
   };
 
