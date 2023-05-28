@@ -36,8 +36,6 @@ const Pasarela = ({ totalPay, cartItems, userId }) => {
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
-      cartItems: cartItems,
-      userId: userId,
     });
 
     if (!error) {
@@ -45,6 +43,8 @@ const Pasarela = ({ totalPay, cartItems, userId }) => {
       const { data } = await axios.post("http://localhost:3001/payment", {
         id,
         amount: totalPay * 100,
+        cartItems: cartItems,
+        userId: userId,
       });
       console.log("Message error: ", data);
     }
