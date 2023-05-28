@@ -1,69 +1,148 @@
-.container {
+.detailContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2em;
-  margin-bottom: 220px;
-}
-
-.smallContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #f1f1f1;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.mediumContainer {
-  background-color: #f1f1f1;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.largeContainer {
-  background-color: #f1f1f1;
-  padding: 40px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
   justify-content: space-between;
-  align-items: center;
-}
-
-.abilities {
-  margin-right: 40px;
-}
-
-.reserv {
-  color: black;
-  background-color: white;
-}
-
-.reserv:hover {
-  background-color: black;
-}
-
-.img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.nameService {
-  font-size: 1.2em;
+.serviceInfoContainer {
+  flex-basis: 60%;
+}
+
+.serviceName {
+  font-size: 24px;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.serviceType {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.serviceLocation {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.featuredProjectsContainer {
+  margin-top: 20px;
+}
+
+.featuredProjectsTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.featuredProjectImage {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.serviceDescriptionContainer {
+  margin-top: 20px;
+}
+
+.serviceDescriptionTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.serviceDescription {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.serviceReviewsContainer {
+  margin-top: 20px;
+}
+
+.serviceReviewsTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.serviceReviews {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.reservationContainer {
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendarContainer {
+  margin-bottom: 10px;
+}
+
+.selectDateLabel,
+.selectTimeLabel {
+  font-size: 16px;
   margin-bottom: 5px;
 }
 
-.container p {
-  margin: 0;
+.datePicker {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  outline: none;
+}
+
+.reservationButton {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ff8900;
+  color: #fff;
+  cursor: pointer;
+}
+
+.reservationButton.enabled {
+  background-color: #ff6e00;
+}
+
+.reservationButton:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .detailContainer {
+    flex-direction: column;
+  }
+
+  .serviceInfoContainer,
+  .reservationContainer {
+    width: 100%;
+  }
+
+  .serviceInfoContainer {
+    margin-bottom: 20px;
+  }
 }
