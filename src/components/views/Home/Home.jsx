@@ -9,11 +9,18 @@ const Home = () => {
 //toco daniel linea 10 y 11
 const uidHome = useSelector((state) => state.currentUserIdLoggedIn);
 console.log(uidHome, 'uid desde home con use selector');
+const allServices = useSelector(state => state.allServices);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 3000);
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (allServices.length > 0) {
+      setLoading(false);
+    }
+  }, [allServices]);
 
   return (
     <div className={styles.container}>
