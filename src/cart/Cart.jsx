@@ -8,6 +8,8 @@ import Pasarela from "../components/Pasarela/Pasarela";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Login from "../components/Login/Login";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 
 const promiseStripe = loadStripe(
   "pk_test_51NBQA0BpeRt7rcmet7zt0iDB39vFiEWAF1fC9g0mXU9UWuG5E50VE5j5o8AgcsZkeUv9iD4fWK4cUu9kKOqwhzKn00aWDy85Vh"
@@ -143,35 +145,61 @@ const Cart = () => {
 
   return (
     <div className={style.container}>
-      <div>
+      <div className={style.containerTitle}>
         <h1 className={style.title}>My Cart</h1>
-        <button onClick={handleCleanCart}>Clean Cart</button>
+        <button className={style.buttonCleanCart} onClick={handleCleanCart}>
+          <BsFillTrash3Fill /> CLEAN CART
+        </button>
       </div>
       <div className={style.containerService}>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
             <div className={style.containerCart} key={item.id}>
+              <h1 className={style.containerName}>{item.nameService}</h1>
+              <h3 className={style.price}>
+                Price per hour: ${item.pricePerHour}
+              </h3>
               <div>
-                <h1>{item.nameService}</h1>
-                <h3>Price Per Hour: ${item.pricePerHour}</h3>
+                <div className={style.containerInput}>
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="button-addon1"
+                    onClick={() => handleDecrement(item.id)}
+                  >
+                    -
+                  </button>
+                  <input
+                    className={`${style.input} form-control`}
+                    type="number"
+                    value={item.quantity || 1}
+                    onChange={(e) => handleChange(e, item.id)}
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="button-addon1"
+                    onClick={() => handleIncrement(item.id)}
+                  >
+                    +
+                  </button>
+                  <h2 className={style.containerSubTotal}>
+                    Sub Total: ${calculateSubTotal(item)}
+                  </h2>
+                </div>
               </div>
-              <div>
-                <button onClick={() => handleDecrement(item.id)}>-</button>
-                <input
-                  type="number"
-                  value={item.quantity || 1}
-                  onChange={(e) => handleChange(e, item.id)}
-                />
-                <button onClick={() => handleIncrement(item.id)}>+</button>
-              </div>
-              <div>
-                <h2>Sub Total: ${calculateSubTotal(item)}</h2>
-              </div>
-              <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
+              <button
+                className={style.removeItemButton}
+                onClick={() => handleRemoveItem(item.id)}
+              >
+                <BsFillTrash3Fill />
+              </button>
             </div>
           ))
         ) : (
-          <p>No items in the cart</p>
+          <div className={style.containerNotItem}>
+            <h1 className={style.title}>No items in the cart</h1>
+          </div>
         )}
       </div>
       <div className={style.totalContainer}>
