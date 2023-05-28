@@ -39,14 +39,14 @@ const Pasarela = ({ totalPay, cartItems, userId }) => {
     });
 
     if (!error) {
-      const { id } = paymentMethod;
+        const { id } = paymentMethod;
       const { data } = await axios.post("http://localhost:3001/payment", {
         id,
         amount: totalPay * 100,
         cartItems: cartItems,
         userId: userId,
       });
-      console.log("Message error: ", data);
+      console.log("Message: ", data);
     }
   };
   //<Elements stripe={promiseStripe}>
