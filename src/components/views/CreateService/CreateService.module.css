@@ -3,10 +3,46 @@
     display: flex;
     justify-content: center;
     padding-bottom: 50px;
+    padding: 40px;
+    background-color: rgb(219, 218, 218);
 
 }
+.containerform{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+.brother{
+    width: 20em;
+    background-color: rgb(10, 69, 180);
+    margin-right: 20px;
+    border-radius: 20px;
+    padding: 40px;
+}
+.title{
+    color: white;
+    display: flex;
+    margin-bottom: 100px;
+}
+.brother h2{
+    color: white;
+    margin-bottom: 50px;
+    
+}
+.brother p{
+    color: white;
+}
+.imgs{
+    margin-top: 70px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
 .form{
-    background-color: rgb(219, 219, 219);
     padding: 50px;
     width: 35em;
     display: flex;

@@ -6,6 +6,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import service1 from "../CreateService/Images/Services (1).png";
+import service2 from "../CreateService/Images/Services (2).png";
+import service3 from "../CreateService/Images/Services (3).png";
+import service4 from "../CreateService/Images/Services (4).png";
+import service5 from "../CreateService/Images/Services (5).png";
+import service6 from "../CreateService/Images/Services (6).png";
+import service7 from "../CreateService/Images/Services (7).png";
+
+
 
 
 
@@ -196,6 +205,22 @@ const handleCountryClick = (countryName) => {
   
   return (
     <div className={style.container}>
+      <div className={style.containerform}>
+      <div className={style.brother}>
+        <p className={style.title}>WORKIFY</p>
+        <h2>Start your journey with us</h2>
+        <p>Expand your network of clients and let them discover your talented work by creating a service now!</p>
+      <div className={style.imgs}>
+          <img src={service1} alt= "services"/>
+          <img src={service2} alt= "services"/>
+          <img src={service3} alt= "services"/>
+          <img src={service4} alt= "services"/>
+          <img src={service5} alt= "services"/>
+          <img src={service6} alt= "services"/>
+          <img src={service7} alt= "services"/>
+
+      </div>
+      </div>
       <div className={style.form}>
         <h1>Create Service</h1>
         <form
@@ -371,11 +396,12 @@ const handleCountryClick = (countryName) => {
               type="submit"
               className={`${style.myButton} btn btn-outline-secondary`} 
               disabled={isSubmitting}>
-               {isSubmitting ? "Enviando..." : "Enviar"}
+               {isSubmitting ? "Sending..." : "Send"}
             </button>
           </div>
           <Toaster position="bottom-right" reverseOrder={false} />
         </form>
+        </div>  
       </div>
     </div>
   );
