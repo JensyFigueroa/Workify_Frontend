@@ -27,6 +27,7 @@ const initialState = {
   orderType: "up",
   cart: [],
   currentUserIdLoggedIn: "",
+  currentUserNameLoggedIn: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -221,7 +222,8 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        currentUserIdLoggedIn: action.payload,
+        currentUserIdLoggedIn: action.payload[0],
+        currentUserNameLoggedIn: action.payload[1],
       };
 
     default:

@@ -8,7 +8,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 //toco daniel linea 10 y 11
 const uidHome = useSelector((state) => state.currentUserIdLoggedIn);
+const nameHome = useSelector((state) => state.currentUserNameLoggedIn)
 console.log(uidHome, 'uid desde home con use selector');
+console.log(nameHome, 'name desde home con use selector');
 const allServices = useSelector(state => state.allServices);
 
   useEffect(() => {
