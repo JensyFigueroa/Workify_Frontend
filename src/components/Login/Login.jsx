@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import styles from './Login.module.css'
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { auth, googleProvider } from '../../config/firebase-config.js'
 import { updateProfile, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, setPersistence, browserSessionPersistence } from 'firebase/auth'
 
@@ -232,6 +232,58 @@ const Login = () => {
         }
     };
 
+    const refLogin = useRef(null);
+    const refUser = useRef(null);
+
+    useEffect(() => {
+      const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const elementId = mutation.target.id;
+            const classList = mutation.target.classList;
+            
+            if (classList.contains('show')) {
+              console.log(`Se agregó la clase 'show' al elemento con ID: ${elementId}`);
+              if (elementId === 'exampleModalToggle') {
+                setFormUser({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
+                setErrors({})
+              }else{
+                setFormLogin({ email: '', password: '' })
+                setErrors({})
+              }
+            } else {
+                if (elementId === 'exampleModalToggle') {
+                    setFormLogin({ email: '', password: '' })
+                    setErrors({})
+                }else{
+                    setFormUser({firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
+                    setErrors({})
+                  }
+
+              console.log(`Se quitó la clase 'show' del elemento con ID: ${elementId}`);
+            }
+          }
+        }
+      });
+    
+      if (refLogin.current) {
+        observer.observe(refLogin.current, { attributes: true });
+      }
+      if (refUser.current) {
+        observer.observe(refUser.current, { attributes: true });
+      }
+    
+      return () => {
+        if (refLogin.current) {
+          observer.unobserve(refLogin.current);
+        }
+        if (refUser.current) {
+          observer.unobserve(refUser.current);
+        }
+      };
+    }, []);
+
+
     return (
         <div className="btn-group " role="group">
             <button
@@ -266,7 +318,7 @@ const Login = () => {
             </ul>
 
 
-            <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+            <div ref={refLogin} className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered modal-lg">
 
                     <div className={`${styles.wrapper} modal-content`}>
@@ -320,7 +372,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <div className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
+            <div ref={refUser} className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered modal-lg">
                     <div className={`${styles.wrapper} modal-content`}>
                         <div className={`${styles.titleLogin} modal-header`}>
