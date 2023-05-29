@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['currentUserIdLoggedIn'],
+  whitelist: ['currentUserIdLoggedIn','currentUserNameLoggedIn'],
 };
 
 const middleware = [thunk];
