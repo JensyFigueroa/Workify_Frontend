@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearFilter,
+import {clearFilter,
   selectItem,
   selectLocation,
   orderResult,

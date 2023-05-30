@@ -17,6 +17,7 @@ import {
 const initialState = {
   allServices: [],
   allServicesCache: [],
+  searchServices:[],
   allItems: [],
   allCountries: [],
   allCities: [],
@@ -27,6 +28,7 @@ const initialState = {
   orderType: "up",
   cart: [],
   currentUserIdLoggedIn: "",
+  currentUserNameLoggedIn: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -57,7 +59,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_SERVICESBYNAME:
       return {
         ...state,
-        allServices: action.payload,
+        searchServices: action.payload,
       };
     case GET_SERVICESDETAIL:
       return {
@@ -221,7 +223,8 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        currentUserIdLoggedIn: action.payload,
+        currentUserIdLoggedIn: action.payload[0],
+        currentUserNameLoggedIn: action.payload[1],
       };
 
     default:

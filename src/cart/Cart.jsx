@@ -7,9 +7,10 @@ import { updateCart } from "../redux/actions";
 import Pasarela from "../components/Pasarela/Pasarela";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Login from "../components/Login/Login";
+
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { BsFillCartFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const promiseStripe = loadStripe(
   "pk_test_51NBQA0BpeRt7rcmet7zt0iDB39vFiEWAF1fC9g0mXU9UWuG5E50VE5j5o8AgcsZkeUv9iD4fWK4cUu9kKOqwhzKn00aWDy85Vh"
@@ -20,7 +21,7 @@ const Cart = () => {
   const cartRedux = useSelector((state) => state.cart);
   const userId = useSelector((state) => state.currentUserIdLoggedIn);
 
-  const [login, setLogin] = useState(false);
+  // const [login, setLogin] = useState(false);
   const [payActive, setPayActive] = useState(false);
 
   const [cartItems, setCartItems] = useState(() => {
@@ -123,9 +124,9 @@ const Cart = () => {
     return total;
   };
 
-  const handleLogin = () => {
-    setLogin(!login);
-  };
+  // const handleLogin = () => {
+  //   setLogin(!login);
+  // };
 
   const handlePay = () => {
     setPayActive(!payActive);
@@ -151,43 +152,46 @@ const Cart = () => {
           <BsFillTrash3Fill /> CLEAN CART
         </button>
       </div>
+      <div className={style.containerFields}>
+        <h2>NAME SERVICE</h2>
+        <h2>PRICE PER HOUR</h2>
+        <h2>HOURS TOTAL</h2>
+        <h2>SUB TOTAL PRICE</h2>
+        <h2>CLEAN</h2>
+      </div>
       <div className={style.containerService}>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
             <div className={style.containerCart} key={item.id}>
               <h1 className={style.containerName}>{item.nameService}</h1>
-              <h3 className={style.price}>
-                Price per hour: ${item.pricePerHour}
-              </h3>
-              <div>
-                <div className={style.containerInput}>
-                  <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="button-addon1"
-                    onClick={() => handleDecrement(item.id)}
-                  >
-                    -
-                  </button>
-                  <input
-                    className={`${style.input} form-control`}
-                    type="number"
-                    value={item.quantity || 1}
-                    onChange={(e) => handleChange(e, item.id)}
-                  />
-                  <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="button-addon1"
-                    onClick={() => handleIncrement(item.id)}
-                  >
-                    +
-                  </button>
-                  <h2 className={style.containerSubTotal}>
-                    Sub Total: ${calculateSubTotal(item)}
-                  </h2>
-                </div>
+              <h3 className={style.price}>${item.pricePerHour}</h3>
+              <div className={style.containerInput}>
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  id="button-addon1"
+                  onClick={() => handleDecrement(item.id)}
+                >
+                  -
+                </button>
+                <input
+                  className={`${style.input} `}
+                  type="number"
+                  value={item.quantity || 1}
+                  onChange={(e) => handleChange(e, item.id)}
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  id="button-addon1"
+                  onClick={() => handleIncrement(item.id)}
+                >
+                  +
+                </button>
               </div>
+              <h2 className={style.containerSubTotal}>
+                ${calculateSubTotal(item)}
+              </h2>
               <button
                 className={style.removeItemButton}
                 onClick={() => handleRemoveItem(item.id)}
@@ -207,14 +211,18 @@ const Cart = () => {
         {userId ? (
           <button onClick={handlePay}>Pay</button>
         ) : (
-          <button onClick={handleLogin}>Login</button>
+          <Link
+            className="dropdown-item"
+            to="#"
+            data-bs-target="#exampleModalToggle"
+            data-bs-toggle="modal"
+            // onClick={() => handleFormChange("formLogin")}
+          >
+            Login
+          </Link>
         )}
       </div>
-      {login && (
-        <div>
-          <Login />
-        </div>
-      )}
+
       {payActive && (
         <div className={style.popUp} onClick={handlePopupClick}>
           <div className={style.pasarela}>

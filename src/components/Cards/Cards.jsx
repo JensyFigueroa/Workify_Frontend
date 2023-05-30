@@ -12,14 +12,23 @@ const cartFromLocalStorage = JSON.parse(
 export function Cards() {
   const [cart, setCart] = useState(cartFromLocalStorage);
   const dispatch = useDispatch();
-  const allServices = useSelector((state) => state.allServices);
+  let allServices = useSelector((state) => state.allServices);
   const filterLocation = useSelector((state) => state.selectedLocation);
   const filterItem = useSelector((state) => state.selectedItem);
+  const searchServices = useSelector((state) => state.searchServices);
+
+  let services =[]
+
+  if (searchServices.length > 0) {
+    services = searchServices
+  }else{
+    services = allServices
+  }
 
   useEffect(() => {
-    if (filterLocation === null && filterItem === null) {
-      dispatch(getServices());
-    }
+      if (filterLocation === null && filterItem === null) {
+        dispatch(getServices());
+      }
   }, []);
 
   useEffect(() => {
@@ -32,8 +41,8 @@ export function Cards() {
 
   return (
     <div className={styles.container}>
-      {allServices.length > 0 ? (
-        allServices.map((serv, index) => {
+      {services.length > 0 ? (
+        services.map((serv, index) => {
           return (
             <Card
               id={serv.id}

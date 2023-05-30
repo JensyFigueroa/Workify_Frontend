@@ -2,8 +2,10 @@ import { useState } from 'react';
 import styles from './SearchBar.module.css'
 import { useDispatch } from 'react-redux';
 import {getServicesByName} from '../../redux/actions'
+import { useNavigate } from 'react-router';
 
 const SearchBar = () => {
+  const navigate = useNavigate()
   const [name, setName] = useState('')
 
   const dispatch = useDispatch()
@@ -14,6 +16,7 @@ const SearchBar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault()
+    navigate('/home')
     dispatch(getServicesByName(name))
   }
 

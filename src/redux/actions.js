@@ -119,9 +119,9 @@ export const updateCart = (cartItems) => {
   };
 };
 
-export const loginUser = (uid) => {
+export const loginUser = (uid, name) => {
   return {
     type: LOGIN_USER,
-    payload: uid,
+    payload: [uid, name]
   };
 };
