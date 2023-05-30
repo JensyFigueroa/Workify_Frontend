@@ -17,6 +17,7 @@ import {
 const initialState = {
   allServices: [],
   allServicesCache: [],
+  searchServices:[],
   allItems: [],
   allCountries: [],
   allCities: [],
@@ -58,7 +59,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_SERVICESBYNAME:
       return {
         ...state,
-        allServices: action.payload,
+        searchServices: action.payload,
       };
     case GET_SERVICESDETAIL:
       return {
