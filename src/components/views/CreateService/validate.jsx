@@ -10,5 +10,8 @@ export default function validate({
   if (!numericRegex.test(price)) {
     errors.price = "Price must contain only numbers";
   }
+  if(description.length === 0 || description.length > 150){
+    errors.description = "Please write a short description about your service..."
+  }
   return errors;
 }

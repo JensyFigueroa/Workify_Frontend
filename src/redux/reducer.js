@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import {
   GET_SERVICES,
   GET_SERVICESBYNAME,
@@ -7,11 +8,16 @@ import {
   SELECT_ITEM,
   CLEAR_FILTER,
   CLEAN_DETAIL,
+  ADD_SERVICE_IN_CART,
+  GET_CART,
+  UPDATE_CART,
+  LOGIN_USER,
 } from "./types";
 
 const initialState = {
   allServices: [],
   allServicesCache: [],
+  searchServices:[],
   allItems: [],
   allCountries: [],
   allCities: [],
@@ -20,6 +26,9 @@ const initialState = {
   selectedLocation: null,
   orderBy: "name",
   orderType: "up",
+  cart: [],
+  currentUserIdLoggedIn: "",
+  currentUserNameLoggedIn: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -50,7 +59,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_SERVICESBYNAME:
       return {
         ...state,
-        allServices: action.payload,
+        searchServices: action.payload,
       };
     case GET_SERVICESDETAIL:
       return {
@@ -61,16 +70,13 @@ const rootReducer = (state = initialState, action) => {
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
       const sortedResults = [...state.allServices].sort((a, b) => {
-        //ascendentemente o descendentemente?
         const order = orderType === "up" ? 1 : -1;
 
         if (orderBy === "nameService") {
           if (a[orderBy] > b[orderBy]) {
-            //ascendente
             return order;
           }
           if (a[orderBy] < b[orderBy]) {
-            //descendente
             return -order;
           }
           return 0;
@@ -172,14 +178,53 @@ const rootReducer = (state = initialState, action) => {
         allServices: state.allServicesCache,
         orderBy: "nameService",
         orderType: "up",
-        selectedItem: null,
-        selectedLocation: null,
+        selectedItem: "ALL",
+        selectedLocation: "ALL",
       };
 
     case CLEAN_DETAIL:
       return {
         ...state,
         serviceDetail: {},
+      };
+
+    case ADD_SERVICE_IN_CART:
+      action.payload.quantity = 1;
+
+      const inServ = (e) => e.id === action.payload.id;
+
+      if (state.cart.some(inServ)) {
+        toast.error("This product is already in your cart!");
+        return {
+          ...state,
+        };
+      }
+
+      let data = [...state.cart, action.payload];
+
+      window.localStorage.setItem("cart", JSON.stringify(data));
+      toast.success("Product added to cart!");
+      return {
+        ...state,
+        cart: data,
+      };
+    case GET_CART:
+      return {
+        ...state,
+        cart: [...state.cart],
+      };
+
+    case UPDATE_CART:
+      console.log(action.payload, "update reducer");
+      return {
+        ...state,
+        cart: action.payload,
+      };
+    case LOGIN_USER:
+      return {
+        ...state,
+        currentUserIdLoggedIn: action.payload[0],
+        currentUserNameLoggedIn: action.payload[1],
       };
 
     default:

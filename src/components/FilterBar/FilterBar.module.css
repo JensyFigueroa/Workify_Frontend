@@ -1,11 +1,13 @@
 .filterBarContainer {
-  width: 100%;
+  width: 99vw;
   height: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .carouselContainer {
@@ -17,33 +19,14 @@
   overflow: hidden;
   margin: 10px;
 }
-
-/* .carouselButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
-  z-index: 2;
-  margin-left: 5px;
-  margin-right: 5px;
+.buttonArrowContainer {
+  display: flex;
+  align-items: center;
 }
-
-.carouselButton:first-child {
-  left: 300px;
-}
-
-.carouselButton:last-child {
-  right: 300px;
-} */
 
 .itemContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -61,12 +44,24 @@
   outline: none;
   margin-right: 20px;
   border-bottom: 2px solid transparent;
-  color: #0D5890;
+  color: #0d5890;
 }
 
-.buttonItem.selected {
-  border-bottom-color: #1CB5E0;
-  color: #0D6EFD;
+.buttonArrow {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  margin-right: 20px;
+  border-bottom: 2px solid transparent;
+  color: #0d5890;
+  margin-left: 30px;
+}
+
+.selected {
+  border-bottom-color: #1cb5e0;
+  color: #0d6efd;
 }
 
 .buttonItem:hover {
@@ -78,30 +73,9 @@
   font-size: 10px;
 }
 
-.buttonIcon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.buttonIcon:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.icon {
-  width: 20px;
-  height: 25px;
-  margin-bottom: 4px;
-}
-
 .filterButtonsContainer {
-  width: 30%;
+  width: 20%;
   display: flex;
-
   justify-content: center;
 }
 
@@ -115,19 +89,27 @@
   align-items: center;
   justify-content: center;
   z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .filterContent {
   position: relative;
   max-width: 400px;
-  background-color: #838282;
-  border: 1px solid #a0a0a0;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.orderContainer {
+  display: contents;
+  align-items: center;
 }
 
 .selectContainer {
@@ -141,7 +123,7 @@
 }
 
 .select {
-  height: 40px;
+  height: 30px;
   padding: 5px;
   font-size: 14px;
   border: 1px solid #ccc;
@@ -160,7 +142,6 @@
 
 .filterButton:hover {
   transform: translateY(-5px);
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
 }
 
 .closeButton {
@@ -169,4 +150,9 @@
   outline: none;
   cursor: pointer;
   font-size: 16px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #888;
 }

@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../CreateService/CreateService.module.css";
 import validate from "./validate";
 import services from "./Services";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import service1 from "../CreateService/Images/Services (1).png";
+import service2 from "../CreateService/Images/Services (2).png";
+import service3 from "../CreateService/Images/Services (3).png";
+import service4 from "../CreateService/Images/Services (4).png";
+import service5 from "../CreateService/Images/Services (5).png";
+import service6 from "../CreateService/Images/Services (6).png";
+import service7 from "../CreateService/Images/Services (7).png";
+
+
+
+
 
 export function CreateService() {
+
+
+  
   const navigate = useNavigate();
+  const [countries, setCountries] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cities, setCities] = useState([]);
   const [notification, setNotification] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
+  //daniel toco linea 23 y 24
+    const uidService = useSelector((state) => state.currentUserIdLoggedIn);
+    console.log(uidService, 'uid desde createservice con use selector');
   const [inputs, setInputs] = useState({
     nameService: "",
     location: {
@@ -17,8 +39,9 @@ export function CreateService() {
     },
     imageUrl: [],
     description: "",
-    pricePerHour: 0,
+    pricePerHour: "",
     typeService: "",
+    UserId: uidService,
   });
   const [touch, setTouch] = useState({
     nameService: false,
@@ -39,18 +62,91 @@ export function CreateService() {
     },
     imageUrl: [],
     description: "",
-    pricePerHour: 0,
+    pricePerHour: "",
     typeService: "",
   });
 
-  const handleInputChange = (event) => {
+//<---SE MONTAN LOS PAISES-->
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get('http://api.geonames.org/countryInfoJSON', {
+          params: {
+            username: 'joaquinsgro',
+            type: 'json'
+          }
+        });
+        const countries = response.data.geonames.map(country => ({
+          name: country.countryName
+        }));
+        console.log(countries);
+        setCountries(countries);
+      } catch (error) {
+        console.error('Error al obtener la lista de países', error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
+  const searchCities = async (countryName) => {
+    try {
+      const response = await axios.get('http://api.geonames.org/searchJSON', {
+        params: {
+          q: countryName,
+          username: 'joaquinsgro',
+          type: 'json',
+        },
+      });
+  
+      const city = response.data.geonames.map(state => ({
+        name: state.name,
+      }));
+      console.log(city);
+      setCities(city);
+    } catch (error) {
+      console.error('Error al obtener la lista de estados', error);
+    }
+  };
+
+//<-- FUNCIÓN PARA ASIGNAR EL PAIS A LAS CIUDADES-->
+const handleCountryClick = (countryName) => {
+  searchCities(countryName);
+};
+
+//<--MANEJADOR DE INPUTS Y CLOUDINARY-->
+  const handleInputChange = async (event) => {
     const { name, value } = event.target;
     if (name === "imageUrl") {
-      const imageUrlArray = value.split(",");
-      setInputs({
-        ...inputs,
-        [name]: imageUrlArray,
-      });
+      const file = event.target.files[0];
+      const files = Array.from(event.target.files);
+      const imagesSelected = files.map((file) => URL.createObjectURL(file));
+      setSelectedImages(imagesSelected);
+      
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'services_wfy');
+        formData.append('api_key', '168773883428854');
+  
+        // Realiza una solicitud a Cloudinary para cargar la imagen
+        try {
+          const response = await axios.post('https://api.cloudinary.com/v1_1/Joaquin/image/upload', formData);
+          const imageUrl = response.data.secure_url;
+          setInputs({
+            ...inputs,
+            imageUrl: [imageUrl],
+          });
+        } catch (error) {
+          console.error('Error uploading image:', error);
+        }
+      }
+
+    } else if (name === 'pricePerHour' && parseFloat(value) < 0 ){
+        // No actualizar el estado si el valor es menor a 0
+        return;
+      
     } else {
       setInputs({
         ...inputs,
@@ -68,6 +164,8 @@ export function CreateService() {
       [name]: true,
     });
   };
+
+  //<--MANEJADOR DE INPUT LOCATION-->
   const handleInputLocation = (event) => {
     const { name, value } = event.target;
     setInputs((prevState) => ({
@@ -79,25 +177,52 @@ export function CreateService() {
     }));
   };
 
+  //<--FUNCIÓN SUBMIT-->
   const handleSubmit = async (event) => {
     event.preventDefault();
+   if(uidService.length === 0){
+  toast.error('Must be logged in to create a Service')
+  
+   }else{
     //<---RUTA DEL POST--->
-    try {
+     try {
       await axios
         .post("http://localhost:3001/service/", inputs)
         .then((response) => toast.success(response.data));
+        setIsSubmitting(true);
       setTimeout(() => {
         navigate("/home");
       }, 2000);
     } catch (error) {
       toast.error(error.message);
     }
+   }
+    
+   
+    
   };
-  console.log(notification);
+
+  
   return (
     <div className={style.container}>
+      <div className={style.containerform}>
+      <div className={style.brother}>
+        <p className={style.title}>WORKIFY</p>
+        <h2>Start your journey with us</h2>
+        <p>Expand your network of clients and let them discover your talented work by creating a service now!</p>
+      <div className={style.imgs}>
+          <img src={service1} alt= "services"/>
+          <img src={service2} alt= "services"/>
+          <img src={service3} alt= "services"/>
+          <img src={service4} alt= "services"/>
+          <img src={service5} alt= "services"/>
+          <img src={service6} alt= "services"/>
+          <img src={service7} alt= "services"/>
+
+      </div>
+      </div>
       <div className={style.form}>
-        <h1>Crear Servicio</h1>
+        <h1>Create Service</h1>
         <form
           className="row g-3 needs-validation"
           onSubmit={handleSubmit}
@@ -115,7 +240,7 @@ export function CreateService() {
               id="validationDefault04"
               required
             >
-              <option disabled value="">
+              <option disabled value="" >
                 Select a category
               </option>
               {services.map((serv, index) => (
@@ -137,17 +262,26 @@ export function CreateService() {
             >
               Country
             </span>
-            <input
-              name="pais"
-              value={inputs.location.pais}
-              onChange={handleInputLocation}
-              id="validationDefault01"
-              type="text"
-              className="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              required
-            />
+            <select
+            name="pais"
+            value={inputs.location.pais}
+            onChange={handleInputLocation}
+            id="validationDefault01"
+            type="select"
+            className="form-select"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+            onClick={() => {handleCountryClick(inputs.location.pais)}} 
+            required>
+              <option disabled value="" >
+              Your country
+              </option>
+               {countries.map((country, index) => (
+                <option key={index} value={country.name}>
+                      {country.name}
+                </option>
+              ))}
+            </select>
             <span
               htmlFor="validationDefault01"
               className="input-group-text"
@@ -155,39 +289,47 @@ export function CreateService() {
             >
               City
             </span>
-            <input
+            <select
               name="ciudad"
               value={inputs.location.ciudad}
               onChange={handleInputLocation}
               id="validationDefault01"
-              type="text"
-              className="form-control"
+              type="select"
+              className="form-select"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-default"
-              required
-            />
+              required>
+            <option disabled value="" >
+              Your city
+              </option>
+              {cities.length > 0 &&
+              cities.map((city, index) => (
+               <option key={index}>{city.name}</option>
+                ))}
+            </select>
           </div>
-
+        
           <div className="mb-3">
-            <label htmlFor="basic-url" className="form-label">
-              Your image URL
-            </label>
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon3">
-                https://...
-              </span>
-              <input
-                name="imageUrl"
-                value={inputs.imageUrl.join(",")}
-                onChange={handleInputChange}
-                className="form-control"
-                type="text"
-                id="basic-url"
-                aria-describedby="basic-addon3 basic-addon4"
-                required
-              />
-            </div>
+             <label htmlFor="formFileMultiple" className="form-label">Your image or images</label>
+             <input 
+             name="imageUrl" 
+             onChange={handleInputChange} 
+             className="form-control" 
+             type="file" 
+             id="formFileMultiple" 
+             multiple 
+             required/>
           </div>
+       
+          {selectedImages.length > 0 && (
+            <div>
+
+            <p>Preview:</p>
+            {selectedImages.map((imageUrl, index) => (
+            <img className = {style.preview} key={index} src={imageUrl} alt="preview" />
+                 ))}
+          </div>
+      )} 
 
           <div className="form-floating">
             <textarea
@@ -200,6 +342,9 @@ export function CreateService() {
               required
             />
             <label htmlFor="validationTextarea">Description</label>
+            {touch.description && errors.description && (
+              <p className="text-danger">{errors.description}</p>
+            )}
           </div>
 
           <label htmlFor="basic-url" className="form-label">
@@ -211,7 +356,7 @@ export function CreateService() {
             </span>
             <input
               name="pricePerHour"
-              value={inputs.pricePerHour}
+              value={inputs.pricePerHour === "0" ? "" : inputs.pricePerHour}
               onChange={handleInputChange}
               id="validationDefault01"
               type="number"
@@ -249,13 +394,14 @@ export function CreateService() {
           <div className="col-12">
             <button
               type="submit"
-              className={`${style.myButton} btn btn-outline-secondary`}
-            >
-              Create Service
+              className={`${style.myButton} btn btn-outline-secondary`} 
+              disabled={isSubmitting}>
+               {isSubmitting ? "Sending..." : "Send"}
             </button>
           </div>
           <Toaster position="bottom-right" reverseOrder={false} />
         </form>
+        </div>  
       </div>
     </div>
   );
