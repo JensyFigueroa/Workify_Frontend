@@ -14,10 +14,6 @@ const LandingPage = () => {
     setClickMenu(!clickMenu);
   };
 
-
-
-
-
   return (
     <div>
       <div className={styles.header}>
@@ -61,26 +57,26 @@ const LandingPage = () => {
         <div className={styles.cont}>
           <div className={styles.box1}>
           <form id="myForm">
-            <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required />
+            <div className="form-group row">
+                <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
+                <div className="col-sm-10">
+                    <input type="email" className="form-control" id="inputEmail3" placeholder="Email" required />
                 </div>
             </div>
 
-            <div class="form-group row">
-                <div class="col-sm-4">Soy real</div>
-                <div class="col-sm-8">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1" required />
-                        <label class="form-check-label" for="gridCheck1">No soy un robot</label>
+            <div className="form-group row">
+                <div className="col-sm-4">Soy real</div>
+                <div className="col-sm-8">
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="gridCheck1" required />
+                        <label className="form-check-label" htmlFor="gridCheck1">No soy un robot</label>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary" id="submitButton" >Enviar formulario</button>
+            <div className="form-group row">
+                <div className="col-sm-10">
+                    <button type="submit" className="btn btn-primary" id="submitButton" >Enviar formulario</button>
                 </div>
             </div>
         </form>
