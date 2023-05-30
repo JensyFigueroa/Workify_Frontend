@@ -8,7 +8,9 @@ import Footer from "./components/views/footer/Footer";
 import Error404 from "./components/views/Error404/Error404";
 import Cart from "./cart/Cart";
 import UserProfile from "./components/views/UserProfile/UserProfile";
-
+import axios from "axios";
+// axios.defaults.baseURL = 'http://localhost:3001/';
+axios.defaults.baseURL = 'https://domesticservicesbackend-production-acb6.up.railway.app/';
 function App() {
   return (
     <>

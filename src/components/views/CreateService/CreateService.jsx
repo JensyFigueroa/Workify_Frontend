@@ -187,7 +187,7 @@ const handleCountryClick = (countryName) => {
     //<---RUTA DEL POST--->
      try {
       await axios
-        .post("http://localhost:3001/service/", inputs)
+        .post("/service/", inputs)
         .then((response) => toast.success(response.data));
         setIsSubmitting(true);
       setTimeout(() => {

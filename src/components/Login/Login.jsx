@@ -151,7 +151,7 @@ const Login = () => {
                 description: "",
                 google: false,
             };
-            await axios.post("http://localhost:3001/login/", inputs);
+            await axios.post("/login/", inputs);
             toast.success('User Created!!')
             dispatch(loginUser(uid));
             console.log(res.user, "user en el signin with email and password")
@@ -192,7 +192,7 @@ const loginWithGoogle = async () => {
                 description: "",
                 google: true,
             };
-            await axios.post("http://localhost:3001/login/", inputs);
+            await axios.post("/login/", inputs);
                 dispatch(loginUser(uid));
                 
             }
