@@ -15,7 +15,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.containerPrincipal}>
       <div className={styles.header}>
         <nav className={styles.nav}>
           <Link to="#" id="menu" className={styles.menu} onClick={handleClick}>
@@ -112,15 +112,15 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className={styles.wave}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      {/* <div className={styles.wave}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300">
           <path
             fill="#fff"
             fillOpacity="1"
             d="M0,128L80,144C160,160,320,192,480,176C640,160,800,96,960,80C1120,64,1280,96,1360,112L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
           ></path>
         </svg>
-      </div>
+      </div> */}
     </div>
   );
 };

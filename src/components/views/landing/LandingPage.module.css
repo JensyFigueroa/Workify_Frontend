@@ -1,3 +1,5 @@
+
+
 .header {
     background: #000046;
     /* fallback for old browsers */
@@ -6,7 +8,7 @@
     background: linear-gradient(to right, #1CB5E0, #000046);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     width: 100%;
-    height: 450px;
+    height: 100vh;
 }
 
 
@@ -132,11 +134,12 @@
 }
 
 .wave{
+
     width: 100%;
     background: #000046;
     background: -webkit-linear-gradient(to right, #1CB5E0, #000046);
     background: linear-gradient(to right, #1CB5E0, #000046);  
-    z-index: -1;   
+
 }
 
 .cont{
@@ -146,27 +149,17 @@
     align-items: center;
     position:relative;
 }
-.cont .box1{
-    color: rgb(10, 10, 10);
-    padding: 30px 70px;
-    background-color:#fcfeff;
-    border-radius: 10px;
-    padding-bottom: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.142);
-}
+
 
 .cont .box2{
-    color: rgb(10, 10, 10);
-    padding: 30px 70px;
+    color: rgb(243, 242, 242);
+    
 }
 
 .carouselContainer {
     right: 0;
+    bottom: 0;
 
-    background-color:#fffffff1;
-    border-radius: 10px;
-    padding-bottom: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.142);
   }
   
   .comment {
@@ -241,3 +234,59 @@
     }
 }
 
+@media (max-width: 1280px) {
+    .nav {
+      justify-content: center;
+    }
+  
+    .links {
+      position: static;
+      flex-direction: row;
+      width: 100%;
+      height: auto;
+      align-items: center;
+      background-color: transparent;
+    }
+  
+    .links a {
+      margin-left: 0;
+    }
+  
+    .content {
+        padding: 3rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .text {
+      padding: 30px;
+      width: 100%;
+      text-align: center;
+    }
+  
+    .logo {
+      display: none; /* Oculta el logo en pantallas menores a 1280px */
+    }
+  
+    .text h1 {
+      font-size: 60px;
+    }
+  
+    .text h2 {
+      font-size: 24px;
+    }
+  
+    .btn {
+      width: 120px;
+    }
+  
+    .img {
+      width: 80%;
+    }
+  
+    .cont {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
