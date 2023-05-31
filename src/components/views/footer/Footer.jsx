@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import style from "./Footer.module.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const location = useLocation();
@@ -8,14 +9,8 @@ const Footer = () => {
       <footer className={style.containerPrincipal}>
         <div className={style.container}>
           <div className={style.footerLinks}>
-            <a href="#">Inicio</a>
-            <a href="#">Servicios</a>
-            <a href="#">Productos</a>
-            <a href="#">Contacto</a>
-          </div>
-          <div className={style.footerContact}>
-            <p>Teléfono: (123) 456-7890</p>
-            <p>Email: info@tuecommerce.com</p>
+            <Link to={"/home"}>Home</Link>
+            <Link to={"/about"}>About</Link>
           </div>
         </div>
         <div className={style.footerBottom}>
