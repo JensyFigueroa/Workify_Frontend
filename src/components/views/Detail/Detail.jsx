@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { getServiceDetail, cleanDetail } from "../../../redux/actions";
+import { getServiceDetail, cleanDetail, addServiceInCart } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import style from "./Detail.module.css";
@@ -19,7 +19,7 @@ export function Detail() {
       dispatch(cleanDetail());
     };
   }, [dispatch, id]);
-
+  const currentUserNameLoggedIn = useSelector(state => state.currentUserNameLoggedIn);
   const serviceDetail = useSelector((state) => state.serviceDetail);
   console.log(serviceDetail);
   let arrImage = [serviceDetail.imageUrl];
@@ -89,20 +89,11 @@ export function Detail() {
   };
 
   return (
+    <div className={style.containerFather}>
     <div className={style.detailContainer}>
-      <div className={style.serviceInfoContainer}>
-        <h1 className={style.serviceName}>{serviceDetail.nameService}</h1>
-        <p className={style.serviceType}>{serviceDetail.typeService}</p>
-        <p className={style.serviceLocation}>
-          Location: {serviceDetail.location?.pais} -{" "}
-          {serviceDetail.location?.ciudad}
-        </p>
-        <p className={style.serviceType}>
-          Price per hour: {serviceDetail.pricePerHour}
-        </p>
 
-        <div className={style.featuredProjectsContainer}>
-          <h2 className={style.featuredProjectsTitle}>Featured Projects</h2>
+       <div className={style.featuredProjectsContainer}>
+          {/* <h2 className={style.featuredProjectsTitle}>Featured Projects</h2> */}
           {arrImage.length > 0 &&
             arrImage.map((image, index) => (
               <img
@@ -113,18 +104,45 @@ export function Detail() {
               />
             ))}
         </div>
+
+      <div className={style.serviceInfoContainer}>
+          <div className={style.nameServiceContainer}>
+            <h1 className={style.serviceName}>{serviceDetail.nameService}</h1>
+            <p className={style.serviceType}>{serviceDetail.typeService}</p>
+          </div>
+        <div className={style.serviceTypeContainer}>
+          <p className={style.serviceType}>
+             Price per hour: ${serviceDetail.pricePerHour}
+          </p>
+        
+          <p className={style.serviceLocation}>
+           Location: {serviceDetail.location?.pais} -{" "}
+            {serviceDetail.location?.ciudad}
+          </p>
+        </div>
+
+       <div className={style.fatherDescription}>
         <div className={style.serviceDescriptionContainer}>
           <h2 className={style.serviceDescriptionTitle}>Description</h2>
           <p className={style.serviceDescription}>
             {serviceDetail.description}
           </p>
+          </div>
+            <div className= {style.serviceProvider}>
+              <h2 className={style.serviceDescriptionTitle}>Service Provider</h2>
+              <p>{currentUserNameLoggedIn}</p>
+            </div>
         </div>
-        <div className={style.serviceReviewsContainer}>
-          <h2 className={style.serviceReviewsTitle}>Reviews</h2>
-          <p className={style.serviceReviews}>{serviceDetail.reviews}</p>
-        </div>
+        <button className={`${style.myButton} btn btn-outline-secondary`}
+            onClick={() =>
+              dispatch(addServiceInCart(serviceDetail.id, serviceDetail.nameService, serviceDetail.pricePerHour))
+            }
+          >
+            Add to cart
+          </button>
       </div>
-      <div className={style.reservationContainer}>
+      
+      {/* <div className={style.reservationContainer}>
         <div className={style.calendarContainer}>
           <p className={style.selectDateLabel}>Select Date:</p>
           <DatePicker
@@ -193,7 +211,13 @@ export function Detail() {
             color: "#713200",
           },
         }}
-      />
+      /> */}
+      </div>
+      <div className={style.serviceReviewsContainer}>
+          <h1 className={style.serviceReviewsTitle}>Reviews</h1>
+          <p>Customers rated this pro highly for work quality, professionalism, and responsiveness.</p>
+          <p className={style.serviceReviews}>{serviceDetail.reviews}</p>
+        </div>
     </div>
   );
 }
