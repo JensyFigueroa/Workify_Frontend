@@ -55,84 +55,58 @@ const LandingPage = () => {
           </div>
         </div>
         <div className={styles.cont}>
-          <div className={styles.box1}>
-          <form id="myForm">
-            <div className="form-group row">
-                <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
-                <div className="col-sm-10">
-                    <input type="email" className="form-control" id="inputEmail3" placeholder="Email" required />
-                </div>
-            </div>
-
-            <div className="form-group row">
-                <div className="col-sm-4">Soy real</div>
-                <div className="col-sm-8">
-                    <div className="form-check">
-                        <input className="form-check-input" type="checkbox" id="gridCheck1" required />
-                        <label className="form-check-label" htmlFor="gridCheck1">No soy un robot</label>
-                    </div>
-                </div>
-            </div>
-
-            <div className="form-group row">
-                <div className="col-sm-10">
-                    <button type="submit" className="btn btn-primary" id="submitButton" >Enviar formulario</button>
-                </div>
-            </div>
-        </form>
-          </div>
-
           <div className={styles.box2}>
             <div className={styles.carouselContainer}>
-            <Carousel
-  autoPlay
-  interval={4000}
-  showThumbs={false}
-  infiniteLoop
->
-  <div>
-    <p className={styles.comment}>
-      Contrate a un servicio de Pintura y la verdad estupendo
-    </p>
-    <p className={styles.author}>- John Doe</p>
-    <div className={styles.stars}>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-    </div>
-  </div>
-  <div>
-    <p className={styles.comment}>
-      Me recomendo un amigo para contratar a un plomero y me destapo la cañeria
-    </p>
-    <p className={styles.author}>- Jane Smith</p>
-    <div className={styles.stars}>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-    </div>
-  </div>
-  <div>
-    <p className={styles.comment}>
-      Muy buenos servicios la verdad
-    </p>
-    <p className={styles.author}>- David Johnson</p>
-    <div className={styles.stars}>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-      <span>*</span>
-    </div>
-  </div>
-</Carousel>
+              <Carousel
+                autoPlay
+                interval={4000}
+                showThumbs={false}
+                infiniteLoop
+              >
+                <div>
+                  <p className={styles.comment}>
+                    Contrate a un servicio de Pintura y la verdad estupendo
+                  </p>
+                  <p className={styles.author}>- John Doe</p>
+                  <div className={styles.stars}>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                  </div>
+                </div>
+                <div>
+                  <p className={styles.comment}>
+                    Me recomendo un amigo para contratar a un plomero y me
+                    destapo la cañeria
+                  </p>
+                  <p className={styles.author}>- Jane Smith</p>
+                  <div className={styles.stars}>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                  </div>
+                </div>
+                <div>
+                  <p className={styles.comment}>
+                    Muy buenos servicios la verdad
+                  </p>
+                  <p className={styles.author}>- David Johnson</p>
+                  <div className={styles.stars}>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                    <span>*</span>
+                  </div>
+                </div>
+              </Carousel>
             </div>
           </div>
         </div>
