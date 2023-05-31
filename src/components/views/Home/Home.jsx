@@ -6,12 +6,12 @@ import { Loading } from "../../Loading/Loading";
 import { useSelector } from "react-redux";
 const Home = () => {
   const [loading, setLoading] = useState(true);
-//toco daniel linea 10 y 11
-const uidHome = useSelector((state) => state.currentUserIdLoggedIn);
-const nameHome = useSelector((state) => state.currentUserNameLoggedIn)
-console.log(uidHome, 'uid desde home con use selector');
-console.log(nameHome, 'name desde home con use selector');
-const allServices = useSelector(state => state.allServices);
+  //toco daniel linea 10 y 11
+  const uidHome = useSelector((state) => state.currentUserIdLoggedIn);
+  const nameHome = useSelector((state) => state.currentUserNameLoggedIn);
+  console.log(uidHome, "uid desde home con use selector");
+  console.log(nameHome, "name desde home con use selector");
+  const allServices = useSelector((state) => state.allServices);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 3000);
@@ -25,7 +25,7 @@ const allServices = useSelector(state => state.allServices);
   }, [allServices]);
 
   return (
-    <div className={styles.container}>
+    <>
       {loading ? (
         <Loading />
       ) : (
@@ -34,7 +34,7 @@ const allServices = useSelector(state => state.allServices);
           <Cards />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

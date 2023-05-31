@@ -1,13 +1,14 @@
 .filterBarContainer {
-  width: 99vw;
-  height: 50px;
+  width: 100%;
+  height: 3.5em;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.4);
+  /* justify-content: space-between; */
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
   overflow-x: hidden;
   overflow-y: hidden;
+  background-color: #ebeff8;
 }
 
 .carouselContainer {
@@ -16,8 +17,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
-  margin: 10px;
+  /* overflow: hidden; */
+  /* margin: 10px; */
 }
 .buttonArrowContainer {
   display: flex;
