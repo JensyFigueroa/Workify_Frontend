@@ -6,15 +6,15 @@ const Footer = () => {
   const location = useLocation();
   return (
     location.pathname !== "/" && (
-      <footer className={style.containerPrincipal}>
+      <footer className={style.footer}>
         <div className={style.container}>
           <div className={style.footerLinks}>
             <Link to={"/home"}>Home</Link>
             <Link to={"/about"}>About</Link>
           </div>
-        </div>
-        <div className={style.footerBottom}>
-          <p>&copy; 2023 Workify. Todos los derechos reservados.</p>
+          <div className={style.footerBottom}>
+            <p>&copy; 2023 Workify. Todos los derechos reservados.</p>
+          </div>
         </div>
       </footer>
     )
