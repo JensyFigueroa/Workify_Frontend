@@ -14,8 +14,8 @@ import axios from "axios";
 axios.defaults.baseURL = 'https://domesticservicesbackend-production-acb6.up.railway.app/';
 function App() {
   return (
-    <>
     
+    <>
       <Navbar />
       <Routes>
         <Route path={"/"} element={<LandingPage />} />

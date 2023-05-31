@@ -40,7 +40,7 @@ const Pasarela = ({ totalPay, cartItems, userId }) => {
 
     if (!error) {
         const { id } = paymentMethod;
-      const { data } = await axios.post("http://localhost:3001/payment", {
+      const { data } = await axios.post("/payment", {
         id,
         amount: totalPay * 100,
         cartItems: cartItems,
