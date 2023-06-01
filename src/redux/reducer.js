@@ -12,12 +12,13 @@ import {
   GET_CART,
   UPDATE_CART,
   LOGIN_USER,
+  CLEAN_SEARCH,
 } from "./types";
 
 const initialState = {
   allServices: [],
   allServicesCache: [],
-  searchServices:[],
+  searchServices: [],
   allItems: [],
   allCountries: [],
   allCities: [],
@@ -81,6 +82,30 @@ const rootReducer = (state = initialState, action) => {
           }
           return 0;
         } else if (orderBy === "typeService") {
+          if (a[orderBy] > b[orderBy]) {
+            return -order;
+          }
+          if (a[orderBy] < b[orderBy]) {
+            return order;
+          }
+          return 0;
+        } else if (orderBy === "pricePerHour") {
+          if (a[orderBy] > b[orderBy]) {
+            return -order;
+          }
+          if (a[orderBy] < b[orderBy]) {
+            return order;
+          }
+          return 0;
+        } else if (orderBy === "reviews") {
+          if (a[orderBy] > b[orderBy]) {
+            return -order;
+          }
+          if (a[orderBy] < b[orderBy]) {
+            return order;
+          }
+          return 0;
+        } else if (orderBy === "rating") {
           if (a[orderBy] > b[orderBy]) {
             return -order;
           }
@@ -225,6 +250,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentUserIdLoggedIn: action.payload[0],
         currentUserNameLoggedIn: action.payload[1],
+      };
+    case CLEAN_SEARCH:
+      return {
+        ...state,
+        searchServices: [],
       };
 
     default:
