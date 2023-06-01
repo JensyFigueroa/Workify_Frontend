@@ -7,7 +7,7 @@ import {
   selectItem,
   selectLocation,
   orderResult,
-  cleanSearch
+  cleanSearch,
 } from "../../redux/actions";
 import styles from "./FilterBar.module.css";
 
@@ -89,8 +89,15 @@ const FilterBar = () => {
 
   const handleOrderByName = (e) => {
     const { value } = e.target;
-    setOrderBy(value);
-    dispatch(orderResult(value, orderType));
+    if (value === "raiting") {
+      setOrderBy(value);
+      console.log(value, "raiting en handler de order");
+      dispatch(orderResult(value, orderType));
+    } else {
+      console.log(value, "en handler de order");
+      setOrderBy(value);
+      dispatch(orderResult(value, orderType));
+    }
   };
 
   const handleOrderType = (e) => {
@@ -203,9 +210,9 @@ const FilterBar = () => {
                 >
                   <option value="nameService">Name</option>
                   <option value="typeService">Type Service</option>
-                  <option value="pricePerHou">Price</option>
-                  <option value="reviews">Reviews</option>
-                  <option value="rating">Rating</option>
+                  <option value="pricePerHour">Price</option>
+
+                  <option value="raiting">Rating</option>
                 </select>
               </div>
               <div className={styles.selectContainer}>
