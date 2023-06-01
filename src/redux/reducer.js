@@ -29,7 +29,7 @@ const initialState = {
   orderType: "up",
   cart: [],
   currentUserIdLoggedIn: "",
-  currentUserNameLoggedIn: ["",""],
+  currentUserNameLoggedIn: ['',''],
 };
 
 const rootReducer = (state = initialState, action) => {

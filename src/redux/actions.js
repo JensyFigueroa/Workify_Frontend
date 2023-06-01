@@ -119,6 +119,7 @@ export const updateCart = (cartItems) => {
 };
 
 export const loginUser = (uid, name, userPhone) => {
+  console.log(uid, name, userPhone, 'action')
   return {
     type: LOGIN_USER,
     payload: [uid, name, userPhone]

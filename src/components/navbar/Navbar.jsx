@@ -6,7 +6,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
 import {BsFillCartFill} from 'react-icons/bs'
 import { useLocation } from "react-router-dom";
 import logo from '../views/landing/img/logo.png'
-import Login from '../Login/Login'
+import LoginUser from '../Login/LoginUser'
 
 const Navbar = () => {
   let location = useLocation();
@@ -107,7 +107,7 @@ const Navbar = () => {
           </div>
 
          <div>
-              <Login />
+              <LoginUser />
          </div>
 
           <div
