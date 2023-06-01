@@ -208,7 +208,7 @@ const Login = () => {
                 await axios.post("/login/", inputs);
                 const userPhone =  await (await axios.get(`/user/${uid}`)).data.phone
                 console.log(userPhone,"telefono")
-                dispatch(loginUser(uid, name, userPhonelogin));
+                dispatch(loginUser(uid, name, userPhone));
 
             }
         } catch (error) {
