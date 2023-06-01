@@ -1,0 +1,22 @@
+.container{
+    width: 28em;
+    height: 25em;
+    z-index: 0;
+    position: relative;
+}
+
+.carousel{
+  width: 25em; /* Ajusta el ancho deseado */
+  height: 25em;
+  object-fit: cover;
+}
+
+.customPrevButton{
+    margin-left: -3em;
+}
+
+.customNextButton{
+    margin-left: 5em;
+}
+
+
