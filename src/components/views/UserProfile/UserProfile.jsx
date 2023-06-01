@@ -2,52 +2,44 @@ import React, { useState } from 'react';
 import styles from './UserProfile.module.css';
 
 export default function UserProfile() {
-  const [image, setImage] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleImageChange = (event) => {
+  const handleProfileClick = () => {
+    setShowForm(true);
+  };
+
+  const handleComprasClick = () => {
+    setShowForm(false);
+  };
+
+  const handleImageSelect = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
+    setSelectedImage(URL.createObjectURL(file));
+  };
 
-    reader.onload = () => {
-      setImage(reader.result);
-    };
-
-    reader.readAsDataURL(file);
+  const handleImageReset = () => {
+    setSelectedImage(null);
   };
 
   return (
     <div className={styles.containerPrincipal}>
-      <div className={styles.leftColumn}>
-        <label htmlFor="imageUpload">Imagen:</label>
-        <input
-          type="file"
-          id="imageUpload"
-          name="imageUpload"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-        {image && (
-          <img src={image} alt="Profile" width="300" height="300" />
-        )}
+      <div className={styles.columnLeft}>
+        <input type="button" value="Mi Perfil" onClick={handleProfileClick} />
+        <input type="button" value="Servicios" onClick={handleComprasClick} />
+        <input type="button" value="Logout"  onClick={handleComprasClick}/>
       </div>
-      <div className={styles.rightColumn}>
-        <ul className={styles.userDataList}>
-          <li>
-            <span>Nombre:</span> Pepe
-          </li>
-          <li>
-            <span>Apellido:</span> Argento
-          </li>
-          <li>
-            <span>Email:</span> pepito78@gmail.com
-          </li>
-          <li>
-            <span>Compras:</span> Ninguna
-          </li>
-          <li>
-            <span>Perfil:</span> User
-          </li>
-        </ul>
+      <div className={styles.columnRight}>
+        {showForm && (
+          <form className={styles.formPersonal}>
+            <input type="text" placeholder="Nombre" />
+            <input type="text" placeholder="Apellido" />
+            <input type="email" placeholder="Email" />
+            <input type="text" placeholder="Dirección" />
+            <button type="submit">Guardar</button>
+          </form>
+        )}
+       
       </div>
     </div>
   );
