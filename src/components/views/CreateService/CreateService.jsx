@@ -116,54 +116,63 @@ const handleCountryClick = (countryName) => {
 };
 
 //<--MANEJADOR DE INPUTS Y CLOUDINARY-->
-  const handleInputChange = async (event) => {
-    const { name, value } = event.target;
-    if (name === "imageUrl") {
-      const file = event.target.files[0];
-      const files = Array.from(event.target.files);
-      const imagesSelected = files.map((file) => URL.createObjectURL(file));
-      setSelectedImages(imagesSelected);
-      
-      if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'services_wfy');
-        formData.append('api_key', '168773883428854');
-  
-        // Realiza una solicitud a Cloudinary para cargar la imagen
-        try {
-          const response = await axios.post('https://api.cloudinary.com/v1_1/Joaquin/image/upload', formData);
-          const imageUrl = response.data.secure_url;
-          setInputs({
-            ...inputs,
-            imageUrl: [imageUrl],
-          });
-        } catch (error) {
-          console.error('Error uploading image:', error);
-        }
-      }
+const handleInputChange = async (event) => {
+  const { name, value } = event.target;
 
-    } else if (name === 'pricePerHour' && parseFloat(value) < 0 ){
-        // No actualizar el estado si el valor es menor a 0
-        return;
-      
-    } else {
+  if (name === "imageUrl") {
+    const files = Array.from(event.target.files);
+    const imagesSelected = files.map((file) => URL.createObjectURL(file));
+    setSelectedImages(imagesSelected);
+
+    const formDataArray = files.map((file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "services_wfy");
+      formData.append("api_key", "168773883428854");
+      return formData;
+    });
+
+    try {
+      const uploadPromises = formDataArray.map((formData) =>
+        axios.post(
+          "https://api.cloudinary.com/v1_1/Joaquin/image/upload",
+          formData
+        )
+      );
+
+      const responses = await Promise.all(uploadPromises);
+      const imageUrls = responses.map((response) => response.data.secure_url);
+
       setInputs({
         ...inputs,
-        [name]: value,
+        imageUrl: [...inputs.imageUrl, ...imageUrls],
       });
+    } catch (error) {
+      console.error("Error uploading images:", error);
     }
-    setErrors(
-      validate({
-        ...inputs,
-        [name]: value,
-      })
-    );
-    setTouch({
-      ...touch,
-      [name]: true,
+  } else if (name === "pricePerHour" && parseFloat(value) < 0) {
+    // No actualizar el estado si el valor es menor a 0
+    return;
+  } else {
+    setInputs({
+      ...inputs,
+      [name]: value,
     });
-  };
+  }
+
+  setErrors(
+    validate({
+      ...inputs,
+      [name]: value,
+    })
+  );
+
+  setTouch({
+    ...touch,
+    [name]: true,
+  });
+};
+
 
   //<--MANEJADOR DE INPUT LOCATION-->
   const handleInputLocation = (event) => {
@@ -182,7 +191,6 @@ const handleCountryClick = (countryName) => {
     event.preventDefault();
    if(uidService.length === 0){
   toast.error('Must be logged in to create a Service')
-  
    }else{
     //<---RUTA DEL POST--->
      try {
