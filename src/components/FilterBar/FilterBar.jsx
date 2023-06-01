@@ -7,6 +7,7 @@ import {
   selectItem,
   selectLocation,
   orderResult,
+  cleanSearch
 } from "../../redux/actions";
 import styles from "./FilterBar.module.css";
 
