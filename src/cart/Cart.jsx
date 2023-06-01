@@ -7,7 +7,7 @@ import { updateCart } from "../redux/actions";
 import Pasarela from "../components/Pasarela/Pasarela";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
+import axios from "axios";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { BsFillCartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -144,6 +144,14 @@ const Cart = () => {
     setPayActive(false);
   };
 
+  const handleNewViewPay = async ()=>{
+    const {data} = await axios.post('/payment/newPay',{
+      cartItems,
+    });
+    console.log(data);
+    window.open(data.url,'_blank')
+  }
+
   return (
     <div className={style.container}>
       <div className={style.containerTitle}>
@@ -222,6 +230,8 @@ const Cart = () => {
           </Link>
         )}
       </div>
+
+      <button onClick={handleNewViewPay}>new view Pay</button>
 
       {payActive && (
         <div className={style.popUp} onClick={handlePopupClick}>
