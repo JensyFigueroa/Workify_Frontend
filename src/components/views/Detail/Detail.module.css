@@ -64,11 +64,6 @@
   margin-left: 50px;
 }
 
-.featuredProjectsTitle {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
 
 .featuredProjectImage {
   width: 25em;
@@ -102,6 +97,27 @@
 .myButton:hover{
   background-color: black;
 }
+
+.form{
+  display: flex;
+  flex-direction: column;
+  margin-left: 15em;
+}
+.form h3{
+  border-bottom: 1px solid #b9b8b8;
+  width: 23em;
+}
+
+.inputs input{
+  width: 12em;
+  margin-bottom: 1em;
+}
+.inputs textarea{
+  width: 25em;
+  margin-bottom: 2.5em;
+  height: 5em;
+}
+
 
 .serviceDescriptionTitle {
   font-size: 20px;

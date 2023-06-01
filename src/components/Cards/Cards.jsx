@@ -47,7 +47,7 @@ export function Cards() {
             <Card
               id={serv.id}
               key={index}
-              image={serv.imageUrl}
+              image={serv.imageUrl[0]}
               nameService={serv.nameService}
               typeService={serv.typeService}
               pricePerHour={serv.pricePerHour}

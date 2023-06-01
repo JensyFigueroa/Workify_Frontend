@@ -2,7 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {clearFilter,
+import {
+  clearFilter,
   selectItem,
   selectLocation,
   orderResult,
@@ -99,6 +100,7 @@ const FilterBar = () => {
 
   const handleClearfilter = () => {
     dispatch(clearFilter());
+    dispatch(cleanSearch());
     setLocation("ALL");
     setItems("ALL");
     setIsFiltersCleared(!isFiltersCleared);
@@ -200,6 +202,9 @@ const FilterBar = () => {
                 >
                   <option value="nameService">Name</option>
                   <option value="typeService">Type Service</option>
+                  <option value="pricePerHou">Price</option>
+                  <option value="reviews">Reviews</option>
+                  <option value="rating">Rating</option>
                 </select>
               </div>
               <div className={styles.selectContainer}>

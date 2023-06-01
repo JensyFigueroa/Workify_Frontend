@@ -117,7 +117,9 @@ const Login = () => {
                 const uid = res.user.uid;
                 const name = res.user.displayName;
                 console.log(name, "namegoogle");
-                dispatch(loginUser(uid, name))
+                const userPhonelogin =  await (await axios.get(`/user/${uid}`)).data.phone
+                console.log(userPhonelogin,"login normal")
+                dispatch(loginUser(uid, name, userPhonelogin))
                 console.log(res.user, "user en el signin with email and password");
             }
         } catch (error) {
@@ -161,7 +163,8 @@ const Login = () => {
                 };
                 await axios.post("/login/", inputs);
                 toast.success('User Created!!')
-                dispatch(loginUser(uid, name))
+                const userPhoneRegister =  await (await axios.get(`/user/${uid}`)).data.phone
+                dispatch(loginUser(uid, name, userPhoneRegister))
                 console.log(res.user, "user en el signin with email and password")
             }
         } catch (error) {
@@ -203,7 +206,9 @@ const Login = () => {
                     google: true,
                 };
                 await axios.post("/login/", inputs);
-                dispatch(loginUser(uid, name));
+                const userPhone =  await (await axios.get(`/user/${uid}`)).data.phone
+                console.log(userPhone,"telefono")
+                dispatch(loginUser(uid, name, userPhone));
 
             }
         } catch (error) {
@@ -226,7 +231,7 @@ const Login = () => {
             //     window.localStorage.removeItem('uid');
             // })
             console.log('logged out');
-            dispatch(loginUser('', ''))
+            dispatch(loginUser('', '',''))
         } catch (error) {
             console.log(error);
         }

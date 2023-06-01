@@ -10,7 +10,8 @@ import {
   ADD_SERVICE_IN_CART,
   GET_CART,
   UPDATE_CART,
-  LOGIN_USER
+  LOGIN_USER,
+  CLEAN_SEARCH,
 } from "./types";
 import axios from "axios";
 
@@ -33,9 +34,7 @@ export const getServices = () => {
 export const getServicesByName = (name) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(
-        `/service/name?name=${name}`
-      );
+      const response = await axios.get(`/service/name?name=${name}`);
       const data = response.data;
       return dispatch({
         type: GET_SERVICESBYNAME,
@@ -119,9 +118,15 @@ export const updateCart = (cartItems) => {
   };
 };
 
-export const loginUser = (uid, name) => {
+export const loginUser = (uid, name, userPhone) => {
   return {
     type: LOGIN_USER,
-    payload: [uid, name]
+    payload: [uid, name, userPhone]
+  };
+};
+
+export const cleanSearch = () => {
+  return {
+    type: CLEAN_SEARCH,
   };
 };
