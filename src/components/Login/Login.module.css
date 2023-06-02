@@ -1,14 +1,15 @@
 .btn {
     width: 40px;
+    height: 40px;
     background-color: #F8F9FA;
     border-radius: 50px;
-    margin-right: 13px;
+    margin: auto 20px;
     border: .5px solid #DEE2E6;
 }
 
 .userName p, h6{
     color: white;
-    margin: 0;
+    margin: 0 0 0 30px;
 }
 
 .loginIco {

@@ -22,9 +22,8 @@ const LandingPage = () => {
             Menu
           </Link>
           <div
-            className={`${styles.links} ${
-              clickMenu ? styles.open : styles.close
-            }  ${styles.close}`}
+            className={`${styles.links} ${clickMenu ? styles.open : styles.close
+              }  ${styles.close}`}
             id="links"
           >
             <Link to="/home" className={`${styles.link} ${styles.top}`}>
@@ -33,8 +32,8 @@ const LandingPage = () => {
             <Link to="/about" className={styles.link}>
               About
             </Link>
-            <Link to="/contacto" className={styles.link}>
-              Contacto{" "}
+            <Link to="/createService" className={styles.link}>
+              Publish your service
             </Link>
           </div>
         </nav>

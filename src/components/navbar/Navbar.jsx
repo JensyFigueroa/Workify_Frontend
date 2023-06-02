@@ -3,7 +3,7 @@ import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import {BsFillCartFill} from 'react-icons/bs'
+import {MdHomeRepairService} from 'react-icons/md'
 import { useLocation } from "react-router-dom";
 import logo from '../views/landing/img/logo.png'
 import LoginUser from '../Login/LoginUser'
@@ -75,7 +75,8 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <span>Home</span>
+              <i className="fa-solid fa-house-chimney"/>
+              Home
             </NavLink>
             <NavLink
               to="/about"
@@ -84,6 +85,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
+              <i className="fa-solid fa-circle-info"/>
               About
             </NavLink>
             <NavLink
@@ -93,7 +95,8 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              Create Service
+              <i className="fa-solid fa-address-card"/>
+              Publish your service
             </NavLink>
             <NavLink
               to="/cart"
@@ -102,7 +105,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <BsFillCartFill />
+              <MdHomeRepairService style={{fontSize:'40px'}}/>
             </NavLink>
           </div>
 
