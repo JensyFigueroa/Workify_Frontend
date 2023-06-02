@@ -22,7 +22,7 @@ export function Card({
         <div className={styles.info}>
           <p>{nameService}</p>
           <p>Category: {typeService}</p>
-          <p>Service Provider: {currentUserNameLoggedIn}</p>
+          <p>Service Provider: {currentUserNameLoggedIn[0]}</p>
           <p>Rating:  </p>
         </div>
         <div className={styles.buttons}>
@@ -31,7 +31,7 @@ export function Card({
               dispatch(addServiceInCart({ id, nameService, pricePerHour }))
             }
           >
-            Add to cart
+            Add service
           </button>
           <Link to={`/detail/${id}`}>
             <button className={styles.btn}>More info...</button>
