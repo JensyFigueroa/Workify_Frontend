@@ -12,13 +12,13 @@ const Home = () => {
   console.log(uidHome, "uid desde home con use selector");
   console.log(nameHome, "name desde home con use selector");
   const allServices = useSelector((state) => state.allServices);
-
   useEffect(() => {
-    setTimeout(() => setLoading(false), 3000);
+    setTimeout(() => setLoading(false), 4000);
     window.scrollTo(0, 0);
   }, []);
-
+  
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (allServices.length > 0) {
       setLoading(false);
     }

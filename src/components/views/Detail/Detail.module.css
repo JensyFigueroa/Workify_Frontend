@@ -86,7 +86,7 @@
 
 .serviceProvider{
   margin-left: -11em;
-  margin-top: 10px;
+  margin-top: 8em;
 }
 .myButton{
   color: black;
@@ -103,21 +103,44 @@
   flex-direction: column;
   margin-left: 15em;
 }
+
 .form h3{
   border-bottom: 1px solid #b9b8b8;
-  width: 23em;
+  width: 8em;
 }
 
 .inputs input{
   width: 12em;
   margin-bottom: 1em;
 }
+
+.spanComent{
+  border-bottom: 1px solid #b9b8b8;
+  width: 50em;
+  padding: 10px;
+}
+.stars{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  
+}
+.stars p{
+  margin-right: 2em;
+  margin-top: 1em;
+}
+
 .inputs textarea{
   width: 25em;
   margin-bottom: 2.5em;
   height: 5em;
 }
 
+.h4{
+  margin-top: 5em
+}
 
 .serviceDescriptionTitle {
   font-size: 20px;

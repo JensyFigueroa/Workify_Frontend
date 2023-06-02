@@ -4,35 +4,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import style from "./Detail.module.css";
 import  Carousel  from "./Carousel/Carousel";
+import RatingStars from 'react-rating-stars-component';
+import { Form } from 'react-bootstrap';
+
+
+
+
+
 
 
 export function Detail() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [comments, setComments] = useState([])
   const [inputs, setInputs] = useState({
-    name: "",
+    raiting: "",
     comment: "",
   })
   const currentUserNameLoggedIn = useSelector(state => state.currentUserNameLoggedIn);
   const serviceDetail = useSelector((state) => state.serviceDetail);
   let arrImage = Array.isArray(serviceDetail.imageUrl) ? [...serviceDetail.imageUrl] : [serviceDetail.imageUrl];
   const { nameService, pricePerHour } = serviceDetail;
+  const comments = serviceDetail && serviceDetail.reviews ? serviceDetail.reviews : [];
   
+  //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     dispatch(getServiceDetail(id));
     return () => {
       dispatch(cleanDetail());
     };
   }, [dispatch, id]);
 
+
+  //<--MANEJADOR DE INPUTS-->
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    })
+    if (event.target) {
+      const { name, value } = event.target.elements;
+      setInputs({
+          ...inputs,
+          [name]: value,
+        })
+     
+    }
+   
   } 
+  //<--MANEJADOR DE SUBMIT-->
   const handleSubmit = (event) => {
     event.preventDefault();
     try {
@@ -60,7 +77,21 @@ export function Detail() {
         <div className={style.serviceTypeContainer}>
           <p className={style.serviceType}>
              Price per hour: ${serviceDetail.pricePerHour}
-          </p>
+             {serviceDetail.reviews && serviceDetail.reviews.length > 0 ? (
+              serviceDetail.reviews.map((review, index) => (
+                <RatingStars 
+                count={5}
+                key={index} 
+                value={review.raiting} 
+                size={24} // Tamaño de las estrellas
+                color1={'#ddd'} // Color de las estrellas inactivas
+                color2={'#ffd700'} // Color de las estrellas activas
+                />
+              ))
+            ) : (
+              <p>No hay comentarios o valoraciones disponibles.</p>
+            )}
+                      </p>
         
           <p className={style.serviceLocation}>
            Location: {serviceDetail.location?.pais} -{" "}
@@ -92,33 +123,54 @@ export function Detail() {
       <div className={style.serviceReviewsContainer}>
           <h1 className={style.serviceReviewsTitle}>Reviews</h1>
           <p>Customers rated this pro highly for work quality, professionalism, and responsiveness.</p>
-          <p className={style.serviceReviews}>{serviceDetail.reviews}</p>
         </div>
         <div>
 
     <div className={style.form}>
       <h3>Comments</h3>
-      <ul>
+      
         {comments.map((com, index) => (
-          <li key={index}>{com}</li>
+          <section className={style.comments}>
+            <span key={index}>
+            <RatingStars
+              count={5} // Número total de estrellas
+              value={com.raiting} // Valor del rating
+              size={24} // Tamaño de las estrellas
+              color1={'#ddd'} // Color de las estrellas inactivas
+              color2={'#ffd700'} // Color de las estrellas activas
+            />
+            </span>
+            <div className={style.spanComent}>
+              Comment: {com.comment}
+            </div>
+          </section>
+
         ))}
-      </ul>
-        <form className={style.inputs} onSubmit={handleSubmit}>
-              <input 
-                placeholder="Name"
-                value={inputs.name}
+     
+          <div className={style.h4}>
+            <h4>Leave a comment!</h4>
+          </div>
+                
+      <form className={style.inputs} onSubmit={handleSubmit}>
+        <Form.Group controlId="rating">
+            <div className={style.stars}>
+              <p>Rating</p>
+              <RatingStars
+                classNames={style.star}
+                count={5}
+                value={inputs.raiting}
                 onChange={handleInputChange}
-                type="name"
-                className={`form-control`}
-                aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default"
-                required
+                size={24}
+                activeColor="#ffd700"
               />
+            </div>
+        </Form.Group>
               <textarea
                 id="validationTextarea"
                 className={`form-control`}
                 placeholder="Comment"
                 value={inputs.comment}
+                name = "comment"
                 onChange={handleInputChange}
                 required
               ></textarea>
