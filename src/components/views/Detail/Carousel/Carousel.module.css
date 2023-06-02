@@ -9,14 +9,36 @@
   width: 25em; /* Ajusta el ancho deseado */
   height: 25em;
   object-fit: cover;
+  border-radius: 5px;
 }
 
 .customPrevButton{
-    margin-left: -3em;
+    margin-left: 0;
+    background-color: rgb(255, 255, 255, 0.9);
+    border-radius: 5px;
+    transform: scale(0.8);
+
 }
 
 .customNextButton{
-    margin-left: 5em;
+    margin-right: 3em;
+    background-color: rgb(255, 255, 255, 0.9);
+    border-radius: 5px;
+    transform: scale(0.8);
+
 }
 
+
+.thumb{
+    width: 6em;
+    height: 6em;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer;
+
+}
+
+.thumbsContainer{
+    margin-top: 0.5em;
+}
 

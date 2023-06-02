@@ -25,7 +25,19 @@ export function Detail() {
   let arrImage = Array.isArray(serviceDetail.imageUrl) ? [...serviceDetail.imageUrl] : [serviceDetail.imageUrl];
   const { nameService, pricePerHour } = serviceDetail;
   const comments = serviceDetail && serviceDetail.reviews ? serviceDetail.reviews : [];
-  
+  const [likes, setLikes] = useState({});
+
+  const handleLikeClick = (index) => {
+    setLikes((prevLikes) => {
+      if (prevLikes[index]) {
+        // Si ya existe un like para este comentario, restamos 1
+        return { ...prevLikes, [index]: prevLikes[index] - 1 };
+      } else {
+        // Si no existe un like para este comentario, sumamos 1
+        return { ...prevLikes, [index]: 1 };
+      }
+    });
+  };
   //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -86,6 +98,7 @@ export function Detail() {
                 size={24} // Tamaño de las estrellas
                 color1={'#ddd'} // Color de las estrellas inactivas
                 color2={'#ffd700'} // Color de las estrellas activas
+                edit={false}
                 />
               ))
             ) : (
@@ -124,7 +137,7 @@ export function Detail() {
           <h1 className={style.serviceReviewsTitle}>Reviews</h1>
           <p>Customers rated this pro highly for work quality, professionalism, and responsiveness.</p>
         </div>
-        <div>
+        
 
     <div className={style.form}>
       <h3>Comments</h3>
@@ -138,10 +151,15 @@ export function Detail() {
               size={24} // Tamaño de las estrellas
               color1={'#ddd'} // Color de las estrellas inactivas
               color2={'#ffd700'} // Color de las estrellas activas
+              edit={false}
             />
             </span>
             <div className={style.spanComent}>
               Comment: {com.comment}
+              <button onClick={() => handleLikeClick(index)}>
+            {likes[index] ? 'Like' : 'Like'}
+            {likes[index] && <div>{likes[index]}</div>}
+          </button>
             </div>
           </section>
 
@@ -179,7 +197,7 @@ export function Detail() {
           
       </div>
     </div>
-    </div>
+    
   );
 
   }

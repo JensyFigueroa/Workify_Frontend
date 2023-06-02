@@ -1,6 +1,7 @@
 .containerFather{
   display: flex;
   flex-direction: column;
+  background-color: white;
 }
 
 .detailContainer {
@@ -9,10 +10,8 @@
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 20px;
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 6em;
 }
 
 .serviceInfoContainer {
@@ -45,6 +44,7 @@
   padding: 10px;
   width: 30em;
   height: 7em;
+  margin-top: 2em;
 }
 
 .serviceType {
@@ -81,12 +81,13 @@
   padding: 10px;
   width: 30em;
   height: 12em;
+  margin-top: 2em;
   
 }
 
 .serviceProvider{
   margin-left: -11em;
-  margin-top: 8em;
+  margin-top: 12em;
 }
 .myButton{
   color: black;
@@ -102,6 +103,10 @@
   display: flex;
   flex-direction: column;
   margin-left: 15em;
+  border-radius: 20px;
+  padding: 40px;
+  width: 60em;
+  margin-bottom: 3em;
 }
 
 .form h3{
@@ -118,6 +123,13 @@
   border-bottom: 1px solid #b9b8b8;
   width: 50em;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.spanComent button{
+  width: 4em;
+  border: none;
+  margin-top: 1em;
 }
 .stars{
   display: flex;
