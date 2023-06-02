@@ -12,17 +12,18 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../redux/actions';
 import toast, { Toaster } from "react-hot-toast";
-import { useRef } from 'react';
 
 
 const Login = () => {
     const [showModalLogin, setShowModalLogin] = useState(false);
+    const [showModalPassword, setShowModalPassword] = useState(false);
     const [showModalUser, setShowModalUser] = useState(false);
     const dispatch = useDispatch();
 
     const userName = useSelector(state => state.currentUserNameLoggedIn)
 
     const [formLogin, setFormLogin] = useState({ email: '', password: '' });
+    const [formPassword, setFormPassword] = useState({ emailForgot: ''});
     const [formUser, setFormUser] = useState({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' });
     const [errors, setErrors] = useState({});
 
@@ -40,6 +41,11 @@ const Login = () => {
         setFormLogin({ ...formLogin, [name]: value })
 
     }
+    const handleInputChangePassword = (e) => {
+        const { name, value } = e.target
+        setFormPassword ({ ...formPassword, [name]: value })
+
+    }
 
     const handleInputChangeUser = (e) => {
         const { name, value } = e.target
@@ -50,6 +56,7 @@ const Login = () => {
     const handleBlur = (e) => {
         handleInputChangeLogin(e);
         if (currentForm === 'formLogin') setErrors(validate(formLogin));
+        if (currentForm === 'formPassword') setErrors(validate(formPassword));
         if (currentForm === 'formUser') setErrors(validate(formUser));
         // console.log('estoy en el blur')
     }
@@ -125,6 +132,12 @@ const Login = () => {
             setShowModalLogin(false);
         }
 
+    }
+
+    const handleSubmitPassword = async (event) => {
+        event.preventDefault();
+        toast.success('An email has been sent to your email')
+        setShowModalPassword(false);
     }
 
     const handleSubmitUser = async (e) => {
@@ -246,6 +259,11 @@ const Login = () => {
         setFormLogin({ email: '', password: '' })
         setErrors({})
     }
+    const hideFormPassword = (bool) => {
+        setShowModalPassword(bool)
+        setFormPassword({ email: ''})
+        setErrors({})
+    }
     const hideFormUser = (bool) => {
         setShowModalUser(bool)
         setFormUser({firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
@@ -257,6 +275,7 @@ const Login = () => {
             {userName[0].length > 0 ? <div className={styles.userName}>
                 <p>Welcome</p>
                 <h6>{userName[0]}</h6></div> : ''}
+            
             <button
                 type="button"
                 className={`${styles.btn} `}
@@ -285,7 +304,7 @@ const Login = () => {
                 </li>
             </ul>
 
-            <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)}>
+            <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)} >
                 <Modal.Header className={styles.headerLogin} >
                     <Modal.Title className={styles.titleLogin} >Login Workify
                     </Modal.Title>
@@ -314,7 +333,7 @@ const Login = () => {
                         </div>
 
                         <div className={styles.passLink}>
-                            <Link to={'#'}>Forgot password</Link>
+                            <Link to={'#'} onClick={() => { setShowModalPassword(true), handleFormChange('formPassword') }}>Forgot password</Link>
                         </div>
 
                         <div className={styles.field}>
@@ -339,8 +358,40 @@ const Login = () => {
                 </Modal.Body>
             </Modal>
 
+           
+{/* ############################### FORM FORGOT PASSWORD ################################################## */}
+
+<Modal className={styles.wrapper} show={showModalPassword} onHide={() => hideFormPassword(false)} size="lg">
+                <Modal.Header className={styles.headerLogin} >
+                    <Modal.Title className={styles.titleLogin} >Forgot Password Workify
+                    </Modal.Title>
+                    <Link className={styles.customCloseButton} onClick={() => setShowModalPassword(false)}>
+                        X
+                    </Link>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleSubmitPassword}>
+                        <div className={styles.field}>
+                            <input type="text" name='emailForgot' onChange={handleInputChangePassword} onBlur={handleBlur} value={formPassword.emailForgot} required />
+                            <label htmlFor="">Email address</label>
+                        </div>
+                        {errors.emailForgot && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.emailForgot}</p>}
+                  
+                        <div className={styles.field}>
+                            {/* <input type="submit" value="Login" /> */}
+                            <Button className={styles.btnLogin} variant="primary" type="submit">
+                                Recover password
+                            </Button>
+                        </div>
+
+                        <Toaster position="bottom-right" reverseOrder={false} />
+                    </Form>
+             
+                </Modal.Body>
+            </Modal>
 
 
+{/* ############################### FORM CREATE USER ################################################## */}
             <Modal className={styles.wrapper} show={showModalUser} onHide={() => hideFormUser(false)} size="lg">
                 <Modal.Header className={styles.headerLogin} >
                     <Modal.Title className={styles.titleLogin} >Create User Workify</Modal.Title>

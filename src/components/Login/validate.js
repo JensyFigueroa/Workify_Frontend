@@ -1,7 +1,7 @@
 export default function validateInputs(inputs) {
   let errors = {};
 
-  // console.log(inputs, "inputs validate funcion");
+  console.log(inputs, "inputs validate funcion");
 
   if (inputs.email || inputs.password) {
     if (
@@ -17,6 +17,15 @@ export default function validateInputs(inputs) {
     )
       errors.password =
         "Must be more than 6 characters with 1 uppercase character 1 lowercase character and 1 special character";
+  }
+
+  if (inputs.emailForgot) {
+    if (
+      (inputs.emailForgot.length > 0 && !/\S+@\S+\.\S+/.test(inputs.emailForgot)) ||
+      inputs.emailForgot.length >= 35
+    )
+      errors.emailForgot = "Must be a email";
+   
   }
 
   if (inputs.firstName ||inputs.lastName ||inputs.phoneNumber || inputs.emailUser ||inputs.emailConfirm ||inputs.passwordUser ||inputs.passwordConfirm) {
