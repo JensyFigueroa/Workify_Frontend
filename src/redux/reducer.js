@@ -29,7 +29,7 @@ const initialState = {
   orderType: "up",
   cart: [],
   currentUserIdLoggedIn: "",
-  currentUserNameLoggedIn: ['',''],
+  currentUserNameLoggedIn: ["", ""],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -97,19 +97,15 @@ const rootReducer = (state = initialState, action) => {
             return order;
           }
           return 0;
-        } else if (orderBy === "reviews") {
-          if (a[orderBy] > b[orderBy]) {
+        } else if (orderBy === "raiting") {
+          console.log("rating en reducer");
+          const aRaiting = a.reviews.length > 0 ? a.reviews[0].raiting : 0;
+          const bRaiting = b.reviews.length > 0 ? b.reviews[0].raiting : 0;
+
+          if (aRaiting > bRaiting) {
             return -order;
           }
-          if (a[orderBy] < b[orderBy]) {
-            return order;
-          }
-          return 0;
-        } else if (orderBy === "rating") {
-          if (a[orderBy] > b[orderBy]) {
-            return -order;
-          }
-          if (a[orderBy] < b[orderBy]) {
+          if (aRaiting < bRaiting) {
             return order;
           }
           return 0;
@@ -249,7 +245,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUserIdLoggedIn: action.payload[0],
-        currentUserNameLoggedIn: [action.payload[1],action.payload[2]]
+        currentUserNameLoggedIn: [action.payload[1], action.payload[2]],
       };
     case CLEAN_SEARCH:
       return {
