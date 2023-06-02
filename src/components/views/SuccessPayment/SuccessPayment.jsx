@@ -14,7 +14,8 @@ const SuccessPayment = () => {
       to_email: user[1],
       from_name: "Workify Services",
       subject: "Pago exitoso",
-      message: `Hola ${user[0]},\n\nEl pago ha sido exitoso. Hemos notificado a los prestadores de servicios, en las proximas horas los proveedores de servicios estaran siendo notificados y aceptando o declinando su oferta.\n\nSaludos, \nWorkify Services`,
+      message:
+        "Hello ${user[0]},\n\nThe payment was successful. We have notified the service providers, and in the next few hours, the service providers will be notified and accepting or declining your offer.\n\nRegards,\nWorkify Services.",
     };
     emailjs
       .send("service_3iqa24w", "template_o4thiyt", templateParams)
@@ -26,7 +27,11 @@ const SuccessPayment = () => {
       });
   }, []);
 
-  return <div className={styles.container}>SuccessPayment</div>;
+  return (
+    <div className={styles.container}>
+      "Your payment has been successfully processed."
+    </div>
+  );
 };
 
 export default SuccessPayment;

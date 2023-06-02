@@ -9,6 +9,7 @@ import Error404 from "./components/views/Error404/Error404";
 import Cart from "./cart/Cart";
 import UserProfile from "./components/views/UserProfile/UserProfile";
 import SuccessPayment from "./components/views/SuccessPayment/SuccessPayment";
+import About from "./components/views/About/About";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3001/";
@@ -26,6 +27,7 @@ function App() {
         <Route path={"*"} element={<Error404 />} />
         <Route path={"/cart"} element={<Cart />} />
         <Route path={"/payment/success"} element={<SuccessPayment />} />
+        <Route path={"/about"} element={<About />} />
       </Routes>
       <Footer />
     </>
