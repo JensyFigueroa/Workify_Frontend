@@ -291,16 +291,24 @@ const Login = () => {
                 <BsFillPersonLinesFill className={styles.loginIco} />
             </button>
             <ul className="dropdown-menu">
+                {userName[0].length > 0 ? <li>
+                    <Link className="dropdown-item" to="/UserProfile" variant="primary">
+                        Profile
+                    </Link>
+                </li>: ''}
+                {userName[0].length === 0 ?
                 <li>
                     <Link className="dropdown-item" to="#" variant="primary" onClick={() => { setShowModalLogin(true), handleFormChange('formLogin') }} >
                         Login
                     </Link>
-                </li>
+                </li>:''}
+
+                {userName[0].length > 0 ?
                 <li>
                     <Link className="dropdown-item" to="#" onClick={logOut}>
                         Log Out
                     </Link>
-                </li>
+                </li>:''}
                 <li>
                     <Link className="dropdown-item" to="#" style={{ color: 'blue' }} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onClick={() => { setShowModalUser(true), handleFormChange('formUser') }} >
                         Create User

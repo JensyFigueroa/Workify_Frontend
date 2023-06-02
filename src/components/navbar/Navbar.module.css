@@ -48,7 +48,7 @@ h1 {
 .links {
     display: flex;
     gap: 40px;
-    /* background-color: #009903; */
+    /* background-color: #000046; */
     position: absolute;
     top: -700px;
     left: -2000px;
@@ -111,7 +111,7 @@ h1 {
 }
 
 .navIcon span {
-    background-color: black;
+    background-color: white;
     position: absolute;
     border-radius: 2px;
     transition: .3s cubic-bezier(.8, .5, .2, 1.4);
@@ -167,6 +167,11 @@ h1 {
 
 
 @media(max-width: 1024px) {
+    .links {
+        display: flex;
+        flex-direction: column;
+        background-color: #000046;
+    }
     .link {
         margin: 15px 0;
     }

@@ -6,6 +6,8 @@ import styles from "./LandingPage.module.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
+import {FiMenu} from 'react-icons/fi'
+import {AiOutlineClose} from 'react-icons/ai'
 
 const LandingPage = () => {
   const [clickMenu, setClickMenu] = useState(false);
@@ -13,13 +15,16 @@ const LandingPage = () => {
   const handleClick = () => {
     setClickMenu(!clickMenu);
   };
+  console.log(clickMenu)
+
 
   return (
     <div className={styles.containerPrincipal}>
       <div className={styles.header}>
         <nav className={styles.nav}>
-          <Link to="#" id="menu" className={styles.menu} onClick={handleClick}>
-            Menu
+          <Link to="#" id="menu" className={styles.menu} >
+            {clickMenu ? <AiOutlineClose className={styles.icoMenu} onClick={handleClick}/> : <FiMenu className={styles.icoMenu} onClick={handleClick}/> }
+                
           </Link>
           <div
             className={`${styles.links} ${clickMenu ? styles.open : styles.close

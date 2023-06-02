@@ -21,12 +21,18 @@
 }
 
 .menu {
+    font-size: 40px;
+    font-weight: 600;
     display: block;
-    color: #fff;
     text-decoration: none;
     animation: moveLeft 1s ease-in;
     z-index: 10000;
 }
+
+.menu .icoMenu{
+    color: white;
+    font-weight: 600;
+  }
 
 .links{
     position: fixed;
@@ -184,8 +190,7 @@
     font-size: 24px;
     margin-right: 5px;
   }
-  
-
+    
 @keyframes moveLeft {
     0%{
         opacity: 0;
