@@ -1,28 +1,25 @@
 import React from "react";
 import styles from "./SuccessPayment.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
+import { setCart } from "../../../redux/actions";
 
 const SuccessPayment = () => {
   const user = useSelector((state) => state.currentUserNameLoggedIn);
-  console.log(user);
 
-  const persona = { email: "carlitossaul.h@gmail.com" };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Configura las credenciales de email.js
     emailjs.init("7W9NT4oCDCiTSPAhs");
 
-    // Configura el mensaje de correo electrónico
     const templateParams = {
-      to_email: persona.email, // Reemplaza "user.email" con la propiedad correcta del objeto user que contiene el correo electrónico del usuario
-      from_name: "Workify Services", // Nombre del remitente del correo electrónico
-      subject: "Pago exitoso", // Asunto del correo electrónico
-      message: `Hola ${user[0]},\n\nEl pago ha sido exitoso. Gracias por utilizar nuestros servicios.\n\nSaludos, \nWorkify Services`, // Cuerpo del correo electrónico
+      to_email: user[1],
+      from_name: "Workify Services",
+      subject: "Pago exitoso",
+      message:
+        "Hello ${user[0]},\n\nThe payment was successful. We have notified the service providers, and in the next few hours, the service providers will be notified and accepting or declining your offer.\n\nRegards,\nWorkify Services.",
     };
-
-    // Envía el correo electrónico
     emailjs
       .send("service_3iqa24w", "template_o4thiyt", templateParams)
       .then((response) => {
@@ -33,7 +30,13 @@ const SuccessPayment = () => {
       });
   }, []);
 
-  return <div className={styles.container}>SuccessPayment</div>;
+  dispatch(setCart());
+
+  return (
+    <div className={styles.container}>
+      "Your payment has been successfully processed."
+    </div>
+  );
 };
 
 export default SuccessPayment;
