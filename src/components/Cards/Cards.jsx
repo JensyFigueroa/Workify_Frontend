@@ -17,18 +17,18 @@ export function Cards() {
   const filterItem = useSelector((state) => state.selectedItem);
   const searchServices = useSelector((state) => state.searchServices);
 
-  let services =[]
+  let services = [];
 
   if (searchServices.length > 0) {
-    services = searchServices
-  }else{
-    services = allServices
+    services = searchServices;
+  } else {
+    services = allServices;
   }
 
   useEffect(() => {
-      if (filterLocation === null && filterItem === null) {
-        dispatch(getServices());
-      }
+    if (filterLocation === null && filterItem === null) {
+      dispatch(getServices());
+    }
   }, []);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ export function Cards() {
               nameService={serv.nameService}
               typeService={serv.typeService}
               pricePerHour={serv.pricePerHour}
+              emailUserService={serv.emailUserService}
               addToCart={addToCart}
             />
           );

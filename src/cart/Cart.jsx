@@ -144,13 +144,13 @@ const Cart = () => {
     setPayActive(false);
   };
 
-  const handleNewViewPay = async ()=>{
-    const {data} = await axios.post('/payment/newPay',{
+  const handleNewViewPay = async () => {
+    const { data } = await axios.post("/payment/newPay", {
       cartItems,
     });
     console.log(data);
-    window.open(data.url,'_blank')
-  }
+    window.open(data.url, "_blank");
+  };
 
   return (
     <div className={style.container}>

@@ -11,9 +11,12 @@ export function Card({
   handleSelect,
   pricePerHour,
   addToCart,
+  emailUserService,
 }) {
   const dispatch = useDispatch();
-  const currentUserNameLoggedIn = useSelector(state => state.currentUserNameLoggedIn);
+  const currentUserNameLoggedIn = useSelector(
+    (state) => state.currentUserNameLoggedIn
+  );
 
   return (
     <div className={styles.container}>
@@ -23,12 +26,19 @@ export function Card({
           <p>{nameService}</p>
           <p>Category: {typeService}</p>
           <p>Service Provider: {currentUserNameLoggedIn[0]}</p>
-          <p>Rating:  </p>
+          <p>Rating: </p>
         </div>
         <div className={styles.buttons}>
           <button
             onClick={() =>
-              dispatch(addServiceInCart({ id, nameService, pricePerHour }))
+              dispatch(
+                addServiceInCart({
+                  id,
+                  nameService,
+                  pricePerHour,
+                  emailUserService,
+                })
+              )
             }
           >
             Add service
