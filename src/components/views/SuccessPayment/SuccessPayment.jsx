@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "./SuccessPayment.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
+import { setCart } from "../../../redux/actions";
 
 const SuccessPayment = () => {
   const user = useSelector((state) => state.currentUserNameLoggedIn);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     emailjs.init("7W9NT4oCDCiTSPAhs");
@@ -26,6 +29,8 @@ const SuccessPayment = () => {
         console.error("Error al enviar el correo electrónico", error);
       });
   }, []);
+
+  dispatch(setCart());
 
   return (
     <div className={styles.container}>

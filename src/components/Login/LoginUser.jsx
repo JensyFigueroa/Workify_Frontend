@@ -119,9 +119,12 @@ const Login = () => {
                 if (res && res.user) {
                     const uid = res.user.uid;
                     const name = res.user.displayName;
-                    console.log(name, "namegoogle");
-                    dispatch(loginUser(uid, name))
-                    console.log(res.user, "user en el signin with email and password");
+                    
+                    const userPhoneLogin = await (await axios.get(`/user/${uid}`)).data.phone
+                    const userEmail = await (await axios.get(`/user/${uid}`)).data.email
+                    //console.log(userEmail, "useridata");
+                    dispatch(loginUser(uid, name, userPhoneLogin, userEmail))
+                    //console.log(res.user, "user en el signin with email and password");
                 }
                 console.log('Enviando el form Login ', formLogin);
                 setFormLogin({ email: '', password: '' })
@@ -176,8 +179,9 @@ const Login = () => {
                     await axios.post("/login/", inputs);
                     toast.success('User Created!!')
                     const userPhoneRegister = await (await axios.get(`/user/${uid}`)).data.phone
-                    dispatch(loginUser(uid, name, userPhoneRegister))
-                    console.log(res.user, "user en el signin with email and password")
+                    const userEmail = await (await axios.get(`/user/${uid}`)).data.email
+                    dispatch(loginUser(uid, name, userPhoneRegister, userEmail))
+                    //console.log(res.user, "user en el signin with email and password")
                 }
 
 
@@ -224,8 +228,9 @@ const Login = () => {
                 };
                 await axios.post("/login/", inputs);
                 const userPhone = await (await axios.get(`/user/${uid}`)).data.phone
-                console.log(userPhone, "telefono")
-                dispatch(loginUser(uid, name, userPhone));
+                const userEmail = await (await axios.get(`/user/${uid}`)).data.email
+                dispatch(loginUser(uid, name, userPhone, userEmail))
+               
             }
         } catch (error) {
             console.log(error, "que gonorrea");
@@ -248,7 +253,7 @@ const Login = () => {
             //     window.localStorage.removeItem('uid');
             // })
             console.log('logged out');
-            dispatch(loginUser('', '', ''))
+            dispatch(loginUser('', '', '',''))
         } catch (error) {
             console.log(error);
         }
