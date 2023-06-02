@@ -118,11 +118,11 @@ export const updateCart = (cartItems) => {
   };
 };
 
-export const loginUser = (uid, name, userPhone) => {
+export const loginUser = (uid, name, userPhone, userEmail) => {
   console.log(uid, name, userPhone, 'action')
   return {
     type: LOGIN_USER,
-    payload: [uid, name, userPhone]
+    payload: [uid, name, userPhone, userEmail]
   };
 };
 
