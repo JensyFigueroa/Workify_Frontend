@@ -12,6 +12,7 @@ import {
   UPDATE_CART,
   LOGIN_USER,
   CLEAN_SEARCH,
+  SET_CART,
 } from "./types";
 import axios from "axios";
 
@@ -119,15 +120,21 @@ export const updateCart = (cartItems) => {
 };
 
 export const loginUser = (uid, name, userPhone) => {
-  console.log(uid, name, userPhone, 'action')
+  console.log(uid, name, userPhone, "action");
   return {
     type: LOGIN_USER,
-    payload: [uid, name, userPhone]
+    payload: [uid, name, userPhone],
   };
 };
 
 export const cleanSearch = () => {
   return {
     type: CLEAN_SEARCH,
+  };
+};
+
+export const setCart = () => {
+  return {
+    type: SET_CART,
   };
 };

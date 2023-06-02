@@ -13,6 +13,7 @@ import {
   UPDATE_CART,
   LOGIN_USER,
   CLEAN_SEARCH,
+  SET_CART,
 } from "./types";
 
 const initialState = {
@@ -251,6 +252,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchServices: [],
+      };
+    case SET_CART:
+      window.localStorage.removeItem("cart");
+      return {
+        ...state,
+        cart: [],
       };
 
     default:
