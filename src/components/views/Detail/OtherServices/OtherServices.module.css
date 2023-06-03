@@ -35,7 +35,6 @@
 }
 
 .paginationArrowNext{
-    text-decoration: none;
     font-size: 2.0em;
     border: 1px solid rgb(0, 204, 240);
     height: 1.8em;
@@ -47,7 +46,6 @@
     border-bottom-right-radius: 15px;
 }
 .paginationArrowPre{
-    text-decoration: none;
     font-size: 2.0em;
     border: 1px solid rgb(0, 204, 240);
     height: 1.8em;
@@ -57,12 +55,15 @@
     color: rgb(0, 204, 240);
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+    text-decoration: none !important;
 }
 .activePage{
     margin-left: 2em;
+    text-decoration: none;
 }
 .paginationButton{
     list-style: none;
+    text-decoration: none;
 }
 .pageLink{
     display: none;
