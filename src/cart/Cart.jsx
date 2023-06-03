@@ -218,7 +218,7 @@ const Cart = () => {
       <div className={styles.totalContainer}>
         <h2>Total: ${calculateTotal()}</h2>
         {userId ? (
-          <button onClick={handlePay}>Pay</button>
+           <button className={styles.pay} onClick={handleNewViewPay}>Pay</button>
         ) : (
           <>
           <button className={styles.login}>
@@ -231,7 +231,7 @@ const Cart = () => {
       </div>
 
 
-      <button onClick={handleNewViewPay}>new view Pay</button>
+     
 
       {payActive && (
         <div className={styles.popUp} onClick={handlePopupClick}>
