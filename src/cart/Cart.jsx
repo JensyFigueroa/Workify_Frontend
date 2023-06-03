@@ -11,6 +11,7 @@ import axios from "axios";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { BsFillCartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Login from "../components/Login/Login";
 
 const promiseStripe = loadStripe(
   "pk_test_51NBQA0BpeRt7rcmet7zt0iDB39vFiEWAF1fC9g0mXU9UWuG5E50VE5j5o8AgcsZkeUv9iD4fWK4cUu9kKOqwhzKn00aWDy85Vh"
@@ -219,15 +220,7 @@ const Cart = () => {
         {userId ? (
           <button onClick={handlePay}>Pay</button>
         ) : (
-          <Link
-            className="dropdown-item"
-            to="#"
-            data-bs-target="#exampleModalToggle"
-            data-bs-toggle="modal"
-            // onClick={() => handleFormChange("formLogin")}
-          >
-            Login
-          </Link>
+          <Login/>
         )}
       </div>
 

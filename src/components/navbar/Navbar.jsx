@@ -7,9 +7,18 @@ import {MdHomeRepairService} from 'react-icons/md'
 import { useLocation } from "react-router-dom";
 import logo from '../views/landing/img/logo.png'
 import LoginUser from '../Login/LoginUser'
+import { useDispatch, useSelector } from "react-redux";
+import Login from "../Login/Login";
+import { loginUser } from '../../redux/actions';
+import { signOut } from 'firebase/auth'
+import { auth } from '../../config/firebase-config.js'
 
 const Navbar = () => {
   let location = useLocation();
+  const dispatch = useDispatch();
+
+  const userName = useSelector(state => state.currentUserNameLoggedIn)
+
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -52,6 +61,20 @@ const Navbar = () => {
   }, []);
 
   const navbarClasses = `${isScrolled ? styles.fixed : styles.container}`;
+
+  const logOut = async () => {
+    try {
+        await signOut(auth)
+        // .then((res) => {
+        //     setUID('');
+        //     window.localStorage.removeItem('uid');
+        // })
+        console.log('logged out');
+        dispatch(loginUser('', '', '', ''))
+    } catch (error) {
+        console.log(error);
+    }
+};
 
   return (
     location.pathname !== "/" && (
@@ -109,9 +132,45 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-         <div>
-              <LoginUser />
-         </div>
+          <div className="btn-group " role="group">
+            {userName[0].length > 0 ? <div className={styles.userName}>
+                <p>Welcome</p>
+                <h6>{userName[0]}</h6></div> : ''}
+            
+            <button
+                type="button"
+                className={`${styles.btn} `}
+                style={{ color: "black" }}
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                <BsFillPersonLinesFill className={styles.loginIco} />
+            </button>
+            <ul className="dropdown-menu">
+                {userName[0].length > 0 ? <li>
+                    <Link className="dropdown-item" to="/UserProfile" variant="primary">
+                        Profile
+                    </Link>
+                </li>: ''}
+                {userName[0].length === 0 ?
+                <li>
+                   <Login/>
+                </li>:''}
+
+                {userName[0].length > 0 ?
+                <li>
+                    <Link className="dropdown-item" to="#" onClick={logOut}>
+                        Log Out
+                    </Link>
+                </li>:''}
+                <li>
+                    <Link className="dropdown-item" to="#" >
+                        <LoginUser/>
+                    </Link>
+
+                </li>
+            </ul>
+            </div>
 
           <div
             className={`${styles.btnBurguer} ${styles.navIcon} ${

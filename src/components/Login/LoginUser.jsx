@@ -14,16 +14,13 @@ import { loginUser } from '../../redux/actions';
 import toast, { Toaster } from "react-hot-toast";
 
 
-const Login = () => {
+const LoginUser = () => {
     const [showModalLogin, setShowModalLogin] = useState(false);
-    const [showModalPassword, setShowModalPassword] = useState(false);
     const [showModalUser, setShowModalUser] = useState(false);
     const dispatch = useDispatch();
 
     const userName = useSelector(state => state.currentUserNameLoggedIn)
 
-    const [formLogin, setFormLogin] = useState({ email: '', password: '' });
-    const [formPassword, setFormPassword] = useState({ emailForgot: ''});
     const [formUser, setFormUser] = useState({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' });
     const [errors, setErrors] = useState({});
 
@@ -36,17 +33,6 @@ const Login = () => {
         setCurrentForm(formName);
     };
 
-    const handleInputChangeLogin = (e) => {
-        const { name, value } = e.target
-        setFormLogin({ ...formLogin, [name]: value })
-
-    }
-    const handleInputChangePassword = (e) => {
-        const { name, value } = e.target
-        setFormPassword ({ ...formPassword, [name]: value })
-
-    }
-
     const handleInputChangeUser = (e) => {
         const { name, value } = e.target
         setFormUser({ ...formUser, [name]: value })
@@ -54,9 +40,7 @@ const Login = () => {
     }
 
     const handleBlur = (e) => {
-        handleInputChangeLogin(e);
-        if (currentForm === 'formLogin') setErrors(validate(formLogin));
-        if (currentForm === 'formPassword') setErrors(validate(formPassword));
+        handleInputChangeUser(e);
         if (currentForm === 'formUser') setErrors(validate(formUser));
         // console.log('estoy en el blur')
     }
@@ -110,39 +94,6 @@ const Login = () => {
         searchCities(countryName);
     };
 
-    const handleSubmitLogin = async (event) => {
-        event.preventDefault();
-
-        if (Object.keys(errors).length === 0 && currentForm === 'formLogin') {
-            try {
-                const res = await signInWithEmailAndPassword(auth, formLogin.email, formLogin.password);
-                if (res && res.user) {
-                    const uid = res.user.uid;
-                    const name = res.user.displayName;
-                    
-                    const userPhoneLogin = await (await axios.get(`/user/${uid}`)).data.phone
-                    const userEmail = await (await axios.get(`/user/${uid}`)).data.email
-                    //console.log(userEmail, "useridata");
-                    dispatch(loginUser(uid, name, userPhoneLogin, userEmail))
-                    //console.log(res.user, "user en el signin with email and password");
-                }
-                console.log('Enviando el form Login ', formLogin);
-                setFormLogin({ email: '', password: '' })
-            } catch (error) {
-                console.log(error);
-            }
-
-            setShowModalLogin(false);
-        }
-
-    }
-
-    const handleSubmitPassword = async (event) => {
-        event.preventDefault();
-        toast.success('An email has been sent to your email')
-        setShowModalPassword(false);
-    }
-
     const handleSubmitUser = async (e) => {
         e.preventDefault();
 
@@ -150,7 +101,7 @@ const Login = () => {
             try {
                 const res = await createUserWithEmailAndPassword(auth, formUser.emailUser, formUser.passwordUser)
 
-            
+
                 await updateProfile(auth.currentUser, {
                     displayName: formUser.firstName + " " + formUser.lastName
                 });
@@ -200,211 +151,19 @@ const Login = () => {
         }
     }
 
-
-    const loginWithGoogle = async () => {    
-        try {   
-            await setPersistence(auth, browserSessionPersistence);
-            const res = await signInWithPopup(auth, googleProvider);
-            if (res && res.user) {
-
-                const uid = res.user.uid;
-                const name = res.user.displayName;
-                // setUID(uid);
-                // window.localStorage.setItem('uid', res.user.uid);
-                console.log(res.user.displayName, "usuario logeado");
-                const inputs = {
-                    id: res.user.uid,
-                    name: res.user.displayName,
-                    email: res.user.email,
-                    country: "",
-                    city: "",
-                    phone: res.user.providerData[0].phoneNumber,
-                    credential: [""],
-                    imagePublicId: "",
-                    imageUrl: res.user.photoURL,
-                    adminStatus: false,
-                    description: "",
-                    google: true,
-                };
-                await axios.post("/login/", inputs);
-                const userPhone = await (await axios.get(`/user/${uid}`)).data.phone
-                const userEmail = await (await axios.get(`/user/${uid}`)).data.email
-                dispatch(loginUser(uid, name, userPhone, userEmail))
-               
-            }
-        } catch (error) {
-            console.log(error, "que gonorrea");
-        }
-
-        setShowModalLogin(false)
-        
-    };
-
-
-    if (auth?.currentUser) {
-        console.log("usuario esta logeado")
-    }
-
-    const logOut = async () => {
-        try {
-            await signOut(auth)
-            // .then((res) => {
-            //     setUID('');
-            //     window.localStorage.removeItem('uid');
-            // })
-            console.log('logged out');
-            dispatch(loginUser('', '', '',''))
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const hideFormLogin = (bool) => {
-        setShowModalLogin(bool)
-        setFormLogin({ email: '', password: '' })
-        setErrors({})
-    }
-    const hideFormPassword = (bool) => {
-        setShowModalPassword(bool)
-        setFormPassword({ email: ''})
-        setErrors({})
-    }
     const hideFormUser = (bool) => {
         setShowModalUser(bool)
-        setFormUser({firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
+        setFormUser({ firstName: '', lastName: '', phoneNumber: '', country: 'Your country', city: 'Your city', emailUser: '', emailConfirm: '', passwordUser: '', passwordConfirm: '' })
         setErrors({})
     }
 
     return (
-        <div className="btn-group " role="group">
-            {userName[0].length > 0 ? <div className={styles.userName}>
-                <p>Welcome</p>
-                <h6>{userName[0]}</h6></div> : ''}
-            
-            <button
-                type="button"
-                className={`${styles.btn} `}
-                style={{ color: "black" }}
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-            >
-                <BsFillPersonLinesFill className={styles.loginIco} />
-            </button>
-            <ul className="dropdown-menu">
-                {userName[0].length > 0 ? <li>
-                    <Link className="dropdown-item" to="/UserProfile" variant="primary">
-                        Profile
-                    </Link>
-                </li>: ''}
-                {userName[0].length === 0 ?
-                <li>
-                    <Link className="dropdown-item" to="#" variant="primary" onClick={() => { setShowModalLogin(true), handleFormChange('formLogin') }} >
-                        Login
-                    </Link>
-                </li>:''}
-
-                {userName[0].length > 0 ?
-                <li>
-                    <Link className="dropdown-item" to="#" onClick={logOut}>
-                        Log Out
-                    </Link>
-                </li>:''}
-                <li>
-                    <Link className="dropdown-item" to="#" style={{ color: 'blue' }} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onClick={() => { setShowModalUser(true), handleFormChange('formUser') }} >
-                        Create User
-                    </Link>
-
-                </li>
-            </ul>
-
-            <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)} >
-                <Modal.Header className={styles.headerLogin} >
-                    <Modal.Title className={styles.titleLogin} >Login Workify
-                    </Modal.Title>
-                    <Link className={styles.customCloseButton} onClick={() => setShowModalLogin(false)}>
-                        X
-                    </Link>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleSubmitLogin}>
-                        <div className={styles.field}>
-                            <input type="text" name='email' onChange={handleInputChangeLogin} onBlur={handleBlur} value={formLogin.email} required />
-                            <label htmlFor="">Email address</label>
-                        </div>
-                        {errors.email && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.email}</p>}
-                        <div className={styles.field}>
-                            <input type="password" name='password' onChange={handleInputChangeLogin} onBlur={handleBlur} value={formLogin.password} required />
-                            <label htmlFor="">Password</label>
-                        </div>
-                        {errors.password && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.password}</p>}
-
-                        <div className={styles.content}>
-                            <div className={styles.checkbox}>
-                                <input type="checkbox" name="" id="rememberMe" />
-                                <label htmlFor="rememberMe">Remember Me</label>
-                            </div>
-                        </div>
-
-                        <div className={styles.passLink}>
-                            <Link to={'#'} onClick={() => { setShowModalPassword(true), handleFormChange('formPassword') }}>Forgot password</Link>
-                        </div>
-
-                        <div className={styles.field}>
-                            {/* <input type="submit" value="Login" /> */}
-                            <Button className={styles.btnLogin} variant="primary" type="submit">
-                                Sign in
-                            </Button>
-                        </div>
-
-                        <div className={styles.signUpLink}>
-                            Don`t have an account?
-                            <div className={styles.typeAccount}>
-
-                                <Link to={'#'} data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" onClick={() => { setShowModalLogin(false), setShowModalUser(true), handleFormChange('formUser') }}>SignUp User</Link>
-                            </div>
-                        </div>
-
-                    </Form>
-                    <div className="modal-footer">
-                        <button onClick={() => {loginWithGoogle(), setShowModalLogin(false)}} className={styles.btnGoogle}><FcGoogle className={styles.icoGoogle} /> Continue with Google</button>
-                    </div>
-                </Modal.Body>
-            </Modal>
-
-           
-{/* ############################### FORM FORGOT PASSWORD ################################################## */}
-
-<Modal className={styles.wrapper} show={showModalPassword} onHide={() => hideFormPassword(false)} size="lg">
-                <Modal.Header className={styles.headerLogin} >
-                    <Modal.Title className={styles.titleLogin} >Forgot Password Workify
-                    </Modal.Title>
-                    <Link className={styles.customCloseButton} onClick={() => setShowModalPassword(false)}>
-                        X
-                    </Link>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleSubmitPassword}>
-                        <div className={styles.field}>
-                            <input type="text" name='emailForgot' onChange={handleInputChangePassword} onBlur={handleBlur} value={formPassword.emailForgot} required />
-                            <label htmlFor="">Email address</label>
-                        </div>
-                        {errors.emailForgot && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.emailForgot}</p>}
-                  
-                        <div className={styles.field}>
-                            {/* <input type="submit" value="Login" /> */}
-                            <Button className={styles.btnLogin} variant="primary" type="submit">
-                                Recover password
-                            </Button>
-                        </div>
-
-                        <Toaster position="bottom-right" reverseOrder={false} />
-                    </Form>
-             
-                </Modal.Body>
-            </Modal>
+        <>
+            <Link className="dropdown-item" to="#" style={{ color: 'blue' }} onClick={() => { setShowModalUser(true), handleFormChange('formUser') }} >
+                Register user
+            </Link>
 
 
-{/* ############################### FORM CREATE USER ################################################## */}
             <Modal className={styles.wrapper} show={showModalUser} onHide={() => hideFormUser(false)} size="lg">
                 <Modal.Header className={styles.headerLogin} >
                     <Modal.Title className={styles.titleLogin} >Create User Workify</Modal.Title>
@@ -513,7 +272,7 @@ const Login = () => {
 
                         <div className={styles.field}>
                             <Button className={styles.btnLogin} variant="primary" type="submit">
-                                Create User
+                                Register User
                             </Button>
                         </div>
 
@@ -522,8 +281,8 @@ const Login = () => {
                 </Modal.Body>
             </Modal>
 
-        </div>
+        </>
     );
 };
 
-export default Login;
+export default LoginUser;
