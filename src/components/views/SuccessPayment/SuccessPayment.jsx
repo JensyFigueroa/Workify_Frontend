@@ -4,11 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
 import { setCart } from "../../../redux/actions";
+import axios from "axios";
 
 const SuccessPayment = () => {
   const user = useSelector((state) => state.currentUserNameLoggedIn);
 
   const dispatch = useDispatch();
+
+  useEffect( ()=>{
+    const searchParams = new URLSearchParams(location.search);
+    const sessionId = searchParams.get('session_id');
+    axios.get(`/payment/success?idSession=${sessionId}`).then((data)=>{console.log('data: ',data);})
+    
+  })
 
   useEffect(() => {
     emailjs.init("7W9NT4oCDCiTSPAhs");
