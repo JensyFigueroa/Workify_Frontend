@@ -6,10 +6,8 @@ import style from "./Detail.module.css";
 import  Carousel  from "./Carousel/Carousel";
 import RatingStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
-
-
-
-
+import { Cards } from "../../Cards/Cards";
+import { OtherServices } from "./OtherServices/OtherServices";
 
 
 
@@ -91,6 +89,7 @@ export function Detail() {
              Price per hour: ${serviceDetail.pricePerHour}
              {serviceDetail.reviews && serviceDetail.reviews.length > 0 ? (
               serviceDetail.reviews.map((review, index) => (
+                <div className={style.ratings}>
                 <RatingStars 
                 count={5}
                 key={index} 
@@ -100,7 +99,11 @@ export function Detail() {
                 color2={'#ffd700'} // Color de las estrellas activas
                 edit={false}
                 />
+                <span>({review.raiting}.0)</span>
+
+                </div>
               ))
+              
             ) : (
               <p>No hay comentarios o valoraciones disponibles.</p>
             )}
@@ -121,7 +124,7 @@ export function Detail() {
           </div>
             <div className= {style.serviceProvider}>
               <h2 className={style.serviceDescriptionTitle}>Service Provider</h2>
-              <p>{currentUserNameLoggedIn}</p>
+              <p>{currentUserNameLoggedIn[0]}</p>
             </div>
         </div>
         <button className={`${style.myButton} btn btn-outline-secondary`}
@@ -133,10 +136,10 @@ export function Detail() {
           </button>
       </div>
       </div>
-      <div className={style.serviceReviewsContainer}>
+      {/* <div className={style.serviceReviewsContainer}>
           <h1 className={style.serviceReviewsTitle}>Reviews</h1>
           <p>Customers rated this pro highly for work quality, professionalism, and responsiveness.</p>
-        </div>
+        </div> */}
         
 
     <div className={style.form}>
@@ -145,6 +148,7 @@ export function Detail() {
         {comments.map((com, index) => (
           <section className={style.comments}>
             <span key={index}>
+            <div className={style.ratings}>
             <RatingStars
               count={5} // Número total de estrellas
               value={com.raiting} // Valor del rating
@@ -153,13 +157,15 @@ export function Detail() {
               color2={'#ffd700'} // Color de las estrellas activas
               edit={false}
             />
+             <span>({com.raiting}.0)</span>
+            </div>
             </span>
             <div className={style.spanComent}>
               Comment: {com.comment}
               <button onClick={() => handleLikeClick(index)}>
-            {likes[index] ? 'Like' : 'Like'}
-            {likes[index] && <div>{likes[index]}</div>}
-          </button>
+                {likes[index] ? 'Dislike' : 'Like'}
+                {likes[index] > 0 && <div >{likes[index]}</div>}
+              </button>
             </div>
           </section>
 
@@ -195,6 +201,10 @@ export function Detail() {
               <button className={`${style.myButton} btn btn-outline-secondary`} type="submit">Send comment</button>
         </form>
           
+      </div>
+      <div className={style.otherServices}>
+      <h3>Other Services</h3>
+        <OtherServices/>
       </div>
     </div>
     
