@@ -18,6 +18,10 @@ const Login = () => {
     const [showModalLogin, setShowModalLogin] = useState(false);
     const [formLogin, setFormLogin] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({});
+    const hideLogin = () =>{
+        console.log(showModalLogin)
+        setShowModalLogin(false)
+    }
 
     const [currentForm, setCurrentForm] = useState('');
 
@@ -116,14 +120,14 @@ const Login = () => {
         setErrors({})
     }
 
+    const userName = useSelector(state => state.currentUserNameLoggedIn)
 
     return (
         <>
             <Link className="dropdown-item" to="#" variant="primary" onClick={() => { setShowModalLogin(true), handleFormChange('formLogin') }} >
                 Login
             </Link>
-
-            <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)} >
+            {!userName[0] ? <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)} >
                 <Modal.Header className={styles.headerLogin} >
                     <Modal.Title className={styles.titleLogin} >Login Workify
                     </Modal.Title>
@@ -165,7 +169,7 @@ const Login = () => {
                         <div className={styles.signUpLink}>
                             Don`t have an account?
                             <div className={styles.typeAccount} >
-                                <LoginUser />
+                                <LoginUser/>   
                             </div>
                         </div>
 
@@ -174,7 +178,8 @@ const Login = () => {
                         <button onClick={() => { loginWithGoogle(), setShowModalLogin(false) }} className={styles.btnGoogle}><FcGoogle className={styles.icoGoogle} /> Continue with Google</button>
                     </div>
                 </Modal.Body>
-            </Modal>
+            </Modal> : ''}
+            
         </>
     )
 }
