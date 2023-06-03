@@ -127,7 +127,8 @@ const Login = () => {
             <Link className="dropdown-item" to="#" variant="primary" onClick={() => { setShowModalLogin(true), handleFormChange('formLogin') }} >
                 Login
             </Link>
-            {!userName[0] ? <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)} >
+            
+            <Modal className={styles.wrapper} show={showModalLogin} onHide={() => hideFormLogin(false)} >
                 <Modal.Header className={styles.headerLogin} >
                     <Modal.Title className={styles.titleLogin} >Login Workify
                     </Modal.Title>
@@ -178,7 +179,7 @@ const Login = () => {
                         <button onClick={() => { loginWithGoogle(), setShowModalLogin(false) }} className={styles.btnGoogle}><FcGoogle className={styles.icoGoogle} /> Continue with Google</button>
                     </div>
                 </Modal.Body>
-            </Modal> : ''}
+            </Modal>
             
         </>
     )

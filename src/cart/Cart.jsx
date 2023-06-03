@@ -221,14 +221,15 @@ const Cart = () => {
           <button onClick={handlePay}>Pay</button>
         ) : (
           <>
-          <Link className={styles.login}>
+          <button className={styles.login}>
             <span>Must</span> &nbsp;
             <Login />
             &nbsp;<span>first</span>
-          </Link>
+          </button>
           </>
         )}
       </div>
+
 
       <button onClick={handleNewViewPay}>new view Pay</button>
 
