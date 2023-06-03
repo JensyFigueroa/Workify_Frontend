@@ -30,7 +30,7 @@ const initialState = {
   orderType: "up",
   cart: [],
   currentUserIdLoggedIn: "",
-  currentUserNameLoggedIn: ["","",""],
+  currentUserNameLoggedIn: ["","","",""],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -246,7 +246,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUserIdLoggedIn: action.payload[0],
-        currentUserNameLoggedIn: [action.payload[1], action.payload[3], action.payload[2]],
+        currentUserNameLoggedIn: [action.payload[1], action.payload[3], action.payload[2], action.payload[4]]
       };
     case CLEAN_SEARCH:
       return {
