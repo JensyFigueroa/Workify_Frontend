@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from "./Cart.module.css";
+import styles from "./Cart.module.css";
 import { useEffect } from "react";
 import { getCart } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -134,8 +134,8 @@ const Cart = () => {
   };
 
   const handlePopupClick = (e) => {
-    const popUpContainer = document.querySelector(`.${style.popUp}`);
-    const pasarelaContainer = document.querySelector(`.${style.pasarela}`);
+    const popUpContainer = document.querySelector(`.${styles.popUp}`);
+    const pasarelaContainer = document.querySelector(`.${styles.pasarela}`);
     if (
       !popUpContainer.contains(e.target) ||
       pasarelaContainer.contains(e.target)
@@ -154,27 +154,27 @@ const Cart = () => {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.containerTitle}>
-        <h1 className={style.title}>My Cart</h1>
-        <button className={style.buttonCleanCart} onClick={handleCleanCart}>
+    <div className={styles.container}>
+      <div className={styles.containerTitle}>
+        <h1 className={styles.title}>My Cart</h1>
+        <button className={styles.buttonCleanCart} onClick={handleCleanCart}>
           <BsFillTrash3Fill /> CLEAN CART
         </button>
       </div>
-      <div className={style.containerFields}>
+      <div className={styles.containerFields}>
         <h2>NAME SERVICE</h2>
         <h2>PRICE PER HOUR</h2>
         <h2>HOURS TOTAL</h2>
         <h2>SUB TOTAL PRICE</h2>
         <h2>CLEAN</h2>
       </div>
-      <div className={style.containerService}>
+      <div className={styles.containerService}>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
-            <div className={style.containerCart} key={item.id}>
-              <h1 className={style.containerName}>{item.nameService}</h1>
-              <h3 className={style.price}>${item.pricePerHour}</h3>
-              <div className={style.containerInput}>
+            <div className={styles.containerCart} key={item.id}>
+              <h1 className={styles.containerName}>{item.nameService}</h1>
+              <h3 className={styles.price}>${item.pricePerHour}</h3>
+              <div className={styles.containerInput}>
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
@@ -184,7 +184,7 @@ const Cart = () => {
                   -
                 </button>
                 <input
-                  className={`${style.input} `}
+                  className={`${styles.input} `}
                   type="number"
                   value={item.quantity || 1}
                   onChange={(e) => handleChange(e, item.id)}
@@ -198,11 +198,11 @@ const Cart = () => {
                   +
                 </button>
               </div>
-              <h2 className={style.containerSubTotal}>
+              <h2 className={styles.containerSubTotal}>
                 ${calculateSubTotal(item)}
               </h2>
               <button
-                className={style.removeItemButton}
+                className={styles.removeItemButton}
                 onClick={() => handleRemoveItem(item.id)}
               >
                 <BsFillTrash3Fill />
@@ -210,25 +210,31 @@ const Cart = () => {
             </div>
           ))
         ) : (
-          <div className={style.containerNotItem}>
-            <h1 className={style.title}>No items in the cart</h1>
+          <div className={styles.containerNotItem}>
+            <h1 className={styles.title}>No items in the cart</h1>
           </div>
         )}
       </div>
-      <div className={style.totalContainer}>
+      <div className={styles.totalContainer}>
         <h2>Total: ${calculateTotal()}</h2>
         {userId ? (
           <button onClick={handlePay}>Pay</button>
         ) : (
-          <Login/>
+          <>
+          <Link className={styles.login}>
+            <span>Must</span> &nbsp;
+            <Login />
+            &nbsp;<span>first</span>
+          </Link>
+          </>
         )}
       </div>
 
       <button onClick={handleNewViewPay}>new view Pay</button>
 
       {payActive && (
-        <div className={style.popUp} onClick={handlePopupClick}>
-          <div className={style.pasarela}>
+        <div className={styles.popUp} onClick={handlePopupClick}>
+          <div className={styles.pasarela}>
             <Elements stripe={promiseStripe}>
               <Pasarela
                 userId={userId}
