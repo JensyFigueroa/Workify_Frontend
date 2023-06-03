@@ -218,19 +218,20 @@ const Cart = () => {
       <div className={styles.totalContainer}>
         <h2>Total: ${calculateTotal()}</h2>
         {userId ? (
-          <button onClick={handlePay}>Pay</button>
+           <button className={styles.pay} onClick={handleNewViewPay}>Pay</button>
         ) : (
           <>
-          <Link className={styles.login}>
+          <button className={styles.login}>
             <span>Must</span> &nbsp;
             <Login />
             &nbsp;<span>first</span>
-          </Link>
+          </button>
           </>
         )}
       </div>
 
-      <button onClick={handleNewViewPay}>new view Pay</button>
+
+     
 
       {payActive && (
         <div className={styles.popUp} onClick={handlePopupClick}>

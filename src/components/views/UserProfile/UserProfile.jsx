@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import styles from "./UserProfile.module.css";
+import {useSelector} from 'react-redux'
+import axios from 'axios'
+
+//icons Mui
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export default function UserProfile() {
   const [showForm, setShowForm] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showServiceContent, setShowServiceContent] = useState(false);
   const [showProfileSection, setShowProfileSection] = useState(false);
+  const [showChangeProfile, setshowChangeProfile] = useState(false);
   const [showLogoutMessage, setShowLogoutMessage] = useState(false);
+  const idUser = useSelector(state => state.currentUserIdLoggedIn)
+  
+  
+
+  useEffect(async () => {
+    // const objUser =  () => {
+      const user =(await axios.get(`/user/${idUser}`)).data
+      console.log(user)
+      return user
+    // }
+    // console.log(objUser,'user')
+  },[])
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -24,12 +42,14 @@ export default function UserProfile() {
     setShowServiceContent(true);
     setShowProfileSection(false);
     setShowLogoutMessage(false);
+   
   };
 
   const handleProfileClick = () => {
     setShowForm(true);
-    setShowServiceContent(false);
     setShowProfileSection(true);
+
+    setShowServiceContent(false);
     setShowLogoutMessage(false);
   };
 
@@ -38,7 +58,17 @@ export default function UserProfile() {
     setShowServiceContent(false);
     setShowProfileSection(false);
     setShowLogoutMessage(true);
+  
   };
+  const handleChangesProfile = () => {
+    setShowForm(false);
+    setShowServiceContent(false);
+    setShowProfileSection(false);
+    setShowLogoutMessage(false);
+
+  };
+
+
 
   return (
     <div className={styles.containerPrincipal}>
@@ -61,16 +91,17 @@ export default function UserProfile() {
       <div className={styles.columnRight}>
         {showProfileSection && (
           <div className={styles.containerForm}>
-            <h2 className={styles.h3info}>My personal information</h2>
+            <h3>My Profile date</h3>
             <form>
               <div class="form-row ">
                 <div class="form-group col-md-6">
-                  <label for="inputEmail4">Name</label>
+                  <label>Name</label>
                   <input
-                    type="email"
+                    type="name"
                     class="form-control"
                     id="inputEmail4"
-                    placeholder="Name..."
+                    placeholder="Gonzalo"
+                   
                   />
                 </div>
                 <div class="form-group col-md-6">
@@ -123,10 +154,12 @@ export default function UserProfile() {
                   />
                 </div>
               </div>
+         
               <button type="submit" class="btn btn-success btn-lg btn-block">
                 Save changes
               </button>
             </form>
+
           </div>
         )}
         {showServiceContent && (
@@ -180,3 +213,81 @@ export default function UserProfile() {
     </div>
   );
 }
+
+
+/* 
+
+<div className={styles.containerForm}>
+            <h2 className={styles.h3info}>My personal information</h2>
+            <form>
+              <div class="form-row ">
+                <div class="form-group col-md-6">
+                  <label>Name</label>
+                  <input
+                    type="name"
+                    class="form-control"
+                    id="inputEmail4"
+                    placeholder="Name..."
+                   
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Last name</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword4"
+                    placeholder="Last name..."
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6 ">
+                  <label for="inputEmail4">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="inputEmail4"
+                    placeholder="Email..."
+                  />
+                </div>
+                <div class="form-group col-md-6 ">
+                  <label for="inputPassword4">Phone</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword4"
+                    placeholder="Phone..."
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6 ">
+                  <label for="inputEmail4">Country</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="inputEmail4"
+                    placeholder="Country..."
+                  />
+                </div>
+                <div class="form-group col-md-6 ">
+                  <label for="inputPassword4">City</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword4"
+                    placeholder="City..."
+                  />
+                </div>
+              </div>
+         
+              <button type="submit" class="btn btn-success btn-lg btn-block">
+                Save changes
+              </button>
+            </form>
+          </div>
+
+
+
+*/
