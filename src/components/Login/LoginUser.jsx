@@ -131,7 +131,9 @@ const LoginUser = () => {
                     toast.success('User Created!!')
                     const userPhoneRegister = await (await axios.get(`/user/${uid}`)).data.phone
                     const userEmail = await (await axios.get(`/user/${uid}`)).data.email
-                    dispatch(loginUser(uid, name, userPhoneRegister, userEmail))
+                    const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl
+                    //console.log(userImg, "imagen de usarui");
+                    dispatch(loginUser(uid, name, userPhoneRegister, userEmail, userImg))
                     //console.log(res.user, "user en el signin with email and password")
                 }
 

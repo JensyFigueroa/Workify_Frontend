@@ -55,8 +55,8 @@ const Login = () => {
 
                     const userPhoneLogin = await (await axios.get(`/user/${uid}`)).data.phone
                     const userEmail = await (await axios.get(`/user/${uid}`)).data.email
-                    //console.log(userEmail, "useridata");
-                    dispatch(loginUser(uid, name, userPhoneLogin, userEmail))
+                    const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl
+                    dispatch(loginUser(uid, name, userPhoneLogin, userEmail, userImg))
                     //console.log(res.user, "user en el signin with email and password");
                 }
                 console.log('Enviando el form Login ', formLogin);
@@ -98,7 +98,9 @@ const Login = () => {
                 await axios.post("/login/", inputs);
                 const userPhone = await (await axios.get(`/user/${uid}`)).data.phone
                 const userEmail = await (await axios.get(`/user/${uid}`)).data.email
-                dispatch(loginUser(uid, name, userPhone, userEmail))
+                const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl
+                //console.log(userImg, "imagen de usarui");
+                dispatch(loginUser(uid, name, userPhone, userEmail, userImg))
 
             }
         } catch (error) {

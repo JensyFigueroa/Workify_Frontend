@@ -70,7 +70,7 @@ const Navbar = () => {
         //     window.localStorage.removeItem('uid');
         // })
         console.log('logged out');
-        dispatch(loginUser('', '', '', ''))
+        dispatch(loginUser('', '', '', '',''))
     } catch (error) {
         console.log(error);
     }
