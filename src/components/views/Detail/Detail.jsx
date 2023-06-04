@@ -30,7 +30,6 @@ export function Detail() {
     comment: "",
   })
 
-
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
       if (prevLikes[index]) {
@@ -100,25 +99,36 @@ export function Detail() {
           <p className={style.serviceType}>
              Price per hour: ${serviceDetail.pricePerHour}
              {serviceDetail.reviews && serviceDetail.reviews.length > 0 ? (
-              serviceDetail.reviews.map((review, index) => (
-                <div className={style.ratings}>
-                <RatingStars 
-                count={5}
-                key={index} 
-                value={review.raiting} 
-                size={24} // Tamaño de las estrellas
-                color1={'#ddd'} // Color de las estrellas inactivas
-                color2={'#ffd700'} // Color de las estrellas activas
-                edit={false}
-                />
-                <span>({review.raiting}.0)</span>
+                  <div className={style.ratings}>
+                    {
+                      (() => {
+                        const sum = serviceDetail.reviews.map((review) => parseFloat(review.rating))
+                          .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0));
+                        const averageRating = sum / serviceDetail.reviews.length;
+                        return isNaN(averageRating) ? 'Invalid ratings' : averageRating.toFixed(1);
+                      })()
+                    }
+                    <RatingStars
+                      count={5}
+                      value={
+                        (() => {
+                          const sum = serviceDetail.reviews.map((review) => parseFloat(review.rating))
+                            .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0));
+                          const averageRating = sum / serviceDetail.reviews.length;
+                          return isNaN(averageRating) ? 0 : averageRating;
+                        })()
+                      }
+                      size={24} // Tamaño de las estrellas
+                      color1={'#ddd'} // Color de las estrellas inactivas
+                      color2={'#ffd700'} // Color de las estrellas activas
+                      edit={false}
+                    />
+                  </div>
+                ) : (
+                  <p>Doesn't have rating.</p>
+                )}
 
-                </div>
-              ))
-              
-            ) : (
-              <p>Doesn't have rating.</p>
-            )}
+
                       </p>
         
           <p className={style.serviceLocation}>
@@ -141,7 +151,7 @@ export function Detail() {
         </div>
         <button className={`${style.myButton} btn btn-outline-secondary`}
             onClick={() =>
-              dispatch(addServiceInCart(id, nameService, pricePerHour))
+              dispatch(addServiceInCart(id, serviceDetail.nameService, serviceDetail.pricePerHour))
             }
           >
             Add to cart
@@ -156,19 +166,20 @@ export function Detail() {
       
         {comments.map((com, index) => (
           <section className={style.comments}>
-            <span key={index}>
+            
             <div className={style.ratings}>
             <RatingStars
+              key={index}
               count={5} // Número total de estrellas
-              value={com.raiting} // Valor del rating
+              value={com.rating} // Valor del rating
               size={24} // Tamaño de las estrellas
               color1={'#ddd'} // Color de las estrellas inactivas
               color2={'#ffd700'} // Color de las estrellas activas
               edit={false}
             />
-             <span>({com.raiting}.0)</span>
+             <span>({com.rating}.0)</span>
             </div>
-            </span>
+          
             <div className={style.spanComent}>
               Comment: {com.comment}
               <button onClick={() => handleLikeClick(index)}>
@@ -196,6 +207,7 @@ export function Detail() {
                 onChange={(rating) => setInputs({ ...inputs, rating })}
                 size={24}
                 activeColor="#ffd700"
+                required
               />
             </div>
         </Form.Group>

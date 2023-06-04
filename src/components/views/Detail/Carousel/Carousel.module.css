@@ -6,28 +6,34 @@
 }
 
 .carousel{
-  width: 25em; /* Ajusta el ancho deseado */
+  width: 25em; 
   height: 25em;
   object-fit: cover;
   border-radius: 5px;
 }
 
-.customPrevButton{
+.customPrevButton {
     margin-left: 0;
-    background-color: rgb(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 5px;
-    transform: scale(0.8);
-
-}
-
-.customNextButton{
+    border: none;
+    padding: 30px;
+    transform: scale(0.7);
+    
+  }
+  
+  .customNextButton {
     margin-right: 3em;
-    background-color: rgb(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 5px;
-    transform: scale(0.8);
+    border: none;
+    padding: 30px;
+    transform: scale(0.7);
 
-}
 
+    
+  }
+ 
 
 .thumb{
     width: 6em;

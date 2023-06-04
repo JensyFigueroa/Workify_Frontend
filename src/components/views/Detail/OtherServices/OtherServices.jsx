@@ -27,8 +27,8 @@ export const OtherServices = () => {
             onPageChange={handlePageChange}
             containerClassName={style.paginationContainer}
             activeClassName={style.activePage}
-            previousLabel={<div className={style.paginationArrowPre}>&lsaquo;</div>}
-            nextLabel={<div className={style.paginationArrowNext}>&rsaquo;</div>}
+            previousLabel={<button className={style.paginationArrowPre}>&lsaquo;</button>}
+            nextLabel={<button className={style.paginationArrowNext}>&rsaquo;</button>}
             previousClassName={style.paginationButton}
             nextClassName={style.paginationButton}
             disabledClassName={style.disabledPaginationButton}
