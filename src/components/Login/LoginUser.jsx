@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import styles from './Login.module.css'
 import { Link } from 'react-router-dom'
-import { BsFillPersonLinesFill } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
-import { auth, googleProvider } from '../../config/firebase-config.js'
-import { updateProfile, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signOut, setPersistence, browserSessionPersistence } from 'firebase/auth'
+import { auth } from '../../config/firebase-config.js'
+import { updateProfile, createUserWithEmailAndPassword } from 'firebase/auth'
 
 import validate from './validate'
 import axios from 'axios';

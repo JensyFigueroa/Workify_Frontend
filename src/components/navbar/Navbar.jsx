@@ -3,7 +3,7 @@ import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import {MdHomeRepairService} from 'react-icons/md'
+import { MdHomeRepairService } from 'react-icons/md'
 import { useLocation } from "react-router-dom";
 import logo from '../views/landing/img/logo.png'
 import LoginUser from '../Login/LoginUser'
@@ -64,17 +64,17 @@ const Navbar = () => {
 
   const logOut = async () => {
     try {
-        await signOut(auth)
-        // .then((res) => {
-        //     setUID('');
-        //     window.localStorage.removeItem('uid');
-        // })
-        console.log('logged out');
-        dispatch(loginUser('', '', '', ''))
+      await signOut(auth)
+      // .then((res) => {
+      //     setUID('');
+      //     window.localStorage.removeItem('uid');
+      // })
+      console.log('logged out');
+      dispatch(loginUser('', '', '', ''))
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-};
+  };
 
   return (
     location.pathname !== "/" && (
@@ -98,7 +98,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <i className="fa-solid fa-house-chimney"/>
+              <i className="fa-solid fa-house-chimney" />
               Home
             </NavLink>
             <NavLink
@@ -108,7 +108,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <i className="fa-solid fa-circle-info"/>
+              <i className="fa-solid fa-circle-info" />
               About
             </NavLink>
             <NavLink
@@ -118,7 +118,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <i className="fa-solid fa-address-card"/>
+              <i className="fa-solid fa-address-card" />
               Publish your service
             </NavLink>
             <NavLink
@@ -128,54 +128,51 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <MdHomeRepairService style={{fontSize:'40px'}}/>
+              <MdHomeRepairService style={{ fontSize: '40px' }} />
             </NavLink>
           </div>
 
           <div className="btn-group " role="group">
             {userName[0].length > 0 ? <div className={styles.userName}>
-                <p>Welcome</p>
-                <h6>{userName[0]}</h6></div> : ''}
-            
+              <p>Welcome</p>
+              <h6>{userName[0]}</h6></div> : ''}
+
             <button
-                type="button"
-                className={`${styles.btn} `}
-                style={{ color: "black" }}
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+              type="button"
+              className={`${styles.btn} `}
+              style={{ color: "black" }}
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-                <BsFillPersonLinesFill className={styles.loginIco} />
+              <BsFillPersonLinesFill className={styles.loginIco} />
             </button>
             <ul className="dropdown-menu">
-                {userName[0].length > 0 ? <li>
-                    <Link className="dropdown-item" to="/UserProfile" variant="primary">
-                        Profile
-                    </Link>
-                </li>: ''}
-                {userName[0].length === 0 ?
+              {userName[0].length > 0 ? <li>
+                <Link className="dropdown-item" to="/UserProfile" variant="primary">
+                  Profile
+                </Link>
+              </li> : ''}
+              {userName[0].length === 0 ?
                 <li>
-                   <Login/>
-                </li>:''}
+                  <Login />
+                </li> : ''}
 
-                {userName[0].length > 0 ?
+              {userName[0].length > 0 ?
                 <li>
-                    <Link className="dropdown-item" to="#" onClick={logOut}>
-                        Log Out
-                    </Link>
-                </li>:''}
-                <li>
-                    <Link className="dropdown-item" to="#" >
-                        <LoginUser/>
-                    </Link>
-
-                </li>
+                  <Link className="dropdown-item" to="#" onClick={logOut}>
+                    Log Out
+                  </Link>
+                </li> : ''}
+              
+              <li>
+                <LoginUser />
+              </li>
             </ul>
-            </div>
+          </div>
 
           <div
-            className={`${styles.btnBurguer} ${styles.navIcon} ${
-              clickBurguer ? styles.open : ""
-            }`}
+            className={`${styles.btnBurguer} ${styles.navIcon} ${clickBurguer ? styles.open : ""
+              }`}
             onClick={handleClick}
           >
             <span></span>
@@ -184,9 +181,8 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`${styles.curtain} ${
-              clickBurguer ? styles.showCurtain : ""
-            }`}
+            className={`${styles.curtain} ${clickBurguer ? styles.showCurtain : ""
+              }`}
           ></div>
         </nav>
       </>
