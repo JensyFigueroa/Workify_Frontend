@@ -6,24 +6,30 @@ import style from "./Detail.module.css";
 import  Carousel  from "./Carousel/Carousel";
 import RatingStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
-import { Cards } from "../../Cards/Cards";
 import { OtherServices } from "./OtherServices/OtherServices";
+import axios from "axios";
 
 
 
 export function Detail() {
+
+
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [inputs, setInputs] = useState({
-    raiting: "",
-    comment: "",
-  })
   const currentUserNameLoggedIn = useSelector(state => state.currentUserNameLoggedIn);
   const serviceDetail = useSelector((state) => state.serviceDetail);
   let arrImage = Array.isArray(serviceDetail.imageUrl) ? [...serviceDetail.imageUrl] : [serviceDetail.imageUrl];
   const { nameService, pricePerHour } = serviceDetail;
   const comments = serviceDetail && serviceDetail.reviews ? serviceDetail.reviews : [];
   const [likes, setLikes] = useState({});
+  const [inputs, setInputs] = useState({
+    serviceId: id,
+    name: currentUserNameLoggedIn[0],
+    imageUrl: "",
+    rating: "",
+    comment: "",
+  })
+
 
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
@@ -36,6 +42,8 @@ export function Detail() {
       }
     });
   };
+
+
   //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,24 +58,28 @@ export function Detail() {
   //<--MANEJADOR DE INPUTS-->
   const handleInputChange = (event) => {
     if (event.target) {
-      const { name, value } = event.target.elements;
+      const { name, value } = event.target;
       setInputs({
           ...inputs,
           [name]: value,
         })
      
     }
-   
   } 
+
   //<--MANEJADOR DE SUBMIT-->
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      
+      await axios
+        .post("/review", inputs)
+        .then((response) => toast.success(response.data));
+     
     } catch (error) {
-      
+      toast.error(error.message);
     }
-  }
+   }
+  
   
 
   return (
@@ -105,7 +117,7 @@ export function Detail() {
               ))
               
             ) : (
-              <p>No hay comentarios o valoraciones disponibles.</p>
+              <p>Doesn't have rating.</p>
             )}
                       </p>
         
@@ -136,10 +148,7 @@ export function Detail() {
           </button>
       </div>
       </div>
-      {/* <div className={style.serviceReviewsContainer}>
-          <h1 className={style.serviceReviewsTitle}>Reviews</h1>
-          <p>Customers rated this pro highly for work quality, professionalism, and responsiveness.</p>
-        </div> */}
+      
         
 
     <div className={style.form}>
@@ -182,8 +191,9 @@ export function Detail() {
               <RatingStars
                 classNames={style.star}
                 count={5}
-                value={inputs.raiting}
-                onChange={handleInputChange}
+                name = "rating"
+                value={inputs.rating}
+                onChange={(rating) => setInputs({ ...inputs, rating })}
                 size={24}
                 activeColor="#ffd700"
               />

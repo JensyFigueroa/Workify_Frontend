@@ -15,9 +15,6 @@ import service6 from "../CreateService/Images/Services (6).png";
 import service7 from "../CreateService/Images/Services (7).png";
 
 
-
-
-
 export function CreateService() {
 
 
