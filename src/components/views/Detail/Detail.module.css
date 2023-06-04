@@ -179,6 +179,9 @@
   border: 2px solid rgb(8, 147, 240);
 }
 
+.name p{
+  text-align: center;
+}
 .otherServices{
   margin-left: 4em;
 }
