@@ -4,6 +4,7 @@ import FilterBar from "../../FilterBar/FilterBar";
 import styles from "./Home.module.css";
 import { Loading } from "../../Loading/Loading";
 import { useSelector } from "react-redux";
+import { all } from "axios";
 const Home = () => {
   const [loading, setLoading] = useState(true);
   //toco daniel linea 10 y 11

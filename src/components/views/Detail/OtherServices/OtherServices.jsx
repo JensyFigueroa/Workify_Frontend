@@ -15,7 +15,7 @@ export const OtherServices = () => {
       };
 
     const paginatedServices = allServices.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-
+      console.log(paginatedServices);
       
     
     return (
