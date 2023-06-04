@@ -5,40 +5,41 @@ import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
 import { setCart } from "../../../redux/actions";
 import axios from "axios";
-import { useState } from "react";
 
 const SuccessPayment = () => {
   const user = useSelector((state) => state.currentUserNameLoggedIn);
   const mailUser = user[1];
   const dispatch = useDispatch();
 
-  const [mail, setMail] = useState([]);
-
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const sessionId = searchParams.get("session_id");
     axios
       .get(`/payment/success?idSession=${sessionId}`)
-      .then(({ data }) => setMail(data.map((ele) => Object.values(ele))));
-  }, []);
+      .then(({ data }) => {
+        console.log(data);
+        const emailPromises = data.map((service) => {
+          const { nameService, emailService, hours } = service;
+          const templateParams = {
+            to_email: emailService,
+            from_name: "Workify Services",
+            subject: "Pago exitoso",
+            message: `Hola ${nameService},\n\nEl pago se ha realizado con éxito. Hemos notificado a los proveedores de servicios y en las próximas horas estarán aceptando o rechazando tu oferta.\n\nSaludos,\nWorkify Services.`,
+          };
+          return emailjs.send(
+            "service_2vfi3xb",
+            "template_2xk89xd",
+            templateParams
+          );
+        });
 
-  useEffect(() => {
-    let mails = mail.flat(1).join(", ");
-    emailjs.init("7W9NT4oCDCiTSPAhs");
-
-    const templateParams = {
-      to_email: mails,
-      from_name: "Workify Services",
-      subject: "Pago exitoso",
-      message: `Holaaaaaaaaaaaaa,\n\nThe payment was successful. We have notified the service providers, and in the next few hours, the service providers will be notified and accepting or declining your offer.\n\nRegards,\nWorkify Servicessssssssssssssssssssssssssssssssssssssss.`,
-    };
-    emailjs
-      .send("service_2vfi3xb", "template_2xk89xd", templateParams)
-      .then((response) => {
-        console.log("Correo electrónico enviado exitosamente", response);
+        return Promise.all(emailPromises);
+      })
+      .then((responses) => {
+        console.log("Correos electrónicos enviados exitosamente", responses);
       })
       .catch((error) => {
-        console.error("Error al enviar el correo electrónico", error);
+        console.error("Error al enviar los correos electrónicos", error);
       });
   }, []);
 
