@@ -29,7 +29,7 @@ export function Detail() {
     rating: "",
     comment: "",
   })
-
+console.log(comments);
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
       if (prevLikes[index]) {
@@ -166,7 +166,12 @@ export function Detail() {
       
         {comments.map((com, index) => (
           <section className={style.comments}>
-            
+       <div className={style.fatherComments}>
+            <div className={style.name}>
+              <p>{com.name}</p>
+              <img src={com.imageUrl}/>
+            </div>
+          <div className={style.ratingComment}>
             <div className={style.ratings}>
             <RatingStars
               key={index}
@@ -179,7 +184,6 @@ export function Detail() {
             />
              <span>({com.rating}.0)</span>
             </div>
-          
             <div className={style.spanComent}>
               Comment: {com.comment}
               <button onClick={() => handleLikeClick(index)}>
@@ -187,6 +191,8 @@ export function Detail() {
                 {likes[index] > 0 && <div >{likes[index]}</div>}
               </button>
             </div>
+          </div>
+        </div>
           </section>
 
         ))}
