@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Modal, Button, Form } from 'react-bootstrap';
 import toast, { Toaster } from "react-hot-toast";
+import { auth } from '../../config/firebase-config.js'
 
 import validate from './validate'
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 const ForgotPassword = () => {
     const [showModalPassword, setShowModalPassword] = useState(false);
@@ -29,11 +31,19 @@ const ForgotPassword = () => {
         // console.log('estoy en el blur')
     }
 
-    const handleSubmitPassword = async (e) => {
-        e.preventDefault();
+    const handleSubmitPassword = async (event) => {
+        event.preventDefault();
+try {
+    await sendPasswordResetEmail(auth, formPassword.emailForgot)
+    toast.success('An email has been sent to your email')
+} catch (error) {
+    toast.error(error.message)
+}
+    
 
-        console.log(formPassword)
-        toast.success('An email has been sent to your email')
+    
+
+
         setShowModalPassword(false);
     }
 

@@ -44,7 +44,7 @@ export const OtherServices = () => {
             <div className={style.price}>
                 <p>${service.pricePerHour}</p>
                 <p className={style.starRating}>
-                {service.reviews[0].raiting} <FaStar className={style.starIcon} />
+                {service.reviews[0].rating} <FaStar className={style.starIcon} />
                 </p>
                 
             </div>

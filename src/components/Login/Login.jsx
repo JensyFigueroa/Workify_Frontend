@@ -13,6 +13,7 @@ import { loginUser } from '../../redux/actions';
 import LoginUser from './LoginUser';
 import ForgotPassword from './ForgotPassword';
 import { set } from 'date-fns';
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
     let closeForm = false
@@ -63,11 +64,19 @@ const Login = () => {
                 }
                 console.log('Enviando el form Login ', formLogin);
                 setFormLogin({ email: '', password: '' })
+                setShowModalLogin(false);
             } catch (error) {
-                console.log(error);
+                console.log(error.message);
+                if (error.message.includes("auth/wrong-password")) {
+                    toast.error("Email or Password Incorrect!! Try Agian!")
+                }
+                if (error.message.includes("auth/user-not-found")) {
+                    toast.error("Email or Password Incorrect!! Try Agian!")
+                }
+                
             }
 
-            setShowModalLogin(false);
+            
         }
 
     }
@@ -106,7 +115,7 @@ const Login = () => {
 
             }
         } catch (error) {
-            console.log(error, "que gonorrea");
+            console.log(error);
         }
 
         setShowModalLogin(false)

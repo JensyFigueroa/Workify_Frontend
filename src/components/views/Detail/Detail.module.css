@@ -111,7 +111,8 @@
 
 .form h3{
   border-bottom: 1px solid #b9b8b8;
-  width: 8em;
+  width: 6em;
+  padding: 5px;
 }
 
 .inputs input{
@@ -120,17 +121,39 @@
 }
 
 .spanComent{
-  border-bottom: 1px solid #b9b8b8;
   width: 50em;
   padding: 10px;
   display: flex;
   flex-direction: column;
 }
+.ratingComment{
+  margin-left: 2em;
+}
 .spanComent button{
   width: 4em;
-  border: none;
+  border: 1px solid rgb(8, 147, 240);
   margin-top: 1em;
   padding: 10px;
+  color: rgb(8, 147, 240);
+  text-align: center;
+  transform: scale(0.75);
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.spanComent button:hover{
+  background-color: rgb(8, 147, 240);
+  color: white;
+}
+.fatherComments{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #b9b8b8;
+  padding: 2em;
+  width: fit-content;
+
 }
 .stars{
   display: flex;
@@ -160,8 +183,19 @@
   flex-direction: row;
   align-items: center;
   margin-top: 10px;
+  margin-left: 0.5em;
+}
+.name img{
+  width: 4em;
+  height: 4em;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgb(8, 147, 240);
 }
 
+.name p{
+  text-align: center;
+}
 .otherServices{
   margin-left: 4em;
 }

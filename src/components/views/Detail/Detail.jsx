@@ -8,6 +8,7 @@ import RatingStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
 import { OtherServices } from "./OtherServices/OtherServices";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -19,17 +20,15 @@ export function Detail() {
   const currentUserNameLoggedIn = useSelector(state => state.currentUserNameLoggedIn);
   const serviceDetail = useSelector((state) => state.serviceDetail);
   let arrImage = Array.isArray(serviceDetail.imageUrl) ? [...serviceDetail.imageUrl] : [serviceDetail.imageUrl];
-  const { nameService, pricePerHour } = serviceDetail;
   const comments = serviceDetail && serviceDetail.reviews ? serviceDetail.reviews : [];
   const [likes, setLikes] = useState({});
   const [inputs, setInputs] = useState({
     serviceId: id,
     name: currentUserNameLoggedIn[0],
-    imageUrl: "",
+    imageUrl: currentUserNameLoggedIn[3],
     rating: "",
     comment: "",
   })
-
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
       if (prevLikes[index]) {
@@ -42,6 +41,7 @@ export function Detail() {
     });
   };
 
+  
 
   //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
@@ -71,9 +71,15 @@ export function Detail() {
     event.preventDefault();
     try {
       await axios
-        .post("/review", inputs)
+        .post("/service/review", inputs)
         .then((response) => toast.success(response.data));
-     
+     setInputs({
+      serviceId: id,
+      name: currentUserNameLoggedIn[0],
+      imageUrl: currentUserNameLoggedIn[3],
+      rating: "",
+      comment: "",
+     })
     } catch (error) {
       toast.error(error.message);
     }
@@ -166,7 +172,12 @@ export function Detail() {
       
         {comments.map((com, index) => (
           <section className={style.comments}>
-            
+       <div className={style.fatherComments}>
+            <div className={style.name}>
+              <img src={com.imageUrl}/>
+              <p>{com.name}</p>
+            </div>
+          <div className={style.ratingComment}>
             <div className={style.ratings}>
             <RatingStars
               key={index}
@@ -179,14 +190,15 @@ export function Detail() {
             />
              <span>({com.rating}.0)</span>
             </div>
-          
             <div className={style.spanComent}>
               Comment: {com.comment}
               <button onClick={() => handleLikeClick(index)}>
-                {likes[index] ? 'Dislike' : 'Like'}
-                {likes[index] > 0 && <div >{likes[index]}</div>}
+                {likes[index] ? 'Like' : 'Like'}
+                {likes[index] > 0 && <div>{likes[index]}</div>}
               </button>
             </div>
+          </div>
+        </div>
           </section>
 
         ))}
@@ -221,6 +233,7 @@ export function Detail() {
                 required
               ></textarea>
               <button className={`${style.myButton} btn btn-outline-secondary`} type="submit">Send comment</button>
+              <Toaster position="bottom-right" reverseOrder={false} />
         </form>
           
       </div>

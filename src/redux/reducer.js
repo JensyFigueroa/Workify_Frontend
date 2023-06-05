@@ -14,6 +14,7 @@ import {
   LOGIN_USER,
   CLEAN_SEARCH,
   SET_CART,
+  GET_USER,
 } from "./types";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   cart: [],
   currentUserIdLoggedIn: "",
   currentUserNameLoggedIn: ["","","",""],
+  userInfo: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -68,6 +70,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         serviceDetail: action.payload,
       };
+    
+    case GET_USER:
+      return {
+        ...state,
+        userInfo: action.payload,
+      }
 
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
