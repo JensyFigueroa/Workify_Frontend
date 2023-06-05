@@ -64,13 +64,13 @@ const Navbar = () => {
 
   const logOut = async () => {
     try {
-      await signOut(auth)
-      // .then((res) => {
-      //     setUID('');
-      //     window.localStorage.removeItem('uid');
-      // })
-      console.log('logged out');
-      dispatch(loginUser('', '', '', ''))
+        await signOut(auth)
+        // .then((res) => {
+        //     setUID('');
+        //     window.localStorage.removeItem('uid');
+        // })
+        console.log('logged out');
+        dispatch(loginUser('', '', '', '',''))
     } catch (error) {
       console.log(error);
     }

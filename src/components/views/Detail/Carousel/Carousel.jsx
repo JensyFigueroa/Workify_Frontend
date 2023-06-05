@@ -36,7 +36,7 @@ const Carousel = ({ images }) => {
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={3}
-        watchSlidesVisibility={true}
+        watchslidesvisibility="true"
         watchSlidesProgress={true}
         className={style.thumbsContainer}
       >
@@ -46,8 +46,8 @@ const Carousel = ({ images }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className={`swiper-button-prev ${style.customPrevButton}`}></div>
-      <div className={`swiper-button-next ${style.customNextButton}`}></div>
+      <button className={`swiper-button-prev ${style.customPrevButton}`}></button>
+      <button className={`swiper-button-next ${style.customNextButton}`}></button>
     </div>
   );
 };

@@ -6,24 +6,29 @@ import style from "./Detail.module.css";
 import  Carousel  from "./Carousel/Carousel";
 import RatingStars from 'react-rating-stars-component';
 import { Form } from 'react-bootstrap';
-import { Cards } from "../../Cards/Cards";
 import { OtherServices } from "./OtherServices/OtherServices";
+import axios from "axios";
 
 
 
 export function Detail() {
+
+
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [inputs, setInputs] = useState({
-    raiting: "",
-    comment: "",
-  })
   const currentUserNameLoggedIn = useSelector(state => state.currentUserNameLoggedIn);
   const serviceDetail = useSelector((state) => state.serviceDetail);
   let arrImage = Array.isArray(serviceDetail.imageUrl) ? [...serviceDetail.imageUrl] : [serviceDetail.imageUrl];
   const { nameService, pricePerHour } = serviceDetail;
   const comments = serviceDetail && serviceDetail.reviews ? serviceDetail.reviews : [];
   const [likes, setLikes] = useState({});
+  const [inputs, setInputs] = useState({
+    serviceId: id,
+    name: currentUserNameLoggedIn[0],
+    imageUrl: "",
+    rating: "",
+    comment: "",
+  })
 
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
@@ -36,6 +41,8 @@ export function Detail() {
       }
     });
   };
+
+
   //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,24 +57,28 @@ export function Detail() {
   //<--MANEJADOR DE INPUTS-->
   const handleInputChange = (event) => {
     if (event.target) {
-      const { name, value } = event.target.elements;
+      const { name, value } = event.target;
       setInputs({
           ...inputs,
           [name]: value,
         })
      
     }
-   
   } 
+
   //<--MANEJADOR DE SUBMIT-->
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      
+      await axios
+        .post("/review", inputs)
+        .then((response) => toast.success(response.data));
+     
     } catch (error) {
-      
+      toast.error(error.message);
     }
-  }
+   }
+  
   
 
   return (
@@ -88,25 +99,36 @@ export function Detail() {
           <p className={style.serviceType}>
              Price per hour: ${serviceDetail.pricePerHour}
              {serviceDetail.reviews && serviceDetail.reviews.length > 0 ? (
-              serviceDetail.reviews.map((review, index) => (
-                <div className={style.ratings}>
-                <RatingStars 
-                count={5}
-                key={index} 
-                value={review.raiting} 
-                size={24} // Tamaño de las estrellas
-                color1={'#ddd'} // Color de las estrellas inactivas
-                color2={'#ffd700'} // Color de las estrellas activas
-                edit={false}
-                />
-                <span>({review.raiting}.0)</span>
+                  <div className={style.ratings}>
+                    {
+                      (() => {
+                        const sum = serviceDetail.reviews.map((review) => parseFloat(review.rating))
+                          .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0));
+                        const averageRating = sum / serviceDetail.reviews.length;
+                        return isNaN(averageRating) ? 'Invalid ratings' : averageRating.toFixed(1);
+                      })()
+                    }
+                    <RatingStars
+                      count={5}
+                      value={
+                        (() => {
+                          const sum = serviceDetail.reviews.map((review) => parseFloat(review.rating))
+                            .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0));
+                          const averageRating = sum / serviceDetail.reviews.length;
+                          return isNaN(averageRating) ? 0 : averageRating;
+                        })()
+                      }
+                      size={24} // Tamaño de las estrellas
+                      color1={'#ddd'} // Color de las estrellas inactivas
+                      color2={'#ffd700'} // Color de las estrellas activas
+                      edit={false}
+                    />
+                  </div>
+                ) : (
+                  <p>Doesn't have rating.</p>
+                )}
 
-                </div>
-              ))
-              
-            ) : (
-              <p>No hay comentarios o valoraciones disponibles.</p>
-            )}
+
                       </p>
         
           <p className={style.serviceLocation}>
@@ -129,17 +151,14 @@ export function Detail() {
         </div>
         <button className={`${style.myButton} btn btn-outline-secondary`}
             onClick={() =>
-              dispatch(addServiceInCart(id, nameService, pricePerHour))
+              dispatch(addServiceInCart(id, serviceDetail.nameService, serviceDetail.pricePerHour))
             }
           >
             Add to cart
           </button>
       </div>
       </div>
-      {/* <div className={style.serviceReviewsContainer}>
-          <h1 className={style.serviceReviewsTitle}>Reviews</h1>
-          <p>Customers rated this pro highly for work quality, professionalism, and responsiveness.</p>
-        </div> */}
+      
         
 
     <div className={style.form}>
@@ -147,19 +166,20 @@ export function Detail() {
       
         {comments.map((com, index) => (
           <section className={style.comments}>
-            <span key={index}>
+            
             <div className={style.ratings}>
             <RatingStars
+              key={index}
               count={5} // Número total de estrellas
-              value={com.raiting} // Valor del rating
+              value={com.rating} // Valor del rating
               size={24} // Tamaño de las estrellas
               color1={'#ddd'} // Color de las estrellas inactivas
               color2={'#ffd700'} // Color de las estrellas activas
               edit={false}
             />
-             <span>({com.raiting}.0)</span>
+             <span>({com.rating}.0)</span>
             </div>
-            </span>
+          
             <div className={style.spanComent}>
               Comment: {com.comment}
               <button onClick={() => handleLikeClick(index)}>
@@ -182,10 +202,12 @@ export function Detail() {
               <RatingStars
                 classNames={style.star}
                 count={5}
-                value={inputs.raiting}
-                onChange={handleInputChange}
+                name = "rating"
+                value={inputs.rating}
+                onChange={(rating) => setInputs({ ...inputs, rating })}
                 size={24}
                 activeColor="#ffd700"
+                required
               />
             </div>
         </Form.Group>

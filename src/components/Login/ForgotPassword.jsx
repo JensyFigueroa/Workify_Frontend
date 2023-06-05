@@ -29,8 +29,10 @@ const ForgotPassword = () => {
         // console.log('estoy en el blur')
     }
 
-    const handleSubmitPassword = async (event) => {
-        event.preventDefault();
+    const handleSubmitPassword = async (e) => {
+        e.preventDefault();
+
+        console.log(formPassword)
         toast.success('An email has been sent to your email')
         setShowModalPassword(false);
     }
@@ -45,7 +47,7 @@ const ForgotPassword = () => {
     return (
         <>
 
-            <Link className="dropdown-item" to="#" variant="primary" onClick={() => { setShowModalPassword(true), handleFormChange('formLogin') }} >
+            <Link className="dropdown-item" to="#" variant="primary" onClick={() => { setShowModalPassword(true), handleFormChange('formLogin')}} >
                 Forgot password
             </Link>
 
@@ -62,7 +64,7 @@ const ForgotPassword = () => {
                         <div className={styles.field}>
                             <input type="text" name='emailForgot' onChange={handleInputChangePassword} onBlur={handleBlur} value={formPassword.emailForgot} required />
                             <label htmlFor="">Email address</label>
-                        </div>
+                            </div>
                         {errors.emailForgot && <p style={{ color: 'red', fontStyle: 'italic', fontSize: '18px' }}>{errors.emailForgot}</p>}
 
                         <div className={styles.field}>
