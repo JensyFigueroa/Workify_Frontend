@@ -186,8 +186,8 @@
   margin-left: 0.5em;
 }
 .name img{
-  width: 6em;
-  height: 6em;
+  width: 4em;
+  height: 4em;
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid rgb(8, 147, 240);

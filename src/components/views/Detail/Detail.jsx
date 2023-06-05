@@ -174,8 +174,8 @@ export function Detail() {
           <section className={style.comments}>
        <div className={style.fatherComments}>
             <div className={style.name}>
-              <p>{com.name}</p>
               <img src={com.imageUrl}/>
+              <p>{com.name}</p>
             </div>
           <div className={style.ratingComment}>
             <div className={style.ratings}>
