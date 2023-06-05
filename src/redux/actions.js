@@ -13,6 +13,7 @@ import {
   LOGIN_USER,
   CLEAN_SEARCH,
   SET_CART,
+  GET_USER
 } from "./types";
 import axios from "axios";
 
@@ -53,9 +54,23 @@ export const getServiceDetail = (id) => {
     try {
       const response = await axios.get(`/service/${id}`);
       const data = response.data;
-      console.log(data, "action");
       return dispatch({
         type: GET_SERVICESDETAIL,
+        payload: data,
+      });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+};
+
+export const getUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`/user/${idUser}`);
+      const data = response.data;
+      return dispatch({
+        type: GET_USER,
         payload: data,
       });
     } catch (error) {

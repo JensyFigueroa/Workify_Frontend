@@ -1,8 +1,8 @@
 import React, { useState ,useEffect } from "react";
 import styles from "./UserProfile.module.css";
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import axios from 'axios'
-
+import { getUser } from "../../../redux/actions";
 //icons Mui
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
@@ -14,17 +14,13 @@ export default function UserProfile() {
   const [showChangeProfile, setshowChangeProfile] = useState(false);
   const [showLogoutMessage, setShowLogoutMessage] = useState(false);
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
-  
-  
+  const userInfo = useSelector(state => state.userInfo);
+  const dispatch = useDispatch();
+  console.log(userInfo);
 
-  useEffect(async () => {
-    // const objUser =  () => {
-      const user =(await axios.get(`/user/${idUser}`)).data
-      console.log(user)
-      return user
-    // }
-    // console.log(objUser,'user')
-  },[])
+  useEffect(() => {
+    dispatch(getUser(idUser));
+  }, [dispatch, idUser])
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -71,9 +67,12 @@ export default function UserProfile() {
 
 
   return (
-    <div className={styles.containerPrincipal}>
-      <div className={styles.columnLeft}>
-        <h2 className={styles.name}>Name</h2>
+  <div className={styles.containerPrincipal}>
+      <h4>Account Settings</h4>
+    <div className={styles.containerSecundary}>
+      <div className={styles.containerLeftRight}>
+        <div className={styles.columnLeft}>
+            <h3 className={styles.name}>Profile Settings</h3>
         <div className={styles.imageSubmit}>
           {selectedImage && (
             <img
@@ -84,10 +83,40 @@ export default function UserProfile() {
           )}
           <input type="file" accept="image/*" onChange={handleImageUpload} />
         </div>
-        <button type="button" class="btn btn-primary btn-lg" value="My profile" onClick={handleProfileClick}>My profile</button>
+        <button type="button" class="btn btn-primary btn-lg" value="My profile" onClick={handleProfileClick}>Edit profile</button>
         <button type="button" class="btn btn-primary btn-lg" value="Service" onClick={handleServiceClick}>Service</button>
         <button type="button" class="btn btn-primary btn-lg" value="Logout" onClick={handleLogoutClick}>Logout</button>
       </div>
+      <div className={styles.infoProfile}>
+            <h5><strong>My profile</strong></h5>
+            <div className={styles.profile1}>
+              <img src={userInfo.imageUrl}/>
+              <div className={styles.profileson}>
+                <h5><strong>{userInfo.name}</strong></h5>
+                <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
+              </div>
+            </div>
+            <div className={styles.profile2}>
+              <h5><strong>Personal information</strong></h5>
+              <div className={styles.profilep} >
+                <p>Full Name: <strong>{userInfo.name}</strong></p>
+                <p>Email address: <strong>{userInfo.email}</strong></p>
+              </div>
+              <div className={styles.profilep1}>
+                <p>Phone: <strong>{userInfo.phone ? userInfo.phone : "Please confirm your phone"}</strong></p>
+                <p>User Id: <strong>{userInfo.id}</strong></p>
+              </div>
+            </div>
+            <div className={styles.profile3}>
+              <h5><strong>Address</strong></h5>
+              <div className={styles.profilep2}>
+                <p>Country: <strong>{userInfo.country ? userInfo.country : "Please confirm your country"}</strong></p>
+                <p>City: <strong>{userInfo.city ? userInfo.city : "Please confirm your city"}</strong></p>
+              </div>
+            </div>
+
+      </div>
+    </div>
       <div className={styles.columnRight}>
         {showProfileSection && (
           <div className={styles.containerForm}>
@@ -210,6 +239,7 @@ export default function UserProfile() {
         )}
         {showLogoutMessage && <div className={styles.message}>Ya te quieres ir? :(</div>}
       </div>
+    </div>
     </div>
   );
 }
