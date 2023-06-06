@@ -3,21 +3,20 @@ import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
 import SearchBar from "../searchBar/SearchBar";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import { MdHomeRepairService } from 'react-icons/md'
+import { MdHomeRepairService } from "react-icons/md";
 import { useLocation } from "react-router-dom";
-import logo from '../views/landing/img/logo.png'
-import LoginUser from '../Login/LoginUser'
+import logo from "../views/landing/img/logo.png";
+import LoginUser from "../Login/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../Login/Login";
-import { loginUser } from '../../redux/actions';
-import { signOut } from 'firebase/auth'
-import { auth } from '../../config/firebase-config.js'
+import { getCart, loginUser } from "../../redux/actions";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase-config.js";
+import axios from "axios";
 
 const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
-
-  const userName = useSelector(state => state.currentUserNameLoggedIn)
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,6 +30,7 @@ const Navbar = () => {
   }
 
   useEffect(() => {
+    dispatch(getCart);
     const handleResize = () => {
       setScreenSize({
         width: window.innerWidth,
@@ -38,6 +38,10 @@ const Navbar = () => {
     };
     window.addEventListener("resize", handleResize);
   }, []);
+
+  const cart = useSelector((state) => state.cart);
+  const userName = useSelector((state) => state.currentUserNameLoggedIn);
+  const idUser = useSelector((state) => state.currentUserIdLoggedIn);
 
   const handleClick = () => {
     setClickBurguer(!clickBurguer);
@@ -63,14 +67,19 @@ const Navbar = () => {
   const navbarClasses = `${isScrolled ? styles.fixed : styles.container}`;
 
   const logOut = async () => {
+    axios
+      .put(`/user/updateCart/${idUser}`, cart)
+      .then((response) => console.log(`se envio el carrito`, response))
+      .catch((error) => console.log(`error al enviar el carrito`, error));
+
     try {
-        await signOut(auth)
-        // .then((res) => {
-        //     setUID('');
-        //     window.localStorage.removeItem('uid');
-        // })
-        console.log('logged out');
-        dispatch(loginUser('', '', '', '',''))
+      await signOut(auth);
+      // .then((res) => {
+      //     setUID('');
+      //     window.localStorage.removeItem('uid');
+      // })
+      console.log("logged out");
+      dispatch(loginUser("", "", "", "", ""));
     } catch (error) {
       console.log(error);
     }
@@ -128,14 +137,19 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              <MdHomeRepairService style={{ fontSize: '40px' }} />
+              <MdHomeRepairService style={{ fontSize: "40px" }} />
             </NavLink>
           </div>
 
           <div className="btn-group " role="group">
-            {userName[0].length > 0 ? <div className={styles.userName}>
-              <p>Welcome</p>
-              <h6>{userName[0]}</h6></div> : ''}
+            {userName[0].length > 0 ? (
+              <div className={styles.userName}>
+                <p>Welcome</p>
+                <h6>{userName[0]}</h6>
+              </div>
+            ) : (
+              ""
+            )}
 
             <button
               type="button"
@@ -147,23 +161,37 @@ const Navbar = () => {
               <BsFillPersonLinesFill className={styles.loginIco} />
             </button>
             <ul className="dropdown-menu">
-              {userName[0].length > 0 ? <li>
-                <Link className="dropdown-item" to="/UserProfile" variant="primary">
-                  Profile
-                </Link>
-              </li> : ''}
-              {userName[0].length === 0 ?
+              {userName[0].length > 0 ? (
+                <li>
+                  <Link
+                    className="dropdown-item"
+                    to="/UserProfile"
+                    variant="primary"
+                  >
+                    Profile
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+              {userName[0].length === 0 ? (
                 <li>
                   <Login />
-                </li> : ''}
+                </li>
+              ) : (
+                ""
+              )}
 
-              {userName[0].length > 0 ?
+              {userName[0].length > 0 ? (
                 <li>
                   <Link className="dropdown-item" to="#" onClick={logOut}>
                     Log Out
                   </Link>
-                </li> : ''}
-              
+                </li>
+              ) : (
+                ""
+              )}
+
               <li>
                 <LoginUser />
               </li>
@@ -171,8 +199,9 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`${styles.btnBurguer} ${styles.navIcon} ${clickBurguer ? styles.open : ""
-              }`}
+            className={`${styles.btnBurguer} ${styles.navIcon} ${
+              clickBurguer ? styles.open : ""
+            }`}
             onClick={handleClick}
           >
             <span></span>
@@ -181,8 +210,9 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`${styles.curtain} ${clickBurguer ? styles.showCurtain : ""
-              }`}
+            className={`${styles.curtain} ${
+              clickBurguer ? styles.showCurtain : ""
+            }`}
           ></div>
         </nav>
       </>

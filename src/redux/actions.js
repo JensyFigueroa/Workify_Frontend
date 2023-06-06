@@ -13,7 +13,8 @@ import {
   LOGIN_USER,
   CLEAN_SEARCH,
   SET_CART,
-  GET_USER
+  GET_USER,
+  GETCART_DATABASE,
 } from "./types";
 import axios from "axios";
 
@@ -126,7 +127,17 @@ export const getCart = () => {
     type: GET_CART,
   };
 };
-
+export const getCartDataBase = (id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/user/getCart/${id}`);
+    return dispatch({
+      type: GETCART_DATABASE,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const updateCart = (cartItems) => {
   return {
     type: UPDATE_CART,

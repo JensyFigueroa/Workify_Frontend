@@ -11,7 +11,14 @@ const SuccessPayment = () => {
   const mailUser = user[1];
   const dispatch = useDispatch();
 
+  const idUser = useSelector((state) => state.currentUserIdLoggedIn);
+  console.log(idUser);
+
   useEffect(() => {
+    axios
+      .get(`/user/vacateCart/${idUser}`)
+      .then((response) => console.log(response, `salio todo bien`))
+      .catch((error) => console.log(`salio todo mal`, error));
     const searchParams = new URLSearchParams(location.search);
     const sessionId = searchParams.get("session_id");
     axios
