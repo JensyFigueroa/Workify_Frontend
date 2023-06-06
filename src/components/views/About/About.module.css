@@ -1,7 +1,79 @@
+
 .container {
-  width: 100%;
-  height: 100vh;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.teamGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.teamMember {
+  flex-basis: calc(25% - 20px); /* Ajusta el ancho según tus necesidades */
+  background-color: #f1f1f100;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.memberImage {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 10px;
+}
+
+.memberName {
+  font-size: 18px;
+  color: #333;
+}
+
+.memberRole {
+  font-size: 14px;
+  color: #777;
+}
+
+.header1 {
+  padding: 60px;
+  background-color: rgb(233, 233, 233);
+  width: 80%;
+  margin-left: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.infoHeader1 {
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: left; /* Alinea el texto a la izquierda */
+  margin-top: 30px;
+}
+
+.imgHeafer1 {
+  height: 50px;
+  margin-right: 10px; /* Agrega un margen derecho para separar las imágenes */
 }
