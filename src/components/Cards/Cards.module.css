@@ -13,6 +13,20 @@
   align-items: center;
 }
 
+.zeroStar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ratings{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 0.5em;
+}
+
 .msg{
   font-size: 30px;
   font-style: italic;
