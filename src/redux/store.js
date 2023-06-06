@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['currentUserIdLoggedIn','currentUserNameLoggedIn', 'allServices'],
+  whitelist: ['currentUserIdLoggedIn','currentUserNameLoggedIn', 'allServices', "cart"],
 };
 
 const middleware = [thunk];

@@ -55,6 +55,7 @@ const Cart = () => {
 
   const handleCleanCart = () => {
     window.localStorage.removeItem("cart");
+    dispatch(updateCart([]));
     window.location.reload();
   };
 
