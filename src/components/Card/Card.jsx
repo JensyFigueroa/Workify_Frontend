@@ -12,6 +12,7 @@ export function Card({
   pricePerHour,
   addToCart,
   emailUserService,
+  rating
 }) {
   const dispatch = useDispatch();
   const currentUserNameLoggedIn = useSelector(
@@ -23,10 +24,17 @@ export function Card({
       <div className={styles.card}>
         <img className={styles.img} src={image} alt="img" />
         <div className={styles.info}>
-          <p>{nameService}</p>
-          <p>Category: {typeService}</p>
-          <p>Service Provider: {currentUserNameLoggedIn[0]}</p>
-          <p>Rating: </p>
+            <div className={styles.pRating}>
+              <p>
+                <strong >{nameService}</strong>
+              </p>
+            <div>{rating}</div>
+            </div>
+          <p><strong className={styles.strongP}>Category:</strong> {typeService}</p>
+          <p><strong className={styles.strongP}>Service Provider:</strong> {currentUserNameLoggedIn[0]}</p>
+         
+          
+          
         </div>
         <div className={styles.buttons}>
           <button
