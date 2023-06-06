@@ -15,6 +15,7 @@ import {
   CLEAN_SEARCH,
   SET_CART,
   GET_USER,
+  GETCART_DATABASE,
 } from "./types";
 
 const initialState = {
@@ -31,8 +32,8 @@ const initialState = {
   orderType: "up",
   cart: [],
   currentUserIdLoggedIn: "",
-  currentUserNameLoggedIn: ["","","",""],
-  userInfo: []
+  currentUserNameLoggedIn: ["", "", "", ""],
+  userInfo: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -70,12 +71,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         serviceDetail: action.payload,
       };
-    
+
     case GET_USER:
       return {
         ...state,
         userInfo: action.payload,
-      }
+      };
 
     case ORDER_RESULT:
       const { orderBy, orderType } = action.payload;
@@ -254,7 +255,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUserIdLoggedIn: action.payload[0],
-        currentUserNameLoggedIn: [action.payload[1], action.payload[3], action.payload[2], action.payload[4]]
+        currentUserNameLoggedIn: [
+          action.payload[1],
+          action.payload[3],
+          action.payload[2],
+          action.payload[4],
+        ],
       };
     case CLEAN_SEARCH:
       return {
@@ -267,6 +273,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: [],
       };
+    // case GETCART_DATABASE:
+
+    //   return {
+    //     ...state,
+
+    //   };
 
     default:
       return {
