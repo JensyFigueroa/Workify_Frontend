@@ -74,7 +74,7 @@ export function Cards() {
     if (firstIndex === services.length) {
       setCurrentPage(5);
       return
-    };
+    }
 
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
     setCurrentPage(nextPage)
