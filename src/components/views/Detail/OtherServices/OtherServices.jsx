@@ -43,9 +43,14 @@ export const OtherServices = () => {
             <h5>{service.nameService}</h5>
             <div className={style.price}>
                 <p>${service.pricePerHour}</p>
-                <p className={style.starRating}>
-                {service.reviews[0].rating} <FaStar className={style.starIcon} />
-                </p>
+            <p className={style.starRating}>
+              {service.reviews && service.reviews.length > 0 && (
+                <>
+                  {service.reviews[0].rating} <FaStar className={style.starIcon} />
+                </>
+              )}
+            </p>
+
                 
             </div>
           </div>
