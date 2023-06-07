@@ -26,18 +26,16 @@ export function Card({
         <div className={styles.info}>
             <div className={styles.pRating}>
               <p>
-                <strong >{nameService}</strong>
+                <h5>{nameService}</h5>
               </p>
             <div>{rating}</div>
             </div>
-          <p><strong className={styles.strongP}>Category:</strong> {typeService}</p>
-          <p><strong className={styles.strongP}>Service Provider:</strong> {currentUserNameLoggedIn[0]}</p>
-         
-          
+          <p>Category: <span>&nbsp;{typeService}</span> </p>
+          <p>Service Provider: <span> &nbsp;{currentUserNameLoggedIn[0]}</span></p>
           
         </div>
         <div className={styles.buttons}>
-          <button
+          <button className={styles.addService}
             onClick={() =>
               dispatch(
                 addServiceInCart({

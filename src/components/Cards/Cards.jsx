@@ -30,6 +30,7 @@ export function Cards() {
   useEffect(() => {
     if (filterLocation === null && filterItem === null) {
       dispatch(getServices());
+      console.log('useEffect');
     }
   }, []);
 
