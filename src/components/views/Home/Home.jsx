@@ -4,14 +4,12 @@ import FilterBar from "../../FilterBar/FilterBar";
 import styles from "./Home.module.css";
 import { Loading } from "../../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartDataBase } from "../../../redux/actions";
+
 const Home = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const uidHome = useSelector((state) => state.currentUserIdLoggedIn);
   const nameHome = useSelector((state) => state.currentUserNameLoggedIn);
-
-  if (uidHome) dispatch(getCartDataBase(uidHome));
 
   console.log(uidHome, "uid desde home con use selector");
   console.log(nameHome, "name desde home con use selector");

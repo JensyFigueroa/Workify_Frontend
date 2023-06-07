@@ -36,7 +36,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const data = cartRedux;
@@ -56,6 +56,10 @@ const Cart = () => {
   const handleCleanCart = () => {
     window.localStorage.removeItem("cart");
     dispatch(updateCart([]));
+    axios
+      .get(`/user/vacateCart/${userId}`)
+      .then((response) => console.log(response, `salio todo bien`))
+      .catch((error) => console.log(`salio todo mal`, error));
     window.location.reload();
   };
 
@@ -219,20 +223,19 @@ const Cart = () => {
       <div className={styles.totalContainer}>
         <h2>Total: ${calculateTotal()}</h2>
         {userId ? (
-           <button className={styles.pay} onClick={handleNewViewPay}>Pay</button>
+          <button className={styles.pay} onClick={handleNewViewPay}>
+            Pay
+          </button>
         ) : (
           <>
-          <button className={styles.login}>
-            <span>Must</span> &nbsp;
-            <Login />
-            &nbsp;<span>first</span>
-          </button>
+            <button className={styles.login}>
+              <span>Must</span> &nbsp;
+              <Login />
+              &nbsp;<span>first</span>
+            </button>
           </>
         )}
       </div>
-
-
-     
 
       {payActive && (
         <div className={styles.popUp} onClick={handlePopupClick}>

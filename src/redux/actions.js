@@ -130,6 +130,7 @@ export const getCart = () => {
 export const getCartDataBase = (id) => async (dispatch) => {
   try {
     const response = await axios.get(`/user/getCart/${id}`);
+    console.log(response.data);
     return dispatch({
       type: GETCART_DATABASE,
       payload: response.data,

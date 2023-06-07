@@ -9,7 +9,7 @@ import logo from "../views/landing/img/logo.png";
 import LoginUser from "../Login/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../Login/Login";
-import { getCart, loginUser } from "../../redux/actions";
+import { getCart, loginUser, setCart } from "../../redux/actions";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase-config.js";
 import axios from "axios";
@@ -69,19 +69,20 @@ const Navbar = () => {
   const navbarClasses = `${isScrolled ? styles.fixed : styles.container}`;
 
   const logOut = async () => {
-    axios
-      .put(`/user/updateCart/${idUser}`, cart)
-      .then((response) => console.log(`se envio el carrito`, response))
-      .catch((error) => console.log(`error al enviar el carrito`, error));
-
     try {
       await signOut(auth);
+      axios
+        .put(`/user/updateCart/${idUser}`, cart)
+        .then((response) => console.log(`se envio el carrito`, response))
+        .catch((error) => console.log(`error al enviar el carrito`, error));
       // .then((res) => {
       //     setUID('');
       //     window.localStorage.removeItem('uid');
       // })
       console.log("logged out");
       dispatch(loginUser("", "", "", "", ""));
+      dispatch(setCart());
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
