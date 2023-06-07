@@ -273,12 +273,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: [],
       };
-    // case GETCART_DATABASE:
-
-    //   return {
-    //     ...state,
-
-    //   };
+    case GETCART_DATABASE:
+      return {
+        ...state,
+        cart: action.payload,
+      };
 
     default:
       return {
