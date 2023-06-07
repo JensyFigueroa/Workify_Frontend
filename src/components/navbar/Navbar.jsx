@@ -18,6 +18,8 @@ const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
+  const cantCart = useSelector(state => state.cart)
+
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -138,6 +140,8 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
+              {cantCart.length ? <span className={styles.cantCart}>{cantCart.length}</span>: ''}
+              
               <MdHomeRepairService style={{ fontSize: "40px" }} />
             </NavLink>
           </div>

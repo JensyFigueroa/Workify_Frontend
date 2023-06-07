@@ -1,30 +1,30 @@
 .card {
   width: 19em;
-  height: 25.5em;
+  height: 28.5em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 15px;
   text-decoration: none;
-  background: rgb(28, 181, 224, .7);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* background: rgb(28, 181, 224, .7); */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   transition: all 0.3s;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 8px #000046;
+  box-shadow: 0 8px 16px 8px rgba(0, 0, 70, .3);
   transform: translateY(-2px);
-  background-color: #1CB5E0;
+  /* background-color: #1CB5E0; */
 }
 
 .img {
   width: 100%;
-  height: auto;
+  height: 300px;
   object-fit: cover;
   aspect-ratio: 4/3;
   margin-top: 0px;
   margin-bottom: 10px;
-  border-radius: 10px 10px 0 0;
+  border-radius: 15px 15px 15px 15px;
 }
 
 .btn {
@@ -44,6 +44,12 @@
   text-shadow: 0 0 2px black;
 }
 
+.btn:hover{
+  background-color: white;
+  border: 1px solid #000046;
+  color: #000046;
+}
+
 .buttons{
   margin-top: -5.5em;
 }
@@ -54,6 +60,15 @@
   border: none;
 }
 
+.addService{
+  background: rgb(28, 181, 224); 
+  margin-top: 40px;
+  margin-right: 10px;
+}
+
+.addService:hover{
+  color: white;
+}
 
 .info {
   width: 100%;
@@ -71,25 +86,30 @@
   justify-content: space-around;
 }
 
-
-.pRating div{
+.pRating p h5 {
   margin-top: -0.5px;
-  color: white;
+  color: #000046;
 }
 
-
-
-
+.pRating div {
+  margin-top: -0.5px;
+  color: #000046;
+  font-weight: 600;
+}
 
 .info p {
   text-align: inherit;
   width: 100%;
   padding: 0px 11px;
-  color: var(--white);
   font-weight: 600;
   margin: 0;
   margin-left: 5px;
   text-shadow: 0 0 1px #252525;
   font-family: "Noto Sans", sans-serif;
   overflow: hidden;
+  color: #000046;
+}
+
+.info p span{
+  font-weight: normal;
 }
