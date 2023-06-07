@@ -2,8 +2,7 @@ import React, { useState ,useEffect } from "react";
 import styles from "./UserProfile.module.css";
 import {useDispatch, useSelector} from 'react-redux'
 import { getUser } from "../../../redux/actions";
-//icons Mui
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+
 
 export default function UserProfile() {
  
@@ -14,8 +13,9 @@ export default function UserProfile() {
   const [initialLoad, setInitialLoad] = useState(true);
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
   const userInfo = useSelector(state => state.userInfo);
+  const [services, setServices] = useState(userInfo.Services);
   const dispatch = useDispatch();
-  console.log(userInfo);
+  console.log(userInfo.Services);
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -59,7 +59,16 @@ export default function UserProfile() {
     setInitialLoad(false);
   };
   
-
+  //<--MANEJADOR DE BOTON SWITCH-->
+  const handleSwitchChange = (serviceId) => {
+    setServices((prevServices) =>
+      prevServices.map((service) =>
+        service.id === serviceId
+          ? { ...service, enabled: !service.enabled }
+          : service
+      )
+    );
+  };
 
 
   return (
@@ -164,7 +173,7 @@ export default function UserProfile() {
           <p><strong>My services</strong></p>
         </div>
        
-          {userInfo.Services.map((service, index) => ( 
+          {userInfo.Services && userInfo.Services.map((service, index) => ( 
           <div key={index} className={styles.containerService}>
               <img src={service.imageUrl[0]}/>
               <div>
@@ -174,6 +183,21 @@ export default function UserProfile() {
                 <p>Price per hour: ${service.pricePerHour}</p>
             </div>
                 <div className={styles.descriptionService}>
+                <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`switchButton-${service.id}`}
+                checked={service.enabled}
+                onChange={() => handleSwitchChange(service.id)}
+              />
+              <label
+                className="form-check-label"
+                htmlFor={`switchButton-${service.id}`}
+              >
+                {service.enabled ? 'Enabled' : 'Disabled'}
+              </label>
+            </div>
                   
                 </div>
           </div>))}
