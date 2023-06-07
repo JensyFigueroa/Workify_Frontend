@@ -6,7 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./components/views/landing/LandingPage";
 import Footer from "./components/views/footer/Footer";
 import Error404 from "./components/views/Error404/Error404";
-import Cart from "./cart/Cart";
+// import Cart from "./cart/Cart";
+import NewCart from "./NewCart/NewCart";
 import UserProfile from "./components/views/UserProfile/UserProfile";
 import SuccessPayment from "./components/views/SuccessPayment/SuccessPayment";
 import About from "./components/views/About/About";
@@ -25,7 +26,7 @@ function App() {
         <Route path="/detail/:id" element={<Detail />}></Route>
         <Route path="/createService" element={<CreateService />}></Route>
         <Route path={"*"} element={<Error404 />} />
-        <Route path={"/cart"} element={<Cart />} />
+        <Route path={"/cart"} element={<NewCart />} />
         <Route path={"/payment/success"} element={<SuccessPayment />} />
         <Route path={"/about"} element={<About />} />
       </Routes>

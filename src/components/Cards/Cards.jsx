@@ -4,15 +4,9 @@ import { getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
 import { useEffect, useState } from "react";
 import faceThink from "./face-think.png";
-import RatingStars from 'react-rating-stars-component';
-
-
-const cartFromLocalStorage = JSON.parse(
-  window.localStorage.getItem("cart") || "[]"
-);
+import RatingStars from "react-rating-stars-component";
 
 export function Cards() {
-  const [cart, setCart] = useState(cartFromLocalStorage);
   const dispatch = useDispatch();
   let allServices = useSelector((state) => state.allServices);
   const filterLocation = useSelector((state) => state.selectedLocation);
@@ -30,17 +24,9 @@ export function Cards() {
   useEffect(() => {
     if (filterLocation === null && filterItem === null) {
       dispatch(getServices());
-      console.log('useEffect');
+      console.log("useEffect");
     }
   }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (newItem) => {
-    setCart((prevCart) => [...prevCart, newItem]);
-  };
 
   console.log(services);
   return (
@@ -56,47 +42,51 @@ export function Cards() {
               typeService={serv.typeService}
               pricePerHour={serv.pricePerHour}
               emailUserService={serv.emailUserService}
-              enabled = {serv.enabled}
-              rating = {serv.reviews && serv.reviews.length > 0 ? (
-                <div className={styles.ratings}>
-                  {
-                    (() => {
-                      const sum = serv.reviews.map((review) => parseFloat(review.rating))
-                        .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0));
+              enabled={serv.enabled}
+              rating={
+                serv.reviews && serv.reviews.length > 0 ? (
+                  <div className={styles.ratings}>
+                    {(() => {
+                      const sum = serv.reviews
+                        .map((review) => parseFloat(review.rating))
+                        .reduce(
+                          (a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0)
+                        );
                       const averageRating = sum / serv.reviews.length;
-                      return isNaN(averageRating) ? 'Invalid ratings' : averageRating.toFixed(1);
-                    })()
-                  }
-                  <RatingStars
-                    count={1}
-                    value={
-                      (() => {
-                        const sum = serv.reviews.map((review) => parseFloat(review.rating))
-                          .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0));
+                      return isNaN(averageRating)
+                        ? "Invalid ratings"
+                        : averageRating.toFixed(1);
+                    })()}
+                    <RatingStars
+                      count={1}
+                      value={(() => {
+                        const sum = serv.reviews
+                          .map((review) => parseFloat(review.rating))
+                          .reduce(
+                            (a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0)
+                          );
                         const averageRating = sum / serv.reviews.length;
                         return isNaN(averageRating) ? 0 : averageRating;
-                      })()
-                    }
-                    size={24} // Tamaño de las estrellas
-                    color1={'#ddd'} // Color de las estrellas inactivas
-                    color2={'#ffd700'} // Color de las estrellas activas
-                    edit={false}
-                  />
-                </div>
-              ) : (
-                <p className={styles.zeroStar}>0
-                <RatingStars
-                count={1}
-                size={24} // Tamaño de las estrellas
-                color1={'#ddd'} // Color de las estrellas inactivas
-                color2={'#ffd700'} // Color de las estrellas activas
-                edit={false}
-              /></p>
-                
-              )}
-
-              addToCart={addToCart}
-
+                      })()}
+                      size={24} // Tamaño de las estrellas
+                      color1={"#ddd"} // Color de las estrellas inactivas
+                      color2={"#ffd700"} // Color de las estrellas activas
+                      edit={false}
+                    />
+                  </div>
+                ) : (
+                  <p className={styles.zeroStar}>
+                    0
+                    <RatingStars
+                      count={1}
+                      size={24} // Tamaño de las estrellas
+                      color1={"#ddd"} // Color de las estrellas inactivas
+                      color2={"#ffd700"} // Color de las estrellas activas
+                      edit={false}
+                    />
+                  </p>
+                )
+              }
             />
           );
         })
