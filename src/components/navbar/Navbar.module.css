@@ -75,6 +75,10 @@ h1 {
     
 }
 
+.link span{
+    text-decoration: none;
+}
+
 .active {
     display: flex;
     flex-direction: column;
@@ -98,6 +102,23 @@ h1 {
     left: 0;
     right: 0;
     text-align: center;
+}
+
+.cantCart{
+    position: absolute;
+    top: 5px;
+    margin-left: 25px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #0D6EFD;
+    border-radius: 50% 50%;
+    background-color: #0D6EFD;
+    text-decoration: none;
+    text-align: center;
+}
+
+.cantCart:hover{
+    text-decoration: none;
 }
 
 /* ###############  navIcon ##########################*/
