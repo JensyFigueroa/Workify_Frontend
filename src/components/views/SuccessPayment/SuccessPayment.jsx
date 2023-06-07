@@ -69,7 +69,7 @@ const SuccessPayment = () => {
       });
   }, []);
 
-  dispatch(setCart());
+  window.localStorage.removeItem("cartItems");
 
   return (
     <div className={styles.container}>

@@ -123,7 +123,10 @@ const Login = () => {
         const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl;
         //console.log(userImg, "imagen de usarui");
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
-        dispatch(getCartDataBase(uid));
+        const response = await axios.get(`/user/getCart/${uid}`);
+        console.log(response.data);
+        const cart = window.localStorage.getItem("cartItems");
+        console.log(cart);
       }
     } catch (error) {
       console.log(error);

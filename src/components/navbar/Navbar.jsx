@@ -18,7 +18,7 @@ const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
-  const cantCart = useSelector(state => state.cart)
+  const cantCart = useSelector((state) => state.cart);
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +32,7 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    dispatch(getCart);
+    // dispatch(getCart);
     const handleResize = () => {
       setScreenSize({
         width: window.innerWidth,
@@ -41,7 +41,7 @@ const Navbar = () => {
     window.addEventListener("resize", handleResize);
   }, []);
 
-  const cart = useSelector((state) => state.cart);
+  // const cart = useSelector((state) => state.cart);
   const userName = useSelector((state) => state.currentUserNameLoggedIn);
   const idUser = useSelector((state) => state.currentUserIdLoggedIn);
 
@@ -71,8 +71,9 @@ const Navbar = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
+      const cartItems = JSON.parse(window.localStorage.getItem("cartItems")); //aca estoy mandando el carrito al back cuando me deslogueo
       axios
-        .put(`/user/updateCart/${idUser}`, cart)
+        .put(`/user/updateCart/${idUser}`, cartItems)
         .then((response) => console.log(`se envio el carrito`, response))
         .catch((error) => console.log(`error al enviar el carrito`, error));
       // .then((res) => {
@@ -81,7 +82,7 @@ const Navbar = () => {
       // })
       console.log("logged out");
       dispatch(loginUser("", "", "", "", ""));
-      dispatch(setCart());
+      window.localStorage.removeItem("cartItems");
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -140,8 +141,12 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              {cantCart.length ? <span className={styles.cantCart}>{cantCart.length}</span>: ''}
-              
+              {cantCart.length ? (
+                <span className={styles.cantCart}>{cantCart.length}</span>
+              ) : (
+                ""
+              )}
+
               <MdHomeRepairService style={{ fontSize: "40px" }} />
             </NavLink>
           </div>
