@@ -27,13 +27,12 @@ export function Cards() {
     services = allServices;
   }
 
-  // useEffect(() => {
-  //   if (searchServices.length > 0) {
-  //   if (filterLocation === null && filterItem === null) {
-  //     dispatch(getServices());
-  //     console.log('useEffect');
-  //   }}
-  // }, []);
+  useEffect(() => {
+    if (filterLocation === null && filterItem === null) {
+      dispatch(getServices());
+      console.log('useEffect');
+    }
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("cart", JSON.stringify(cart));
