@@ -18,11 +18,13 @@ const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
-  const [cantCart, setCantCart] = useState(JSON.parse(window.localStorage.getItem("cartItems")))
+  const [cantCart, setCantCart] = useState(
+    JSON.parse(window.localStorage.getItem("cartItems"))
+  );
 
-useEffect(()=>{
-  setCantCart(JSON.parse(window.localStorage.getItem("cartItems")))
-},[cantCart])
+  // useEffect(() => {
+  //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
+  // }, [cantCart]);
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -145,7 +147,7 @@ useEffect(()=>{
               }
               onClick={handleClick}
             >
-              {cantCart.length ? (
+              {cantCart?.length ? (
                 <span className={styles.cantCart}>{cantCart.length}</span>
               ) : (
                 ""

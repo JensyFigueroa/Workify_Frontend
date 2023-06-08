@@ -21,6 +21,7 @@ import axios from "axios";
 export const getServices = () => {
   return async (dispatch) => {
     try {
+      console.log('entre en la action de getservices');
       const response = await axios.get("/service/");
       const data = response.data;
       return dispatch({
@@ -29,6 +30,7 @@ export const getServices = () => {
       });
     } catch (error) {
       //throw new Error(error.message);
+      console.log('entre en la action de getservices pero en el ERROR');
       console.log(error.message);
     }
   };
@@ -81,6 +83,7 @@ export const getUser = (idUser) => {
 };
 
 export const orderResult = (orderBy, orderType) => {
+  console.log(orderBy, orderType,'orderBy, orderType en action');
   return {
     type: ORDER_RESULT,
     payload: {
@@ -91,6 +94,7 @@ export const orderResult = (orderBy, orderType) => {
 };
 
 export const selectItem = (items) => {
+  console.log(items, 'items en actions');
   return {
     type: SELECT_ITEM,
     payload: items,
@@ -98,6 +102,7 @@ export const selectItem = (items) => {
 };
 
 export const selectLocation = (location) => {
+  console.log(location, 'location en actions');
   return {
     type: SELECT_LOCATION,
     payload: location,

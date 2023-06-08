@@ -140,7 +140,7 @@ const FilterBar = () => {
           value="ALL"
           onClick={handleItemChange}
         >
-          All
+          All Categories
         </button>
         <div className={styles.itemContainer} ref={itemContainerRef}>
           {visibleItems?.map((item, index) => (
