@@ -125,7 +125,7 @@ const Login = () => {
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
         const response = await axios.get(`/user/getCart/${uid}`);
         console.log(response.data);
-        const cart = window.localStorage.getItem("cartItems");
+        const cart = JSON.parse(window.localStorage.getItem("cartItems"));
         console.log(cart);
       }
     } catch (error) {
