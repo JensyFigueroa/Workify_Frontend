@@ -19,8 +19,6 @@ export default function UserProfile() {
   const userInfo = useSelector(state => state.userInfo);
   const [services, setServices] = useState(userInfo.Services);
   const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState(false);
-  const [imageUrl, setImageUrl] = useState(userInfo.imageUrl);
   const [inputs, setInputs] = useState({
     imageUrl: "",
     name: "", 
@@ -30,6 +28,7 @@ export default function UserProfile() {
     description: "",
     phone: "",
   });
+  
   console.log(userInfo);
 
   useEffect(() => {
@@ -85,11 +84,7 @@ export default function UserProfile() {
     );
   };
 
-  //<--MANEJADOR DE CLICK EN IMAGEN-->
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
+  
 
   //<--MANEJADOR DE INPUTS-->
   const handleInputChange = async (event) => {
@@ -111,8 +106,7 @@ export default function UserProfile() {
         );
     
         const imageUrl = response.data.secure_url;
-        setImageUrl(imageUrl);
-        setIsEditing(false);
+        
     
         setInputs({
           ...inputs,
@@ -129,7 +123,6 @@ export default function UserProfile() {
       });
     }
   }
-
   //<--MANEJADOR DEL SUBMIT-->
   const handleSubmit = async(event) => {
       event.preventDefault();
@@ -148,11 +141,10 @@ export default function UserProfile() {
     <div className={styles.containerSecundary}>
       <div className={styles.containerLeftRight}>
         <div className={styles.columnLeft}>
-            <h3 className={styles.name}>Profile Settings</h3>
-        <button type="button" class="btn btn-primary btn-lg" value="My profile" onClick={handleProfileClick}>My profile</button>
-        <button type="button" class="btn btn-primary btn-lg" value="My profile" onClick={handleEditProfileClick}>Edit profile</button>
-        <button type="button" class="btn btn-primary btn-lg" value="Service" onClick={handleServiceClick}>Services</button>
-        <button type="button" class="btn btn-primary btn-lg" value="Logout" onClick={handleMyOrdersClick}>Orders</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleProfileClick}>My profile</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleEditProfileClick}>Edit profile</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleServiceClick}>Services</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleMyOrdersClick}>Orders</button>
       </div>
       {(initialLoad) && (
       <div className={styles.infoProfileContainer}>
@@ -227,33 +219,34 @@ export default function UserProfile() {
           >
             <div className={styles.title1}>
               <p><strong>My personal information</strong></p>
+              <p className={styles.titlep}>You can modify your information if you wish</p>
+
             </div>
             <div className={styles.containerEditProfile}>
 
               <div>
                 <div className={styles.subtitle}>
-                  <p >Basic information</p>
+                  <p><strong>Basic information</strong></p>
                 </div>
                
                 <div className={styles.imageProfile}>
                   <p><strong>Profile Image</strong> </p>
                   <p>A profile photo helps personalize your account</p>
-                  {isEditing ? (
+                  <div className={styles.inputImage}>
+                    <img src={selectedImages.length > 0 ? selectedImages[0] : userInfo.imageUrl} alt="Profile" />
                     <input
-                    name="imageUrl"
-                    value={inputs.imageUrl}
-                    type="file" 
-                    onChange={handleInputChange} />
-                  ) : (
-                    <>
-                      <img src={userInfo.imageUrl} alt="Profile" />
-                      <button onClick={handleEditClick}>Edit</button>
-                    </>
-                  )}
+                      name="imageUrl"
+                      type="file" 
+                      onChange={handleInputChange}
+                    />
+                </div>
+              
+                 
                 </div>
                 <div className={styles.imageProfile}>
                   <p><strong>Name</strong></p>
                   <p>{userInfo.name}</p>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`}></i>
                   <input
                   name="name" 
                   value={inputs.name}
@@ -269,6 +262,7 @@ export default function UserProfile() {
                 <div className={styles.imageProfile}>
                   <p><strong>Country</strong></p>
                   <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
+                  <i className="bi bi-caret-right-fill"></i>
                   <input 
                   name="country" 
                   value={inputs.country}
@@ -282,6 +276,7 @@ export default function UserProfile() {
                 <div className={styles.imageProfileCity}>
                   <p><strong>City</strong></p>
                   <p>{userInfo.city ? userInfo.city : "Please confirm your country"}</p>
+                  <i className={`${styles.arrow1} && bi bi-caret-right-fill`}></i>
                   <input 
                   name="city" 
                   value={inputs.city}
@@ -297,11 +292,12 @@ export default function UserProfile() {
               <div className={styles.newInfo}>
               <div>
               <div className={styles.subtitle}>
-                  <p>Contact information</p>
+                  <p><strong>Contact information</strong></p>
                 </div>
                 <div className={styles.imageProfile}>
                   <p><strong>Email</strong></p>
                   <p>{userInfo.email}</p>
+                  <i className={`${styles.arrow2} && bi bi-caret-right-fill`}></i>
                   <input 
                   name="email" 
                   value={inputs.email}
@@ -314,7 +310,8 @@ export default function UserProfile() {
 
                 <div className={styles.imageProfile}>
                   <p><strong>Description</strong></p>
-                  <p>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
+                  <p className={styles.pAlign}>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
+                  <i className={`${styles.arrow3} && bi bi-caret-right-fill`}></i>
                   <input 
                   name="description" 
                   value={inputs.description}
@@ -328,6 +325,7 @@ export default function UserProfile() {
                 <div className={styles.imageProfileCity}>
                   <p><strong>Phone</strong></p>
                   <p>{userInfo.phone ? userInfo.phone: "Please confirm your phone"}</p>
+                  <i className={`${styles.arrow4} && bi bi-caret-right-fill`}></i>
                   <input 
                   name="phone" 
                   value={inputs.phone}

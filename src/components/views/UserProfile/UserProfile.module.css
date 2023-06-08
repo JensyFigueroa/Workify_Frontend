@@ -50,6 +50,8 @@
   padding: 20px;
   border-radius: 20px;
   width: 55em;
+  background-color: rgb(48, 91, 156);
+  color: white;
 }
 
 .profile2{
@@ -58,6 +60,8 @@
   border-radius: 20px;
   width: 55em;
   padding: 35px;
+  background-color: rgb(48, 91, 156);
+  color: white;
 
 }
 
@@ -67,6 +71,8 @@
   border-radius: 20px;
   width: 55em;
   padding: 35px;
+  background-color: rgb(48, 91, 156);
+  color: white;
   
 }
 
@@ -179,12 +185,44 @@ input {
   margin-left: 0.9em;
 }
 
-.imageProfile img{
+.inputImage img{
   border-radius: 50px;
+  width: 5em;
+  height: 5em;
+  object-fit: cover;
+}
+
+.inputImage{
+  display: flex;
+  flex-direction: column;
+  width: 15em;
+  align-items: center;
+}
+
+.inputImage input{
+  transform: scale(0.5);
+}
+
+.buttonLeft{
+  background-color: white;
+  border: none;
+  color: rgb(97, 97, 97);
+  border-radius: 20px;
+  padding: 10px;
+  width: 8em;
+  font-weight: bold;
+  
+}
+.buttonLeft:hover{
+  background-color: rgba(117, 181, 224, 0.2);
+}
+.buttonLeft:focus {
+  background-color: rgba(117, 181, 224, 0.2);
+  color: rgb(48, 91, 156);
 }
 
 .subtitle{
-  background-color: gainsboro;
+  background-color: rgb(48, 91, 156);
   height: 3.5em;
   width: 55em;
   margin-left: -1.3em;
@@ -196,6 +234,7 @@ input {
 }
 .subtitle p{
   margin-left: 1em;
+  color: white;
 }
 
 .newInfo{
@@ -242,6 +281,7 @@ input {
   padding: 20px;
   border-radius: 20px;
   margin-left: 3em;
+  height: 30em;
 }
 
 .title{
@@ -262,12 +302,41 @@ input {
   font-size: 1.1em;
   padding-top: 1em;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+.titlep{
+  margin-top: -1em;
+  font-size: 15px;
 }
 
 .myButton{
   margin-left: 48em;
 }
+
+.myButton:hover{
+  background-color: rgb(48, 91, 156);
+}
+
+.arrow{
+  margin-left: 6em;
+}
+
+.arrow1{
+  margin-left: 1.4em;
+}
+
+.arrow2{
+  margin-left: 3.5em;
+}
+
+.arrow3{
+  margin-left: -1.4em;
+}
+
+.arrow4{
+  margin-left: 1em;
+}
+
 
 .columnLeft input {
   padding: 20px;
@@ -278,5 +347,7 @@ input {
 
 .columnLeft{
   width: 12em;
+  border-right: 1px solid rgb(209, 209, 209);
+  height: 110%;
 }
 
