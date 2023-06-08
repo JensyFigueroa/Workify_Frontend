@@ -2,7 +2,9 @@ import React, { useState ,useEffect } from "react";
 import styles from "./UserProfile.module.css";
 import {useDispatch, useSelector} from 'react-redux'
 import { getUser } from "../../../redux/actions";
+import toast, { Toaster } from "react-hot-toast";
 
+import axios from "axios";
 
 export default function UserProfile() {
  
@@ -11,11 +13,24 @@ export default function UserProfile() {
   const [showEditProfile, setshowEditProfile] = useState(false);
   const [showMyOrders, setShowMyOrders] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
   const userInfo = useSelector(state => state.userInfo);
   const [services, setServices] = useState(userInfo.Services);
   const dispatch = useDispatch();
-  console.log(userInfo.Services);
+  const [isEditing, setIsEditing] = useState(false);
+  const [imageUrl, setImageUrl] = useState(userInfo.imageUrl);
+  const [inputs, setInputs] = useState({
+    imageUrl: "",
+    name: "", 
+    country: "",
+    city: "",
+    email: "", 
+    description: "",
+    phone: "",
+  });
+  console.log(userInfo);
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -70,6 +85,62 @@ export default function UserProfile() {
     );
   };
 
+  //<--MANEJADOR DE CLICK EN IMAGEN-->
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+
+  //<--MANEJADOR DE INPUTS-->
+  const handleInputChange = async (event) => {
+    const { name, value } = event.target;
+    if (name === "imageUrl") {
+      const file = event.target.files[0];
+      const imageSelected = URL.createObjectURL(file);
+      setSelectedImages([imageSelected]);
+    
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "services_wfy");
+      formData.append("api_key", "168773883428854");
+    
+      try {
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/Joaquin/image/upload",
+          formData
+        );
+    
+        const imageUrl = response.data.secure_url;
+        setImageUrl(imageUrl);
+        setIsEditing(false);
+    
+        setInputs({
+          ...inputs,
+          imageUrl: [...inputs.imageUrl, imageUrl],
+        });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    } else{
+      
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    }
+  }
+
+  //<--MANEJADOR DEL SUBMIT-->
+  const handleSubmit = async(event) => {
+      event.preventDefault();
+
+    //<--RUTA DEL POST-->
+      try {
+        
+      } catch (error) {
+        
+      }
+  }
 
   return (
   <div className={styles.containerPrincipal}>
@@ -149,22 +220,136 @@ export default function UserProfile() {
 
         {showEditProfile && (
           <>
-            <div className={styles.title}>
-              <p><strong>My information</strong></p>
+           <form
+            className="row g-3 needs-validation"
+            onSubmit={handleSubmit}
+            novalidate
+          >
+            <div className={styles.title1}>
+              <p><strong>My personal information</strong></p>
             </div>
             <div className={styles.containerEditProfile}>
 
               <div>
-                <p>Profile Image:</p>
-                <p>Name:</p>
-                <p>Email:</p>
-                <p>Country:</p>
-                <p>City:</p>
-                <p>Phone:</p>
-                <p>Description:</p>
+                <div className={styles.subtitle}>
+                  <p >Basic information</p>
+                </div>
+               
+                <div className={styles.imageProfile}>
+                  <p><strong>Profile Image</strong> </p>
+                  <p>A profile photo helps personalize your account</p>
+                  {isEditing ? (
+                    <input
+                    name="imageUrl"
+                    value={inputs.imageUrl}
+                    type="file" 
+                    onChange={handleInputChange} />
+                  ) : (
+                    <>
+                      <img src={userInfo.imageUrl} alt="Profile" />
+                      <button onClick={handleEditClick}>Edit</button>
+                    </>
+                  )}
+                </div>
+                <div className={styles.imageProfile}>
+                  <p><strong>Name</strong></p>
+                  <p>{userInfo.name}</p>
+                  <input
+                  name="name" 
+                  value={inputs.name}
+                  onChange={handleInputChange}
+                  type="name" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New name"
+                  >
+                  </input>
+                </div>
+
+                <div className={styles.imageProfile}>
+                  <p><strong>Country</strong></p>
+                  <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
+                  <input 
+                  name="country" 
+                  value={inputs.country}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New country"></input>
+                </div>
+
+                <div className={styles.imageProfileCity}>
+                  <p><strong>City</strong></p>
+                  <p>{userInfo.city ? userInfo.city : "Please confirm your country"}</p>
+                  <input 
+                  name="city" 
+                  value={inputs.city}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className={`${styles.inputControl1} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New city"></input>
+                </div>
 
               </div>
             </div>
+              <div className={styles.newInfo}>
+              <div>
+              <div className={styles.subtitle}>
+                  <p>Contact information</p>
+                </div>
+                <div className={styles.imageProfile}>
+                  <p><strong>Email</strong></p>
+                  <p>{userInfo.email}</p>
+                  <input 
+                  name="email" 
+                  value={inputs.email}
+                  onChange={handleInputChange}
+                  type="email" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New email"></input>
+                </div>
+
+                <div className={styles.imageProfile}>
+                  <p><strong>Description</strong></p>
+                  <p>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
+                  <input 
+                  name="description" 
+                  value={inputs.description}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New description"></input>
+                </div>
+
+                <div className={styles.imageProfileCity}>
+                  <p><strong>Phone</strong></p>
+                  <p>{userInfo.phone ? userInfo.phone: "Please confirm your phone"}</p>
+                  <input 
+                  name="phone" 
+                  value={inputs.phone}
+                  onChange={handleInputChange}
+                  type="name" 
+                  className={`${styles.inputControl1} && form-control`} 
+                  id="exampleFormControlInput1"
+                  placeholder="New phone"></input>
+                </div>
+
+                </div>
+              </div>
+              <div className="col-12">
+            <button
+              type="submit"
+              className={`${styles.myButton} btn btn-outline-secondary`} 
+              disabled={isSubmitting}>
+               {isSubmitting ? "Saving..." : "Save changes"}
+            </button>
+          </div>
+          <Toaster position="bottom-right" reverseOrder={false} />
+              </form>
           </>
         )}
         {showServiceContent && (

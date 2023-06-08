@@ -139,13 +139,71 @@ input {
   font-size: 1.2em;
 }
 
+.inputControl{
+  width: 13em;
+}
+
+.inputControl1{
+  width: 13em;
+  margin-right: 0.7em;
+}
+
 .containerEditProfile{
   border: 1px solid rgb(209, 209, 209);
   width: 55em;
   padding: 20px;
   border-radius: 20px;
   margin-left: 3em;
+  margin-bottom: 2em;
 
+}
+
+.imageProfile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(209, 209, 209);
+  padding: 10px;
+}
+.imageProfileCity{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.imageProfileCity p{
+  padding-top: 1em;
+  margin-left: 0.9em;
+}
+
+.imageProfile img{
+  border-radius: 50px;
+}
+
+.subtitle{
+  background-color: gainsboro;
+  height: 3.5em;
+  width: 55em;
+  margin-left: -1.3em;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: -1.3em;
+  padding: 12px;
+}
+.subtitle p{
+  margin-left: 1em;
+}
+
+.newInfo{
+  border: 1px solid rgb(209, 209, 209);
+  width: 55em;
+  padding: 20px;
+  border-radius: 20px;
+  margin-left: 3em;
 }
 
 .containerService{
@@ -193,6 +251,22 @@ input {
   margin-bottom: 0.8em;
   font-size: 1.1em;
   padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.title1{
+  margin-left: 2.5em;
+  padding: 10px;
+  margin-top: -0.5em;
+  font-size: 1.1em;
+  padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.myButton{
+  margin-left: 48em;
 }
 
 .columnLeft input {
