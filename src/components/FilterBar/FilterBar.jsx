@@ -76,6 +76,8 @@ const FilterBar = () => {
     setCarouselPosition(carouselPosition + 5);
     setIsLeftArrowVisible(true);
 
+    console.log(carouselPosition)
+
     if (carouselPosition + 5 === allItems.length - 1 || carouselPosition + 5 > allItems.length - 1) {
       setIsRightArrowVisible(false);
     }
@@ -149,16 +151,16 @@ const FilterBar = () => {
             All Categories
           </button> */}
           {visibleItems?.map((item, index) => (
-            <label className={`${styles.buttonItem} ${item === items ? styles.selected : ""
+            <label key={index}className={`${styles.buttonItem} ${item === items ? styles.selected : ""
               }`}>
+               <i class="fa-solid fa-snowflake"></i>
+              
               <button
-                key={index}
                 value={item}
                 onClick={handleItemChange}
               >
                 {item}
               </button>
-
             </label>
           ))}
         </div>

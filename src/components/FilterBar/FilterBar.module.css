@@ -39,6 +39,9 @@
 }
 
 .buttonItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: none;
   padding: 0;
   cursor: pointer;
