@@ -23,6 +23,7 @@ import ForgotPassword from "./ForgotPassword";
 import { set } from "date-fns";
 import toast, { Toaster } from "react-hot-toast";
 import { getCartDataBase } from "../../redux/actions";
+import UpdateCartOnLogin from "../../cart/updateCartOnLogin";
 
 const Login = () => {
   const location = useLocation();
@@ -123,11 +124,41 @@ const Login = () => {
         const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl;
         //console.log(userImg, "imagen de usarui");
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
-        const response = await axios.get(`/user/getCart/${uid}`);
-        console.log(response.data);
-        const cart = JSON.parse(window.localStorage.getItem("cartItems"));
-        console.log(cart);
+
+        const cartDB = (await axios.get(`/user/getCart/${uid}`)).data;
+        console.log(cartDB);
+        const cartLS =
+          JSON.parse(window.localStorage.getItem("cartItems")) || [];
+        console.log(cartLS);
+
+        const services = {};
+
+        cartDB.forEach((ele) => {
+          if (services[ele.id]) {
+            services[ele.id].quantity += ele.quantity;
+          } else {
+            services[ele.id] = { ...ele };
+          }
+        });
+
+        cartLS.forEach((ele) => {
+          if (services[ele.id]) {
+            services[ele.id].quantity += ele.quantity;
+          } else {
+            services[ele.id] = { ...ele };
+          }
+        });
+
+        const mergedServices = Object.values(services);
+        console.log(mergedServices);
+
+        window.localStorage.setItem(
+          "cartItems",
+          JSON.stringify(mergedServices)
+        );
       }
+      console.log(JSON.parse(window.localStorage.getItem("cartItems")));
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

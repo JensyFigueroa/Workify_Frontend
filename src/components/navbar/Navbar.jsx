@@ -18,11 +18,13 @@ const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
-  const [cantCart, setCantCart] = useState(JSON.parse(window.localStorage.getItem("cartItems")))
+  // const [cantCart, setCantCart] = useState(
+  //   JSON.parse(window.localStorage.getItem("cartItems"))
+  // );
 
-useEffect(()=>{
-  setCantCart(JSON.parse(window.localStorage.getItem("cartItems")))
-},[cantCart])
+  // useEffect(() => {
+  //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
+  // }, [cantCart]);
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -76,6 +78,7 @@ useEffect(()=>{
     try {
       await signOut(auth);
       const cartItems = JSON.parse(window.localStorage.getItem("cartItems")); //aca estoy mandando el carrito al back cuando me deslogueo
+      console.log("saliendo", cartItems);
       axios
         .put(`/user/updateCart/${idUser}`, cartItems)
         .then((response) => console.log(`se envio el carrito`, response))
@@ -87,6 +90,7 @@ useEffect(()=>{
       console.log("logged out");
       dispatch(loginUser("", "", "", "", ""));
       window.localStorage.removeItem("cartItems");
+      console.log(JSON.parse(window.localStorage.getItem("cartItems")));
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -145,11 +149,11 @@ useEffect(()=>{
               }
               onClick={handleClick}
             >
-              {cantCart.length ? (
+              {/* {cantCart.length ? (
                 <span className={styles.cantCart}>{cantCart.length}</span>
               ) : (
                 ""
-              )}
+              )} */}
 
               <MdHomeRepairService style={{ fontSize: "40px" }} />
             </NavLink>
