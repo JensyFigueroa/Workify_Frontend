@@ -13,6 +13,7 @@ import { getCart, loginUser, setCart } from "../../redux/actions";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase-config.js";
 import axios from "axios";
+// import {cantCart} from '../../NewCart/NewCart'
 
 const Navbar = () => {
   let location = useLocation();
@@ -22,11 +23,11 @@ const Navbar = () => {
     JSON.parse(window.localStorage.getItem("cartItems"))
   );
 
-  console.log(cantCart)
+  // console.log(cantCart)
 
-  // useEffect(() => {
-  //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
-  // }, [cantCart]);
+  useEffect(() => {
+    setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
+  }, []);
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -96,6 +97,7 @@ const Navbar = () => {
       console.log(error);
     }
   };
+
 
   return (
     location.pathname !== "/" && (
