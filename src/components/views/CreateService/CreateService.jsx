@@ -67,7 +67,7 @@ export function CreateService() {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/location/country', {
+        const response = await axios.get('/location/country', {
           params: {
             username: 'joaquinsgro',
             type: 'json'
@@ -85,7 +85,7 @@ export function CreateService() {
   //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
   const searchCities = async (countryCode) => {
     try {
-      const response = await axios.get('http://localhost:3001/location/city', {
+      const response = await axios.get('/location/city', {
         params: {
           q: countryCode,
           username: 'joaquinsgro',
