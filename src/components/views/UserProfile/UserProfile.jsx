@@ -15,6 +15,14 @@ export default function UserProfile() {
   const [initialLoad, setInitialLoad] = useState(true);
   const [selectedImages, setSelectedImages] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [enabledInputs, setEnabledInputs] = useState({
+    input1: false,
+    input2: false,
+    input3: false,
+    input4: false,
+    input5: false,
+    input6: false,
+  });
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
   const userInfo = useSelector(state => state.userInfo);
   const [services, setServices] = useState(userInfo.Services);
@@ -83,8 +91,13 @@ export default function UserProfile() {
       )
     );
   };
-
-  
+  //<--MANEJADOR DE CLICK EN FLECHA PARA HABILITAR INPUT-->
+  const handleArrowClick = (inputName) => {
+    setEnabledInputs(prevState => ({
+      ...prevState,
+      [inputName]: !prevState[inputName] 
+    }));
+  };
 
   //<--MANEJADOR DE INPUTS-->
   const handleInputChange = async (event) => {
@@ -128,11 +141,15 @@ export default function UserProfile() {
       event.preventDefault();
 
     //<--RUTA DEL POST-->
-      try {
-        
-      } catch (error) {
-        
-      }
+    try {
+      await axios
+        .put(`/${userInfo.id}`, inputs)
+        .then((response) => toast.success(response.data));
+       
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error);
+    }
   }
 
   return (
@@ -219,7 +236,7 @@ export default function UserProfile() {
           >
             <div className={styles.title1}>
               <p><strong>My personal information</strong></p>
-              <p className={styles.titlep}>You can modify your information if you wish</p>
+              <p className={styles.titlep}>You can modify the information if you wish by clicking on the arrow</p>
 
             </div>
             <div className={styles.containerEditProfile}>
@@ -246,7 +263,7 @@ export default function UserProfile() {
                 <div className={styles.imageProfile}>
                   <p><strong>Name</strong></p>
                   <p>{userInfo.name}</p>
-                  <i className={`${styles.arrow} && bi bi-caret-right-fill`}></i>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input1')}></i>
                   <input
                   name="name" 
                   value={inputs.name}
@@ -255,6 +272,7 @@ export default function UserProfile() {
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New name"
+                  disabled={!enabledInputs.input1}
                   >
                   </input>
                 </div>
@@ -262,7 +280,7 @@ export default function UserProfile() {
                 <div className={styles.imageProfile}>
                   <p><strong>Country</strong></p>
                   <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
-                  <i className="bi bi-caret-right-fill"></i>
+                  <i className={`${styles.arrow5} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input2')}></i>
                   <input 
                   name="country" 
                   value={inputs.country}
@@ -270,13 +288,14 @@ export default function UserProfile() {
                   type="text" 
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
-                  placeholder="New country"></input>
+                  placeholder="New country"
+                  disabled={!enabledInputs.input2}></input>
                 </div>
 
                 <div className={styles.imageProfileCity}>
                   <p><strong>City</strong></p>
                   <p>{userInfo.city ? userInfo.city : "Please confirm your country"}</p>
-                  <i className={`${styles.arrow1} && bi bi-caret-right-fill`}></i>
+                  <i className={`${styles.arrow1} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input3')} ></i>
                   <input 
                   name="city" 
                   value={inputs.city}
@@ -284,7 +303,8 @@ export default function UserProfile() {
                   type="text" 
                   className={`${styles.inputControl1} && form-control`} 
                   id="exampleFormControlInput1" 
-                  placeholder="New city"></input>
+                  placeholder="New city"
+                  disabled={!enabledInputs.input3}></input>
                 </div>
 
               </div>
@@ -297,7 +317,7 @@ export default function UserProfile() {
                 <div className={styles.imageProfile}>
                   <p><strong>Email</strong></p>
                   <p>{userInfo.email}</p>
-                  <i className={`${styles.arrow2} && bi bi-caret-right-fill`}></i>
+                  <i className={`${styles.arrow2} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input4')} ></i>
                   <input 
                   name="email" 
                   value={inputs.email}
@@ -305,13 +325,14 @@ export default function UserProfile() {
                   type="email" 
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
-                  placeholder="New email"></input>
+                  placeholder="New email"
+                  disabled={!enabledInputs.input4}></input>
                 </div>
 
                 <div className={styles.imageProfile}>
                   <p><strong>Description</strong></p>
                   <p className={styles.pAlign}>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
-                  <i className={`${styles.arrow3} && bi bi-caret-right-fill`}></i>
+                  <i className={`${styles.arrow3} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input5')} ></i>
                   <input 
                   name="description" 
                   value={inputs.description}
@@ -319,13 +340,14 @@ export default function UserProfile() {
                   type="text" 
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
-                  placeholder="New description"></input>
+                  placeholder="New description"
+                  disabled={!enabledInputs.input5}></input>
                 </div>
 
                 <div className={styles.imageProfileCity}>
                   <p><strong>Phone</strong></p>
                   <p>{userInfo.phone ? userInfo.phone: "Please confirm your phone"}</p>
-                  <i className={`${styles.arrow4} && bi bi-caret-right-fill`}></i>
+                  <i className={`${styles.arrow4} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input6')}></i>
                   <input 
                   name="phone" 
                   value={inputs.phone}
@@ -333,7 +355,8 @@ export default function UserProfile() {
                   type="name" 
                   className={`${styles.inputControl1} && form-control`} 
                   id="exampleFormControlInput1"
-                  placeholder="New phone"></input>
+                  placeholder="New phone"
+                  disabled={!enabledInputs.input6}></input>
                 </div>
 
                 </div>
