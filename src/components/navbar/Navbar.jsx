@@ -93,13 +93,13 @@ const Navbar = () => {
       console.log("logged out");
       dispatch(loginUser("", "", "", "", ""));
       window.localStorage.removeItem("cartItems");
-      console.log(JSON.parse(window.localStorage.getItem("cartItems")));
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     location.pathname !== "/" && (

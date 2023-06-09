@@ -56,15 +56,15 @@ const LoginUser = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/location/country', {
+        const response = await axios.get("/location/country", {
           params: {
-            username: 'joaquinsgro',
-            type: 'json'
-          }
+            username: "joaquinsgro",
+            type: "json",
+          },
         });
         setCountries(response.data);
       } catch (error) {
-        console.error('Error al obtener la lista de países', error);
+        console.error("Error al obtener la lista de países", error);
       }
     };
 
@@ -74,18 +74,18 @@ const LoginUser = () => {
   //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
   const searchCities = async (countryCode) => {
     try {
-      const response = await axios.get('http://localhost:3001/location/city', {
+      const response = await axios.get("/location/city", {
         params: {
           q: countryCode,
-          username: 'joaquinsgro',
-          type: 'json',
+          username: "joaquinsgro",
+          type: "json",
         },
       });
-      
+
       console.log(response.data);
       setCities(response.data);
     } catch (error) {
-      console.error('Error al obtener la lista de estados', error);
+      console.error("Error al obtener la lista de estados", error);
     }
   };
 
@@ -139,7 +139,8 @@ const LoginUser = () => {
           //console.log(userImg, "imagen de usarui");
           dispatch(loginUser(uid, name, userPhoneRegister, userEmail, userImg));
           //console.log(res.user, "user en el signin with email and password")
-          dispatch(getCartDataBase(uid));
+          UpdateCartOnLogin(uid);
+          window.location.reload();
         }
       } catch (error) {
         if (error.code === "auth/email-already-in-use") {
