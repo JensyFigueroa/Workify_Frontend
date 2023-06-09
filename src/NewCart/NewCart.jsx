@@ -78,6 +78,10 @@ const NewCart = () => {
   const clearCart = () => {
     setCartItems([]);
     localStorage.removeItem("cartItems");
+    axios
+      .get(`/user/vacateCart/${idUser}`)
+      .then((response) => console.log(response, `salio todo bien`))
+      .catch((error) => console.log(`salio todo mal`, error));
   };
 
   const handlePay = () => {
