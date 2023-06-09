@@ -22,6 +22,8 @@ const Navbar = () => {
     JSON.parse(window.localStorage.getItem("cartItems"))
   );
 
+  console.log(cantCart)
+
   // useEffect(() => {
   //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
   // }, [cantCart]);
