@@ -178,10 +178,8 @@ const FilterBar = () => {
           <i className="ri-equalizer-line"></i>
           &nbsp; Filter
         </button>
-
-
-
       </div>
+      
       {isFiltersOpen && (
         <div className={styles.filterPopup} onClick={handleCloseFilters}>
           <div className={styles.filterContent} onClick={handlePopupClick}>
