@@ -92,7 +92,6 @@ export function CreateService() {
           type: 'json',
         },
       });
-     
       
       console.log(response.data);
       setCities(response.data);
