@@ -12,7 +12,6 @@ import {
 import styles from "./FilterBar.module.css";
 
 const FilterBar = () => {
-
   const dispatch = useDispatch();
 
   const [items, setItems] = useState(null);
@@ -31,28 +30,27 @@ const FilterBar = () => {
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
 
+  // useEffect(() => {
+  //   const updateButtonWidth = () => {
+  //     if (itemContainerRef.current) {
+  //       const containerWidth = itemContainerRef.current.offsetWidth;
+  //       const buttonCount = Math.floor(containerWidth / 100);
 
-  useEffect(() => {
-    const updateButtonWidth = () => {
-      if (itemContainerRef.current) {
-        const containerWidth = itemContainerRef.current.offsetWidth;
-        const buttonCount = Math.floor(containerWidth / 100);
+  //       if (buttonCount === 0) {
+  //         setButtonWidth(100);
+  //       } else {
+  //         setButtonWidth(containerWidth / buttonCount);
+  //       }
+  //     }
+  //   };
 
-        if (buttonCount === 0) {
-          setButtonWidth(100);
-        } else {
-          setButtonWidth(containerWidth / buttonCount);
-        }
-      }
-    };
+  //   window.addEventListener("resize", updateButtonWidth);
+  //   updateButtonWidth();
 
-    window.addEventListener("resize", updateButtonWidth);
-    updateButtonWidth();
-
-    return () => {
-      window.removeEventListener("resize", updateButtonWidth);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", updateButtonWidth);
+  //   };
+  // }, []);
 
   const visibleItems = allItems
     .sort()
@@ -76,9 +74,9 @@ const FilterBar = () => {
     setCarouselPosition(carouselPosition + 5);
     setIsLeftArrowVisible(true);
 
-    console.log(carouselPosition)
+    console.log(carouselPosition);
 
-    if (carouselPosition + 5 === allItems.length - 1 || carouselPosition + 5 > allItems.length - 1) {
+    if (carouselPosition + 5 >= allItems.length - 4) {
       setIsRightArrowVisible(false);
     }
   };
@@ -128,7 +126,7 @@ const FilterBar = () => {
     e.stopPropagation();
   };
 
-  console.log(items)
+  console.log(items);
 
   return (
     <div className={styles.filterBarContainer}>
@@ -151,14 +149,15 @@ const FilterBar = () => {
             All Categories
           </button> */}
           {visibleItems?.map((item, index) => (
-            <label key={index}className={`${styles.buttonItem} ${item === items ? styles.selected : ""
-              }`}>
-               <i class="fa-solid fa-snowflake"></i>
-              
-              <button
-                value={item}
-                onClick={handleItemChange}
-              >
+            <label
+              key={index}
+              className={`${styles.buttonItem} ${
+                item === items ? styles.selected : ""
+              }`}
+            >
+              <i class="fa-solid fa-snowflake"></i>
+
+              <button value={item} onClick={handleItemChange}>
                 {item}
               </button>
             </label>
@@ -181,7 +180,7 @@ const FilterBar = () => {
           &nbsp; Filter
         </button>
       </div>
-      
+
       {isFiltersOpen && (
         <div className={styles.filterPopup} onClick={handleCloseFilters}>
           <div className={styles.filterContent} onClick={handlePopupClick}>
@@ -189,7 +188,6 @@ const FilterBar = () => {
               <MdOutlineClose />
             </button>
             <div className={styles.orderContainer}>
-
               <div className={styles.selectContainer}>
                 <label className={styles.selectLabel} htmlFor="orderBy">
                   City by:
@@ -252,7 +250,10 @@ const FilterBar = () => {
                   All Categories
                 </button>
 
-                <button className={styles.btnFilter} onClick={handleClearfilter}>
+                <button
+                  className={styles.btnFilter}
+                  onClick={handleClearfilter}
+                >
                   Clean
                 </button>
               </div>
