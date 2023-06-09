@@ -56,7 +56,7 @@ const FilterBar = () => {
 
   const visibleItems = allItems
     .sort()
-    .slice(carouselPosition, carouselPosition + 4);
+    .slice(carouselPosition, carouselPosition + 5);
 
   const handleItemChange = (e) => {
     const { value } = e.target;
@@ -65,18 +65,20 @@ const FilterBar = () => {
   };
 
   const handleCarouselLeft = () => {
-    setCarouselPosition(carouselPosition - 4);
+    setCarouselPosition(carouselPosition - 5);
     setIsRightArrowVisible(true);
-    if (carouselPosition - 4 === 0) {
+    if (carouselPosition - 5 === 0) {
       setIsLeftArrowVisible(false);
     }
   };
 
   const handleCarouselRight = () => {
-    setCarouselPosition(carouselPosition + 4);
+    setCarouselPosition(carouselPosition + 5);
     setIsLeftArrowVisible(true);
 
-    if (carouselPosition + 4 === allItems.length - 1) {
+    console.log(carouselPosition)
+
+    if (carouselPosition + 5 === allItems.length - 1 || carouselPosition + 5 > allItems.length - 1) {
       setIsRightArrowVisible(false);
     }
   };
@@ -149,15 +151,17 @@ const FilterBar = () => {
             All Categories
           </button> */}
           {visibleItems?.map((item, index) => (
-            <button
-              className={`${styles.buttonItem} ${item === items ? styles.selected : ""
-                }`}
-              key={index}
-              value={item}
-              onClick={handleItemChange}
-            >
-              {item}
-            </button>
+            <label key={index}className={`${styles.buttonItem} ${item === items ? styles.selected : ""
+              }`}>
+               <i class="fa-solid fa-snowflake"></i>
+              
+              <button
+                value={item}
+                onClick={handleItemChange}
+              >
+                {item}
+              </button>
+            </label>
           ))}
         </div>
         <div className={styles.buttonArrowContainer}>
@@ -172,38 +176,12 @@ const FilterBar = () => {
         </div>
       </div>
       <div className={styles.filterButtonsContainer}>
-        <select
-          id="location"
-          value={isFiltersCleared ? "ALL" : location || ""}
-          onChange={handleLocation}
-          className={styles.select}
-        >
-          <option key="ALL" value="ALL">
-            All Cities
-          </option>
-
-          {allcities?.map((city, index) => (
-            <option key={index} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
         <button className={styles.filterButton} onClick={handleToggleFilters}>
-          Order
-        </button>
-        <button
-            className={styles.buttonItem}
-            key="ALL"
-            value="ALL"
-            onClick={handleItemChange}
-          >
-            All Categories
-          </button> 
-        
-        <button className={styles.filterButton} onClick={handleClearfilter}>
-          Clean
+          <i className="ri-equalizer-line"></i>
+          &nbsp; Filter
         </button>
       </div>
+      
       {isFiltersOpen && (
         <div className={styles.filterPopup} onClick={handleCloseFilters}>
           <div className={styles.filterContent} onClick={handlePopupClick}>
@@ -211,6 +189,28 @@ const FilterBar = () => {
               <MdOutlineClose />
             </button>
             <div className={styles.orderContainer}>
+
+              <div className={styles.selectContainer}>
+                <label className={styles.selectLabel} htmlFor="orderBy">
+                  City by:
+                </label>
+                <select
+                  id="location"
+                  value={isFiltersCleared ? "ALL" : location || ""}
+                  onChange={handleLocation}
+                  className={styles.select}
+                >
+                  <option key="ALL" value="ALL">
+                    All Cities
+                  </option>
+
+                  {allcities?.map((city, index) => (
+                    <option key={index} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className={styles.selectContainer}>
                 <label className={styles.selectLabel} htmlFor="orderBy">
                   Order by:
@@ -241,6 +241,20 @@ const FilterBar = () => {
                   <option value="up">Up</option>
                   <option value="down">Down</option>
                 </select>
+              </div>
+              <div className={styles.selectContainer}>
+                <button
+                  className={styles.btnFilter}
+                  key="ALL"
+                  value="ALL"
+                  onClick={handleItemChange}
+                >
+                  All Categories
+                </button>
+
+                <button className={styles.btnFilter} onClick={handleClearfilter}>
+                  Clean
+                </button>
               </div>
             </div>
           </div>
