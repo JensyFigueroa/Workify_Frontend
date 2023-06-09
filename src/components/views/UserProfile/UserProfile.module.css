@@ -50,6 +50,8 @@
   padding: 20px;
   border-radius: 20px;
   width: 55em;
+  background-color: white;
+  color: black;
 }
 
 .profile2{
@@ -58,6 +60,8 @@
   border-radius: 20px;
   width: 55em;
   padding: 35px;
+  background-color: white;
+  color: black;
 
 }
 
@@ -67,6 +71,8 @@
   border-radius: 20px;
   width: 55em;
   padding: 35px;
+  background-color: white;
+  color: rgb(0, 0, 0);
   
 }
 
@@ -139,13 +145,104 @@ input {
   font-size: 1.2em;
 }
 
+.inputControl{
+  width: 13em;
+}
+
+.inputControl1{
+  width: 13em;
+  margin-right: 0.7em;
+}
+
 .containerEditProfile{
   border: 1px solid rgb(209, 209, 209);
   width: 55em;
   padding: 20px;
   border-radius: 20px;
   margin-left: 3em;
+  margin-bottom: 2em;
 
+}
+
+.imageProfile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(209, 209, 209);
+  padding: 10px;
+}
+.imageProfileCity{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.imageProfileCity p{
+  padding-top: 1em;
+  margin-left: 0.9em;
+}
+
+.inputImage img{
+  border-radius: 50px;
+  width: 5em;
+  height: 5em;
+  object-fit: cover;
+}
+
+.inputImage{
+  display: flex;
+  flex-direction: column;
+  width: 15em;
+  align-items: center;
+}
+
+.inputImage input{
+  transform: scale(0.5);
+}
+
+.buttonLeft{
+  background-color: white;
+  border: none;
+  color: rgb(97, 97, 97);
+  border-radius: 20px;
+  padding: 10px;
+  width: 8em;
+  font-weight: bold;
+  
+}
+.buttonLeft:hover{
+  background-color: rgba(117, 181, 224, 0.2);
+}
+.buttonLeft:focus {
+  background-color: rgba(117, 181, 224, 0.2);
+  color: rgb(48, 91, 156);
+}
+
+.subtitle{
+  background-color: rgb(48, 91, 156);
+  height: 3.5em;
+  width: 55em;
+  margin-left: -1.3em;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: -1.3em;
+  padding: 12px;
+}
+.subtitle p{
+  margin-left: 1em;
+  color: white;
+}
+
+.newInfo{
+  border: 1px solid rgb(209, 209, 209);
+  width: 55em;
+  padding: 20px;
+  border-radius: 20px;
+  margin-left: 3em;
 }
 
 .containerService{
@@ -184,6 +281,7 @@ input {
   padding: 20px;
   border-radius: 20px;
   margin-left: 3em;
+  height: 30em;
 }
 
 .title{
@@ -193,6 +291,63 @@ input {
   margin-bottom: 0.8em;
   font-size: 1.1em;
   padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.title1{
+  margin-left: 2.5em;
+  padding: 10px;
+  margin-top: -0.5em;
+  font-size: 1.1em;
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+}
+.titlep{
+  margin-top: -1em;
+  font-size: 15px;
+}
+
+.myButton{
+  margin-left: 48em;
+}
+
+.myButton:hover{
+  background-color: rgb(48, 91, 156);
+}
+
+.arrow{
+  margin-left: 6em;
+  cursor: pointer;
+}
+
+.arrow1{
+  margin-left: 1.4em;
+  cursor: pointer;
+
+}
+
+.arrow2{
+  margin-left: 3.5em;
+  cursor: pointer;
+
+}
+
+.arrow3{
+  margin-left: -1.4em;
+  cursor: pointer;
+
+}
+
+.arrow4{
+  margin-left: 1em;
+  cursor: pointer;
+
+}
+.arrow5{
+  cursor: pointer;
+
 }
 
 .columnLeft input {
@@ -204,5 +359,7 @@ input {
 
 .columnLeft{
   width: 12em;
+  border-right: 1px solid rgb(209, 209, 209);
+  height: 110%;
 }
 

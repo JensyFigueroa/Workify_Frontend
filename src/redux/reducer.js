@@ -52,7 +52,7 @@ const rootReducer = (state = initialState, action) => {
       const cities = Array.from(
         new Set(services.map((service) => service.location.ciudad))
       );
-
+       
       return {
         ...state,
         allServices: services,
@@ -107,15 +107,15 @@ const rootReducer = (state = initialState, action) => {
             return order;
           }
           return 0;
-        } else if (orderBy === "raiting") {
+        } else if (orderBy === "rating") {
           console.log("rating en reducer");
-          const aRaiting = a.reviews.length > 0 ? a.reviews[0].raiting : 0;
-          const bRaiting = b.reviews.length > 0 ? b.reviews[0].raiting : 0;
+          const aRating = a.reviews.length > 0 ? a.reviews[0].rating : 0;
+          const bRating = b.reviews.length > 0 ? b.reviews[0].rating : 0;
 
-          if (aRaiting > bRaiting) {
+          if (aRating > bRating) {
             return -order;
           }
-          if (aRaiting < bRaiting) {
+          if (aRating < bRating) {
             return order;
           }
           return 0;

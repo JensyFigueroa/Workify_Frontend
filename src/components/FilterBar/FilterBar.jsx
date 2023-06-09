@@ -12,6 +12,7 @@ import {
 import styles from "./FilterBar.module.css";
 
 const FilterBar = () => {
+
   const dispatch = useDispatch();
 
   const [items, setItems] = useState(null);
@@ -29,6 +30,7 @@ const FilterBar = () => {
 
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
+
 
   useEffect(() => {
     const updateButtonWidth = () => {
@@ -63,18 +65,18 @@ const FilterBar = () => {
   };
 
   const handleCarouselLeft = () => {
-    setCarouselPosition(carouselPosition - 1);
+    setCarouselPosition(carouselPosition - 4);
     setIsRightArrowVisible(true);
-    if (carouselPosition - 1 === 0) {
+    if (carouselPosition - 4 === 0) {
       setIsLeftArrowVisible(false);
     }
   };
 
   const handleCarouselRight = () => {
-    setCarouselPosition(carouselPosition + 1);
+    setCarouselPosition(carouselPosition + 4);
     setIsLeftArrowVisible(true);
 
-    if (carouselPosition + 1 === allItems.length - 4) {
+    if (carouselPosition + 4 === allItems.length - 1) {
       setIsRightArrowVisible(false);
     }
   };
@@ -89,9 +91,9 @@ const FilterBar = () => {
 
   const handleOrderByName = (e) => {
     const { value } = e.target;
-    if (value === "raiting") {
+    if (value === "rating") {
       setOrderBy(value);
-      console.log(value, "raiting en handler de order");
+      console.log(value, "rating en handler de order");
       dispatch(orderResult(value, orderType));
     } else {
       console.log(value, "en handler de order");
@@ -124,6 +126,8 @@ const FilterBar = () => {
     e.stopPropagation();
   };
 
+  console.log(items)
+
   return (
     <div className={styles.filterBarContainer}>
       <div className={styles.carouselContainer}>
@@ -134,20 +138,20 @@ const FilterBar = () => {
             </button>
           )}
         </div>
-        <button
-          className={styles.buttonItem}
-          key="ALL"
-          value="ALL"
-          onClick={handleItemChange}
-        >
-          All
-        </button>
+
         <div className={styles.itemContainer} ref={itemContainerRef}>
+          {/* <button
+            className={styles.buttonItem}
+            key="ALL"
+            value="ALL"
+            onClick={handleItemChange}
+          >
+            All Categories
+          </button> */}
           {visibleItems?.map((item, index) => (
             <button
-              className={`${styles.buttonItem} ${
-                item === items ? styles.selected : ""
-              }`}
+              className={`${styles.buttonItem} ${item === items ? styles.selected : ""
+                }`}
               key={index}
               value={item}
               onClick={handleItemChange}
@@ -187,6 +191,15 @@ const FilterBar = () => {
         <button className={styles.filterButton} onClick={handleToggleFilters}>
           Order
         </button>
+        <button
+            className={styles.buttonItem}
+            key="ALL"
+            value="ALL"
+            onClick={handleItemChange}
+          >
+            All Categories
+          </button> 
+        
         <button className={styles.filterButton} onClick={handleClearfilter}>
           Clean
         </button>

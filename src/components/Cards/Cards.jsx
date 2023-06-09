@@ -13,26 +13,32 @@ export function Cards() {
   const filterItem = useSelector((state) => state.selectedItem);
   const searchServices = useSelector((state) => state.searchServices);
 
-  let services = [];
+  // let services = [];
 
-  if (searchServices.length > 0) {
-    services = searchServices;
-  } else {
-    services = allServices;
-  }
+  // if (searchServices.length > 0) {
+  //   services = searchServices;
+  // } else {
+  //   services = allServices;
+  // }
+  let services = searchServices.length > 0 ? searchServices : allServices;
 
   useEffect(() => {
     if (filterLocation === null && filterItem === null) {
       dispatch(getServices());
-      console.log("useEffect");
     }
-    setNumServicesXpage([...services].splice(0, cardsXpage))
+    // setNumServicesXpage([...services].splice(0, cardsXpage))
   }, []);
 
   /* ================== PAGINACION ======================*/
 
   const cardsXpage = 10;
   const totalPages = Math.ceil(services.length / cardsXpage);
+
+  useEffect(() => {
+    
+    setCurrentPage(0);
+    setNumServicesXpage([...services].splice(0, cardsXpage));
+  }, [services, cardsXpage]);
 
   let pageNum = [];
   for (let i = 1; i <= totalPages; i++) {

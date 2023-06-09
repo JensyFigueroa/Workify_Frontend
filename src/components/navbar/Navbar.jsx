@@ -18,9 +18,11 @@ const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
-  // const [cantCart, setCantCart] = useState(
-  //   JSON.parse(window.localStorage.getItem("cartItems"))
-  // );
+  const [cantCart, setCantCart] = useState(
+    JSON.parse(window.localStorage.getItem("cartItems"))
+  );
+
+  console.log(cantCart);
 
   // useEffect(() => {
   //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
@@ -149,12 +151,12 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              {/* {cantCart.length ? (
+              {cantCart.length ? (
                 <span className={styles.cantCart}>{cantCart.length}</span>
               ) : (
                 ""
-              )} */}
-
+              )}{" "}
+              */}
               <MdHomeRepairService style={{ fontSize: "40px" }} />
             </NavLink>
           </div>

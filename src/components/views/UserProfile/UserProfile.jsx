@@ -2,7 +2,9 @@ import React, { useState ,useEffect } from "react";
 import styles from "./UserProfile.module.css";
 import {useDispatch, useSelector} from 'react-redux'
 import { getUser } from "../../../redux/actions";
+import toast, { Toaster } from "react-hot-toast";
 
+import axios from "axios";
 
 export default function UserProfile() {
  
@@ -11,11 +13,31 @@ export default function UserProfile() {
   const [showEditProfile, setshowEditProfile] = useState(false);
   const [showMyOrders, setShowMyOrders] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [enabledInputs, setEnabledInputs] = useState({
+    input1: false,
+    input2: false,
+    input3: false,
+    input4: false,
+    input5: false,
+    input6: false,
+  });
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
   const userInfo = useSelector(state => state.userInfo);
   const [services, setServices] = useState(userInfo.Services);
   const dispatch = useDispatch();
-  console.log(userInfo.Services);
+  const [inputs, setInputs] = useState({
+    imageUrl: "",
+    name: "", 
+    country: "",
+    city: "",
+    email: "", 
+    description: "",
+    phone: "",
+  });
+  
+  console.log(userInfo);
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -69,7 +91,66 @@ export default function UserProfile() {
       )
     );
   };
+  //<--MANEJADOR DE CLICK EN FLECHA PARA HABILITAR INPUT-->
+  const handleArrowClick = (inputName) => {
+    setEnabledInputs(prevState => ({
+      ...prevState,
+      [inputName]: !prevState[inputName] 
+    }));
+  };
 
+  //<--MANEJADOR DE INPUTS-->
+  const handleInputChange = async (event) => {
+    const { name, value } = event.target;
+    if (name === "imageUrl") {
+      const file = event.target.files[0];
+      const imageSelected = URL.createObjectURL(file);
+      setSelectedImages([imageSelected]);
+    
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "services_wfy");
+      formData.append("api_key", "168773883428854");
+    
+      try {
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/Joaquin/image/upload",
+          formData
+        );
+    
+        const imageUrl = response.data.secure_url;
+        
+    
+        setInputs({
+          ...inputs,
+          imageUrl: [...inputs.imageUrl, imageUrl],
+        });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    } else{
+      
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    }
+  }
+  //<--MANEJADOR DEL SUBMIT-->
+  const handleSubmit = async(event) => {
+      event.preventDefault();
+
+    //<--RUTA DEL POST-->
+    try {
+      await axios
+        .put(`/${userInfo.id}`, inputs)
+        .then((response) => toast.success(response.data));
+       
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error);
+    }
+  }
 
   return (
   <div className={styles.containerPrincipal}>
@@ -77,11 +158,10 @@ export default function UserProfile() {
     <div className={styles.containerSecundary}>
       <div className={styles.containerLeftRight}>
         <div className={styles.columnLeft}>
-            <h3 className={styles.name}>Profile Settings</h3>
-        <button type="button" class="btn btn-primary btn-lg" value="My profile" onClick={handleProfileClick}>My profile</button>
-        <button type="button" class="btn btn-primary btn-lg" value="My profile" onClick={handleEditProfileClick}>Edit profile</button>
-        <button type="button" class="btn btn-primary btn-lg" value="Service" onClick={handleServiceClick}>Services</button>
-        <button type="button" class="btn btn-primary btn-lg" value="Logout" onClick={handleMyOrdersClick}>Orders</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleProfileClick}>My profile</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleEditProfileClick}>Edit profile</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleServiceClick}>Services</button>
+        <button type="button" className={`${styles.buttonLeft}`}  onClick={handleMyOrdersClick}>Orders</button>
       </div>
       {(initialLoad) && (
       <div className={styles.infoProfileContainer}>
@@ -149,22 +229,148 @@ export default function UserProfile() {
 
         {showEditProfile && (
           <>
-            <div className={styles.title}>
-              <p><strong>My information</strong></p>
+           <form
+            className="row g-3 needs-validation"
+            onSubmit={handleSubmit}
+            novalidate
+          >
+            <div className={styles.title1}>
+              <p><strong>My personal information</strong></p>
+              <p className={styles.titlep}>You can modify the information if you wish by clicking on the arrow</p>
+
             </div>
             <div className={styles.containerEditProfile}>
 
               <div>
-                <p>Profile Image:</p>
-                <p>Name:</p>
-                <p>Email:</p>
-                <p>Country:</p>
-                <p>City:</p>
-                <p>Phone:</p>
-                <p>Description:</p>
+                <div className={styles.subtitle}>
+                  <p><strong>Basic information</strong></p>
+                </div>
+               
+                <div className={styles.imageProfile}>
+                  <p><strong>Profile Image</strong> </p>
+                  <p>A profile photo helps personalize your account</p>
+                  <div className={styles.inputImage}>
+                    <img src={selectedImages.length > 0 ? selectedImages[0] : userInfo.imageUrl} alt="Profile" />
+                    <input
+                      name="imageUrl"
+                      type="file" 
+                      onChange={handleInputChange}
+                    />
+                </div>
+              
+                 
+                </div>
+                <div className={styles.imageProfile}>
+                  <p><strong>Name</strong></p>
+                  <p>{userInfo.name}</p>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input1')}></i>
+                  <input
+                  name="name" 
+                  value={inputs.name}
+                  onChange={handleInputChange}
+                  type="name" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New name"
+                  disabled={!enabledInputs.input1}
+                  >
+                  </input>
+                </div>
+
+                <div className={styles.imageProfile}>
+                  <p><strong>Country</strong></p>
+                  <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
+                  <i className={`${styles.arrow5} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input2')}></i>
+                  <input 
+                  name="country" 
+                  value={inputs.country}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New country"
+                  disabled={!enabledInputs.input2}></input>
+                </div>
+
+                <div className={styles.imageProfileCity}>
+                  <p><strong>City</strong></p>
+                  <p>{userInfo.city ? userInfo.city : "Please confirm your country"}</p>
+                  <i className={`${styles.arrow1} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input3')} ></i>
+                  <input 
+                  name="city" 
+                  value={inputs.city}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className={`${styles.inputControl1} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New city"
+                  disabled={!enabledInputs.input3}></input>
+                </div>
 
               </div>
             </div>
+              <div className={styles.newInfo}>
+              <div>
+              <div className={styles.subtitle}>
+                  <p><strong>Contact information</strong></p>
+                </div>
+                <div className={styles.imageProfile}>
+                  <p><strong>Email</strong></p>
+                  <p>{userInfo.email}</p>
+                  <i className={`${styles.arrow2} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input4')} ></i>
+                  <input 
+                  name="email" 
+                  value={inputs.email}
+                  onChange={handleInputChange}
+                  type="email" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New email"
+                  disabled={!enabledInputs.input4}></input>
+                </div>
+
+                <div className={styles.imageProfile}>
+                  <p><strong>Description</strong></p>
+                  <p className={styles.pAlign}>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
+                  <i className={`${styles.arrow3} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input5')} ></i>
+                  <input 
+                  name="description" 
+                  value={inputs.description}
+                  onChange={handleInputChange}
+                  type="text" 
+                  className={`${styles.inputControl} && form-control`} 
+                  id="exampleFormControlInput1" 
+                  placeholder="New description"
+                  disabled={!enabledInputs.input5}></input>
+                </div>
+
+                <div className={styles.imageProfileCity}>
+                  <p><strong>Phone</strong></p>
+                  <p>{userInfo.phone ? userInfo.phone: "Please confirm your phone"}</p>
+                  <i className={`${styles.arrow4} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input6')}></i>
+                  <input 
+                  name="phone" 
+                  value={inputs.phone}
+                  onChange={handleInputChange}
+                  type="name" 
+                  className={`${styles.inputControl1} && form-control`} 
+                  id="exampleFormControlInput1"
+                  placeholder="New phone"
+                  disabled={!enabledInputs.input6}></input>
+                </div>
+
+                </div>
+              </div>
+              <div className="col-12">
+            <button
+              type="submit"
+              className={`${styles.myButton} btn btn-outline-secondary`} 
+              disabled={isSubmitting}>
+               {isSubmitting ? "Saving..." : "Save changes"}
+            </button>
+          </div>
+          <Toaster position="bottom-right" reverseOrder={false} />
+              </form>
           </>
         )}
         {showServiceContent && (
