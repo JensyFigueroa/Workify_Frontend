@@ -22,6 +22,8 @@ const Navbar = () => {
     JSON.parse(window.localStorage.getItem("cartItems"))
   );
 
+  console.log(cantCart);
+
   // useEffect(() => {
   //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
   // }, [cantCart]);
@@ -78,6 +80,7 @@ const Navbar = () => {
     try {
       await signOut(auth);
       const cartItems = JSON.parse(window.localStorage.getItem("cartItems")); //aca estoy mandando el carrito al back cuando me deslogueo
+      console.log("saliendo", cartItems);
       axios
         .put(`/user/updateCart/${idUser}`, cartItems)
         .then((response) => console.log(`se envio el carrito`, response))
@@ -89,6 +92,7 @@ const Navbar = () => {
       console.log("logged out");
       dispatch(loginUser("", "", "", "", ""));
       window.localStorage.removeItem("cartItems");
+      console.log(JSON.parse(window.localStorage.getItem("cartItems")));
       window.location.reload();
     } catch (error) {
       console.log(error);
