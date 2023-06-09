@@ -67,17 +67,13 @@ export function CreateService() {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('http://api.geonames.org/countryInfoJSON', {
+        const response = await axios.get('http://localhost:3001/location/country', {
           params: {
             username: 'joaquinsgro',
             type: 'json'
           }
         });
-        const countries = response.data.geonames.map(country => ({
-          name: country.countryName
-        }));
-        console.log(countries);
-        setCountries(countries);
+        setCountries(response.data);
       } catch (error) {
         console.error('Error al obtener la lista de países', error);
       }
@@ -87,21 +83,19 @@ export function CreateService() {
   }, []);
 
   //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
-  const searchCities = async (countryName) => {
+  const searchCities = async (countryCode) => {
     try {
-      const response = await axios.get('http://api.geonames.org/searchJSON', {
+      const response = await axios.get('http://localhost:3001/location/city', {
         params: {
-          q: countryName,
+          q: countryCode,
           username: 'joaquinsgro',
           type: 'json',
         },
       });
-  
-      const city = response.data.geonames.map(state => ({
-        name: state.name,
-      }));
-      console.log(city);
-      setCities(city);
+     
+      
+      console.log(response.data);
+      setCities(response.data);
     } catch (error) {
       console.error('Error al obtener la lista de estados', error);
     }
@@ -282,7 +276,7 @@ const handleInputChange = async (event) => {
               Your country
               </option>
                {countries.map((country, index) => (
-                <option key={index} value={country.name}>
+                <option key={index} value={country.code}>
                       {country.name}
                 </option>
               ))}
