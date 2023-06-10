@@ -9,7 +9,7 @@ import logo from "../views/landing/img/logo.png";
 import LoginUser from "../Login/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../Login/Login";
-import { getCart, loginUser, setCart } from "../../redux/actions";
+import { loginUser } from "../../redux/actions";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase-config.js";
 import axios from "axios";

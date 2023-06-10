@@ -10,7 +10,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/actions";
 import toast, { Toaster } from "react-hot-toast";
-import { getCartDataBase } from "../../redux/actions";
 
 const LoginUser = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
@@ -166,8 +165,8 @@ const LoginUser = () => {
     }
   };
 
-   //<--MANEJADOR DE CLICK EN COUNTRY PARA HABILITAR CITY-->
-   const handleArrowClick = () => {
+  //<--MANEJADOR DE CLICK EN COUNTRY PARA HABILITAR CITY-->
+  const handleArrowClick = () => {
     setEnabledInput(true);
   };
 

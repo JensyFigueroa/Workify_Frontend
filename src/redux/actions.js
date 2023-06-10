@@ -21,7 +21,7 @@ import axios from "axios";
 export const getServices = () => {
   return async (dispatch) => {
     try {
-      console.log('entre en la action de getservices');
+      console.log("entre en la action de getservices");
       const response = await axios.get("/service/");
       const data = response.data;
       return dispatch({
@@ -30,7 +30,7 @@ export const getServices = () => {
       });
     } catch (error) {
       //throw new Error(error.message);
-      console.log('entre en la action de getservices pero en el ERROR');
+      console.log("entre en la action de getservices pero en el ERROR");
       console.log(error.message);
     }
   };
@@ -83,7 +83,7 @@ export const getUser = (idUser) => {
 };
 
 export const orderResult = (orderBy, orderType) => {
-  console.log(orderBy, orderType,'orderBy, orderType en action');
+  console.log(orderBy, orderType, "orderBy, orderType en action");
   return {
     type: ORDER_RESULT,
     payload: {
@@ -94,7 +94,7 @@ export const orderResult = (orderBy, orderType) => {
 };
 
 export const selectItem = (items) => {
-  console.log(items, 'items en actions');
+  console.log(items, "items en actions");
   return {
     type: SELECT_ITEM,
     payload: items,
@@ -102,7 +102,7 @@ export const selectItem = (items) => {
 };
 
 export const selectLocation = (location) => {
-  console.log(location, 'location en actions');
+  console.log(location, "location en actions");
   return {
     type: SELECT_LOCATION,
     payload: location,
@@ -121,36 +121,6 @@ export const cleanDetail = () => {
   };
 };
 
-export const addServiceInCart = (obj) => {
-  return {
-    type: ADD_SERVICE_IN_CART,
-    payload: obj,
-  };
-};
-export const getCart = () => {
-  return {
-    type: GET_CART,
-  };
-};
-export const getCartDataBase = (id) => async (dispatch) => {
-  try {
-    const response = await axios.get(`/user/getCart/${id}`);
-    console.log(response.data);
-    return dispatch({
-      type: GETCART_DATABASE,
-      payload: response.data,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const updateCart = (cartItems) => {
-  return {
-    type: UPDATE_CART,
-    payload: cartItems,
-  };
-};
-
 export const loginUser = (uid, name, userPhone, userEmail, imgUrl) => {
   // console.log(uid, name, userPhone, "action");
   return {
@@ -162,11 +132,5 @@ export const loginUser = (uid, name, userPhone, userEmail, imgUrl) => {
 export const cleanSearch = () => {
   return {
     type: CLEAN_SEARCH,
-  };
-};
-
-export const setCart = () => {
-  return {
-    type: SET_CART,
   };
 };

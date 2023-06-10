@@ -3,7 +3,6 @@ import styles from "./SuccessPayment.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
-import { setCart } from "../../../redux/actions";
 import axios from "axios";
 
 const SuccessPayment = () => {

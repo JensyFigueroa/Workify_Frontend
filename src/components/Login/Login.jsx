@@ -22,7 +22,6 @@ import LoginUser from "./LoginUser";
 import ForgotPassword from "./ForgotPassword";
 import { set } from "date-fns";
 import toast, { Toaster } from "react-hot-toast";
-import { getCartDataBase } from "../../redux/actions";
 import UpdateCartOnLogin from "../../NewCart/updateCartOnLogin";
 
 const Login = () => {
