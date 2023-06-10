@@ -223,7 +223,7 @@ const FilterBar = () => {
                   <option value="typeService">Type Service</option>
                   <option value="pricePerHour">Price</option>
 
-                  <option value="raiting">Rating</option>
+                  <option value="rating">Rating</option>
                 </select>
               </div>
               <div className={styles.selectContainer}>
