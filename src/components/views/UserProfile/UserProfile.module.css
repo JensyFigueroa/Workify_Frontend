@@ -117,6 +117,8 @@
   border-radius: 50px;
   object-fit: cover;
   border: 1px solid rgb(8, 147, 240);
+  width: 6em;
+  height: 6em;
 }
 
 .columnLeft button{

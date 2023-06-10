@@ -3,7 +3,7 @@ import styles from "./UserProfile.module.css";
 import {useDispatch, useSelector} from 'react-redux'
 import { getUser } from "../../../redux/actions";
 import toast, { Toaster } from "react-hot-toast";
-
+import def from "../Detail/Images/default.png";
 import axios from "axios";
 
 export default function UserProfile() {
@@ -37,7 +37,6 @@ export default function UserProfile() {
     phone: "",
   });
   
-  console.log(userInfo);
 
   useEffect(() => {
     dispatch(getUser(idUser));
@@ -152,6 +151,10 @@ export default function UserProfile() {
     }
   }
 
+  const imageUrl = selectedImages.length > 0
+  ? selectedImages[0]
+  : (userInfo.imageUrl || def);
+
   return (
   <div className={styles.containerPrincipal}>
       <h4>Account Settings</h4>
@@ -168,7 +171,7 @@ export default function UserProfile() {
       <div className={styles.infoProfile}>
             <h5><strong>My profile</strong></h5>
             <div className={styles.profile1}>
-              <img src={userInfo.imageUrl}/>
+              <img src={userInfo.imageUrl ? userInfo.imageUrl : def}/>
               <div className={styles.profileson}>
                 <h5><strong>{userInfo.name}</strong></h5>
                 <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
@@ -200,7 +203,7 @@ export default function UserProfile() {
           <div className={styles.infoProfile}>
           <h5><strong>My profile</strong></h5>
           <div className={styles.profile1}>
-            <img src={userInfo.imageUrl}/>
+            <img src={userInfo.imageUrl ? userInfo.imageUrl : def}/>
             <div className={styles.profileson}>
               <h5><strong>{userInfo.name}</strong></h5>
               <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
@@ -250,7 +253,7 @@ export default function UserProfile() {
                   <p><strong>Profile Image</strong> </p>
                   <p>A profile photo helps personalize your account</p>
                   <div className={styles.inputImage}>
-                    <img src={selectedImages.length > 0 ? selectedImages[0] : userInfo.imageUrl} alt="Profile" />
+                    <img src={imageUrl} alt="Profile" />
                     <input
                       name="imageUrl"
                       type="file" 

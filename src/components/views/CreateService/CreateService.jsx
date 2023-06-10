@@ -21,9 +21,10 @@ export function CreateService() {
   const [cities, setCities] = useState([]);
   const [notification, setNotification] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
+  const [enabledInput, setEnabledInput] = useState(false);
+
   //daniel toco linea 23 y 24
   const uidService = useSelector((state) => state.currentUserIdLoggedIn);
-  console.log(uidService, "uid desde createservice con use selector");
   const [inputs, setInputs] = useState({
     nameService: "",
     location: {
@@ -89,7 +90,6 @@ export function CreateService() {
         },
       });
 
-      console.log(response.data);
       setCities(response.data);
     } catch (error) {
       console.error("Error al obtener la lista de estados", error);
@@ -99,6 +99,11 @@ export function CreateService() {
   //<-- FUNCIÓN PARA ASIGNAR EL PAIS A LAS CIUDADES-->
   const handleCountryClick = (countryName) => {
     searchCities(countryName);
+  };
+  
+  //<--MANEJADOR DE CLICK EN COUNTRY PARA HABILITAR CITY-->
+  const handleArrowClick = () => {
+    setEnabledInput(true);
   };
 
   //<--MANEJADOR DE INPUTS Y CLOUDINARY-->
@@ -264,6 +269,7 @@ export function CreateService() {
                 aria-describedby="inputGroup-sizing-default"
                 onClick={() => {
                   handleCountryClick(inputs.location.pais);
+                  handleArrowClick();
                 }}
                 required
               >
@@ -293,6 +299,8 @@ export function CreateService() {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
                 required
+                disabled={!enabledInput}
+
               >
                 <option disabled value="">
                   Your city

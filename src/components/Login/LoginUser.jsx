@@ -16,7 +16,7 @@ const LoginUser = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [showModalUser, setShowModalUser] = useState(false);
   const dispatch = useDispatch();
-
+  const [enabledInput, setEnabledInput] = useState(false);
   const userName = useSelector((state) => state.currentUserNameLoggedIn);
 
   const [formUser, setFormUser] = useState({
@@ -166,6 +166,11 @@ const LoginUser = () => {
     }
   };
 
+   //<--MANEJADOR DE CLICK EN COUNTRY PARA HABILITAR CITY-->
+   const handleArrowClick = () => {
+    setEnabledInput(true);
+  };
+
   const hideFormUser = (bool) => {
     setShowModalUser(bool);
     setFormUser({
@@ -290,6 +295,7 @@ const LoginUser = () => {
                   aria-describedby="inputGroup-sizing-default"
                   onClick={() => {
                     handleCountryClick(formUser.country);
+                    handleArrowClick();
                   }}
                   required
                 >
@@ -317,6 +323,7 @@ const LoginUser = () => {
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   required
+                  disabled={!enabledInput}
                 >
                   <option value="">{formUser.city}</option>
                   {cities.length > 0 &&

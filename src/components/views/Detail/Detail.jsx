@@ -9,7 +9,7 @@ import { Form } from 'react-bootstrap';
 import { OtherServices } from "./OtherServices/OtherServices";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-
+import def from "./Images/default.png";
 
 
 export function Detail() {
@@ -21,11 +21,13 @@ export function Detail() {
   const serviceDetail = useSelector((state) => state.serviceDetail);
   let arrImage = Array.isArray(serviceDetail.imageUrl) ? [...serviceDetail.imageUrl] : [serviceDetail.imageUrl];
   const comments = serviceDetail && serviceDetail.reviews ? serviceDetail.reviews : [];
+  const uidService = useSelector((state) => state.currentUserIdLoggedIn);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [likes, setLikes] = useState({});
   const [inputs, setInputs] = useState({
     serviceId: id,
     name: currentUserNameLoggedIn[0],
-    imageUrl: currentUserNameLoggedIn[3],
+    imageUrl: currentUserNameLoggedIn[3] ? currentUserNameLoggedIn[3] : def,
     rating: "",
     comment: "",
   })
@@ -65,14 +67,25 @@ export function Detail() {
      
     }
   } 
-
   //<--MANEJADOR DE SUBMIT-->
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
+    if (uidService.length === 0) {
+      toast.error("Must be logged in to comment a service");
+      setInputs({
+        serviceId: id,
+        name: currentUserNameLoggedIn[0],
+        imageUrl: currentUserNameLoggedIn[3],
+        rating: "",
+        comment: "",
+       })
+    }
+      else{
+        try {
       await axios
         .post("/service/review", inputs)
         .then((response) => toast.success(response.data));
+        setIsSubmitting(true);
      setInputs({
       serviceId: id,
       name: currentUserNameLoggedIn[0],
@@ -80,9 +93,12 @@ export function Detail() {
       rating: "",
       comment: "",
      })
+     window.location.reload();
     } catch (error) {
       toast.error(error.message);
     }
+  }
+    
    }
   
   
@@ -232,7 +248,9 @@ export function Detail() {
                 onChange={handleInputChange}
                 required
               ></textarea>
-              <button className={`${style.myButton} btn btn-outline-secondary`} type="submit">Send comment</button>
+              <button className={`${style.myButton} btn btn-outline-secondary`} type="submit">
+                {isSubmitting ? "Sending..." : "Send comment"}
+                </button>
               <Toaster position="bottom-right" reverseOrder={false} />
         </form>
           
