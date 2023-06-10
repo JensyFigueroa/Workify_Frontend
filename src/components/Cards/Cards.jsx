@@ -85,7 +85,6 @@ export function Cards() {
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
     setCurrentPage(nextPage)
   }
-  console.log(numServicesXpage);
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
