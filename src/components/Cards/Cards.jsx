@@ -85,7 +85,7 @@ export function Cards() {
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
     setCurrentPage(nextPage)
   }
-
+  console.log(numServicesXpage);
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
@@ -100,6 +100,7 @@ export function Cards() {
                 typeService={serv.typeService}
                 pricePerHour={serv.pricePerHour}
                 emailUserService={serv.emailUserService}
+                nameUserService = {serv.nameUserService}
                 enabled={serv.enabled}
                 rating={
                   serv.reviews && serv.reviews.length > 0 ? (

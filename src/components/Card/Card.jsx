@@ -11,6 +11,8 @@ export function Card({
   pricePerHour,
   emailUserService,
   rating,
+  nameUserService
+
 }) {
   const currentUserNameLoggedIn = useSelector(
     (state) => state.currentUserNameLoggedIn
@@ -31,7 +33,7 @@ export function Card({
             Category: <span>&nbsp;{typeService}</span>{" "}
           </p>
           <p>
-            Service Provider: <span> &nbsp;{currentUserNameLoggedIn[0]}</span>
+            Service Provider: <span> &nbsp;{nameUserService}</span>
           </p>
         </div>
         <div className={styles.buttons}>
