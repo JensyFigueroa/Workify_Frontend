@@ -1,5 +1,9 @@
 import { useParams } from "react-router-dom";
-import { getServiceDetail, cleanDetail } from "../../../redux/actions";
+import {
+  getServiceDetail,
+  cleanDetail,
+  addToCart,
+} from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import style from "./Detail.module.css";
@@ -173,15 +177,17 @@ export function Detail() {
             className={`${style.myButton} btn btn-outline-secondary`}
             onClick={() =>
               dispatch(
-                addServiceInCart(
+                addToCart({
                   id,
-                  serviceDetail.nameService,
-                  serviceDetail.pricePerHour
-                )
+                  nameService: serviceDetail.nameService,
+                  pricePerHour: serviceDetail.pricePerHour,
+                  emailUserService: serviceDetail.emailUserService,
+                  quantity: 1,
+                })
               )
             }
           >
-            Add to cart
+            Add service
           </button>
         </div>
       </div>

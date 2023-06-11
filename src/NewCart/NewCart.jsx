@@ -1,30 +1,20 @@
 import { useState, useEffect } from "react";
 import styles from "./NewCart.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Pasarela from "../components/Pasarela/Pasarela";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import Login from "../components/Login/Login";
 import { BsFillTrash3Fill } from "react-icons/bs";
+import { sendCart } from "../redux/actions";
 
 const promiseStripe = loadStripe(
   "pk_test_51NBQA0BpeRt7rcmet7zt0iDB39vFiEWAF1fC9g0mXU9UWuG5E50VE5j5o8AgcsZkeUv9iD4fWK4cUu9kKOqwhzKn00aWDy85Vh"
 );
 
-const addToCart = (product) => {
-  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  const existingItem = cartItems.find((item) => item.id === product.id);
-  if (existingItem) {
-    // Service already exists in the cart, update the quantity instead of adding a new item
-    existingItem.quantity += product.quantity;
-  } else {
-    cartItems.push(product);
-  }
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-};
-
 const NewCart = () => {
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.currentUserIdLoggedIn);
   const [payActive, setPayActive] = useState(false);
 
@@ -36,6 +26,10 @@ const NewCart = () => {
       setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(sendCart(cartItems));
+  }, [cartItems]);
 
   const updateQuantity = (product, quantity) => {
     if (quantity >= 0) {
@@ -82,7 +76,7 @@ const NewCart = () => {
     setCartItems([]);
     localStorage.removeItem("cartItems");
     axios
-      .get(`/user/vacateCart/${idUser}`)
+      .get(`/user/vacateCart/${userId}`)
       .then((response) => console.log(response, `salio todo bien`))
       .catch((error) => console.log(`salio todo mal`, error));
   };
@@ -175,4 +169,4 @@ const NewCart = () => {
 };
 
 export default NewCart;
-export { addToCart };
+// export { addToCart };

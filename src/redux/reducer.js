@@ -16,6 +16,7 @@ import {
   SET_CART,
   GET_USER,
   GETCART_DATABASE,
+  SEND_CART,
 } from "./types";
 
 const initialState = {
@@ -246,6 +247,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchServices: [],
+      };
+
+    case SEND_CART:
+      return {
+        ...state,
+        cart: action.payload,
       };
 
     default:
