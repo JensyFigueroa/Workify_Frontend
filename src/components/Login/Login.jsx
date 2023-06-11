@@ -22,7 +22,6 @@ import LoginUser from "./LoginUser";
 import ForgotPassword from "./ForgotPassword";
 import { set } from "date-fns";
 import toast, { Toaster } from "react-hot-toast";
-import { getCartDataBase } from "../../redux/actions";
 import UpdateCartOnLogin from "../../NewCart/updateCartOnLogin";
 
 const Login = () => {
@@ -127,7 +126,10 @@ const Login = () => {
         //console.log(userImg, "imagen de usarui");
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
         UpdateCartOnLogin(uid);
-        window.location.reload();
+        toast("Welcome");
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
       }
     } catch (error) {
       console.log(error);

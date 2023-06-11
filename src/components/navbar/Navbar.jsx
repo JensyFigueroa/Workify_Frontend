@@ -9,7 +9,7 @@ import logo from "../views/landing/img/logo.png";
 import LoginUser from "../Login/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../Login/Login";
-import { getCart, loginUser, setCart } from "../../redux/actions";
+import { loginUser } from "../../redux/actions";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase-config.js";
 import axios from "axios";
@@ -19,15 +19,17 @@ const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
-  const [cantCart, setCantCart] = useState(
-    JSON.parse(window.localStorage.getItem("cartItems"))
-  );
+  const cart = useSelector((state) => state.cart);
+
+  // const [cantCart, setCantCart] = useState(
+  //   JSON.parse(window.localStorage.getItem("cartItems"))
+  // );
 
   // console.log(cantCart)
 
-  useEffect(() => {
-    setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
-  }, []);
+  // useEffect(() => {
+  //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
+  // }, []);
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -153,8 +155,8 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              {cantCart?.length ? (
-                <span className={styles.cantCart}>{cantCart.length}</span>
+              {cart?.length ? (
+                <span className={styles.cantCart}>{cart.length}</span>
               ) : (
                 ""
               )}

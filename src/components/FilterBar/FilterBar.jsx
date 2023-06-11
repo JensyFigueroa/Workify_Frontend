@@ -81,9 +81,9 @@ const FilterBar = () => {
     }
   };
 
-  const handleToggleFilters = () => {
-    setIsFiltersOpen(!isFiltersOpen);
-  };
+  // const handleToggleFilters = () => {
+  //   setIsFiltersOpen(!isFiltersOpen);
+  // };
 
   const handleCloseFilters = () => {
     setIsFiltersOpen(false);
@@ -174,19 +174,9 @@ const FilterBar = () => {
           )}
         </div>
       </div>
-      <div className={styles.filterButtonsContainer}>
-        <button className={styles.filterButton} onClick={handleToggleFilters}>
-          <i className="ri-equalizer-line"></i>
-          &nbsp; Filter
-        </button>
-      </div>
 
-      {isFiltersOpen && (
-        <div className={styles.filterPopup} onClick={handleCloseFilters}>
-          <div className={styles.filterContent} onClick={handlePopupClick}>
-            <button className={styles.closeButton} onClick={handleCloseFilters}>
-              <MdOutlineClose />
-            </button>
+
+  
             <div className={styles.orderContainer}>
               <div className={styles.selectContainer}>
                 <label className={styles.selectLabel} htmlFor="orderBy">
@@ -258,9 +248,7 @@ const FilterBar = () => {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+         
     </div>
   );
 };

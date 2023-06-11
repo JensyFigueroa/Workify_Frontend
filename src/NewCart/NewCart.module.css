@@ -47,6 +47,9 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .clearButton:hover {
@@ -136,4 +139,13 @@ button:hover {
   justify-content: center;
   flex-direction: column;
   gap: 2em;
+}
+
+.addRemove button {
+  margin-right: 5px;
+}
+.titleContainer {
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
 }
