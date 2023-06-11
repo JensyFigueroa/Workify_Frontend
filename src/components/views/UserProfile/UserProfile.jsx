@@ -27,7 +27,6 @@ export default function UserProfile() {
   });
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
   const userInfo = useSelector(state => state.userInfo);
-  console.log(userInfo);
   const [services, setServices] = useState(userInfo.Services);
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
@@ -84,15 +83,18 @@ export default function UserProfile() {
   };
   
   //<--MANEJADOR DE BOTON SWITCH-->
-  const handleSwitchChange = (serviceId) => {
-    setServices((prevServices) =>
-      prevServices.map((service) =>
-        service.id === serviceId
-          ? { ...service, enabled: !service.enabled }
-          : service
-      )
-    );
+  const handleSwitchChange = async(idService, nameService) => {
+    try {
+      const data = { nameService: nameService };
+      await axios
+      .put(`/profileService/${idService}`, data)
+      .then((response) => toast.success(response.data));
+      window.location.reload();
+    } catch (error) {
+      toast.error("There's an error in your service")
+    }
   };
+
   //<--MANEJADOR DE CLICK EN FLECHA PARA HABILITAR INPUT-->
   const handleArrowClick = (inputName) => {
     setEnabledInputs(prevState => ({
@@ -107,7 +109,7 @@ export default function UserProfile() {
     if (name === "imageUrl") {
       const file = event.target.files[0];
       const imageSelected = URL.createObjectURL(file);
-      setSelectedImages([imageSelected]);
+      setSelectedImages(imageSelected);
     
       const formData = new FormData();
       formData.append("file", file);
@@ -149,6 +151,8 @@ export default function UserProfile() {
       })
     }
   }
+
+
   //<--MANEJADOR DEL SUBMIT-->
   const handleSubmit = async(event) => {
       event.preventDefault();
@@ -182,7 +186,6 @@ export default function UserProfile() {
       window.location.reload();
     } catch (error) {
       toast.error("Can't modified changes, please insert the correct information ");
-      console.log(error);
     }
   }
 
@@ -267,7 +270,7 @@ export default function UserProfile() {
         )}
 
         {showEditProfile && (
-          <>
+          <div>
            <form
             className="row g-3 needs-validation"
             onSubmit={handleSubmit}
@@ -311,7 +314,7 @@ export default function UserProfile() {
                   name="name" 
                   value={inputs.name}
                   onChange={handleInputChange}
-                  type="name" 
+                  type="text" 
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New name"
@@ -424,10 +427,10 @@ export default function UserProfile() {
           </div>
           <Toaster position="bottom-right" reverseOrder={false} />
               </form>
-          </>
+          </div>
         )}
         {showServiceContent && (
-        <>
+        <div>
         <div className={styles.title}>
           <p><strong>My services</strong></p>
         </div>
@@ -447,14 +450,15 @@ export default function UserProfile() {
                 className="form-check-input"
                 type="checkbox"
                 id={`switchButton-${service.id}`}
-                checked={service.enabled}
+                checked={service.enabledS}
+                onChange={() => handleSwitchChange(service.id, service.nameService)}
                
               />
               <label
                 className="form-check-label"
                 htmlFor={`switchButton-${service.id}`}
               >
-                {service.enabled ? 'Enabled' : 'Disabled'}
+                {service.enabledS ? 'Enabled' : 'Disabled'}
               </label>
             </div>
                   
@@ -463,10 +467,10 @@ export default function UserProfile() {
         
           
           
-         </>
+         </div>
         )}
         {showMyOrders && (
-          <>
+          <div>
         <div className={styles.title}>
           <p><strong>My orders</strong></p>
         </div>
@@ -474,7 +478,7 @@ export default function UserProfile() {
           
           </div>
           
-          </>
+          </div>
         )}
         
         </div>

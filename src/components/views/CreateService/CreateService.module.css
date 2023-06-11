@@ -73,4 +73,5 @@
     border-radius: 20px;
     margin-left: 15px;
     margin-top: 15px;
+    object-fit: cover;
 }

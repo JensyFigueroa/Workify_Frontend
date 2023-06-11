@@ -18,6 +18,7 @@ export function Detail() {
     (state) => state.currentUserNameLoggedIn
   );
   const serviceDetail = useSelector((state) => state.serviceDetail);
+  const userInfo = useSelector(state => state.userInfo);
   let arrImage = Array.isArray(serviceDetail.imageUrl)
     ? [...serviceDetail.imageUrl]
     : [serviceDetail.imageUrl];
@@ -77,7 +78,11 @@ export function Detail() {
         rating: "",
         comment: "",
       });
-    } else {
+    } 
+    // else if (userInfo.buys.includes(id)){
+
+    // }
+    else{
       try {
         await axios
           .post("/service/review", inputs)
