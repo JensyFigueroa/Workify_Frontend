@@ -73,10 +73,10 @@ const SuccessPayment = () => {
   return (
     <div className={styles.container}>
       <h1>"Your payment has been successfully processed."</h1>
-      <h2>"You will be redirected to the homepage."</h2>
-      {setTimeout(() => {
-        navigate("/home");
-      }, 3000)}
+      <button className={styles.myButton} onClick={() => navigate("/home")}>
+        {" "}
+        Return to home{" "}
+      </button>
     </div>
   );
 };
