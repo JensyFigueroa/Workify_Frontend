@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import {
   GET_SERVICES,
   GET_SERVICESBYNAME,
@@ -147,6 +148,7 @@ export const addToCart = (product) => {
     }
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     dispatch(sendCart(cartItems));
+    toast.success("Service successfully added");
   };
 };
 

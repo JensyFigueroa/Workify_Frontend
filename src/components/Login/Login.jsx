@@ -126,7 +126,10 @@ const Login = () => {
         //console.log(userImg, "imagen de usarui");
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
         UpdateCartOnLogin(uid);
-        window.location.reload();
+        toast("Welcome");
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
       }
     } catch (error) {
       console.log(error);
