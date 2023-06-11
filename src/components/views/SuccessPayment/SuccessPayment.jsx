@@ -22,7 +22,7 @@ const SuccessPayment = () => {
     const searchParams = new URLSearchParams(location.search);
     const sessionId = searchParams.get("session_id");
     axios
-      .get(`/payment/success?idSession=${sessionId}`)
+      .get(`/payment/success?idSession=${sessionId}&idUser=${idUser}`)
       .then(({ data }) => {
         console.log(data);
         const emailPromises = data.map((service) => {

@@ -103,7 +103,7 @@ const NewCart = () => {
       cartItems,
     });
     console.log(data);
-    window.open(data.url, "_blank");
+    window.location.href = data.url;
   };
 
   return (
