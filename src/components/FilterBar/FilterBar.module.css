@@ -1,8 +1,9 @@
 .filterBarContainer {
+  padding: 5px;
   width: 100%;
-  height: 5em;
+  height: 8rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   /* justify-content: space-between; */
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
@@ -131,21 +132,29 @@
 }
 
 .orderContainer {
-  display: contents;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-   margin-top: 10px;
+  justify-content: center;
+
 }
 
 .selectContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin-top: 10px;
+  justify-content: center;
+  padding:0px 20px;
 }
 
 .selectLabel {
   margin-right: 10px;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .select {
@@ -186,9 +195,8 @@
 }
 
 .btnFilter {
-  
     background: rgb(28, 181, 224); 
-    margin-top: 40px;
+    margin-left: 20px;
     margin-right: 10px;
   
 }
