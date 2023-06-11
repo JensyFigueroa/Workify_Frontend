@@ -5,6 +5,7 @@ import { getUser } from "../../../redux/actions";
 import toast, { Toaster } from "react-hot-toast";
 import def from "../Detail/Images/default.png";
 import axios from "axios";
+import checking from "./img/check.png";
 
 export default function UserProfile() {
  
@@ -208,7 +209,10 @@ export default function UserProfile() {
       {(initialLoad) && (
       <div className={styles.infoProfileContainer}>
       <div className={styles.infoProfile}>
-            <h5><strong>My profile</strong></h5>
+          <div className={styles.fatherSubtitle1}>
+            <p className={styles.subtitle1}><strong>My profile</strong></p>
+            <p className={styles.titlep}>Welcome to  <strong className={styles.strong1}>Workify profile,</strong> you can verify all your <strong className={styles.strong1}>information</strong> and modify it, in addition to your <strong className={styles.strong1}>services</strong>  and <strong className={styles.strong1}>purchases</strong></p>
+          </div>
             <div className={styles.profile1}>
               <img src={userInfo.imageUrl ? userInfo.imageUrl : def}/>
               <div className={styles.profileson}>
@@ -240,7 +244,10 @@ export default function UserProfile() {
       <div className={styles.columnRight}>
         {showProfileSection && (
           <div className={styles.infoProfile}>
-          <h5><strong>My profile</strong></h5>
+          <div className={styles.fatherSubtitle1}>
+            <p className={styles.subtitle1}><strong>My profile</strong></p>
+            <p className={styles.titlep}>Welcome to  <strong className={styles.strong1}>Workify profile,</strong> you can verify all your <strong className={styles.strong1}>information</strong> and modify it, in addition to your <strong className={styles.strong1}>services</strong>  and <strong className={styles.strong1}>purchases</strong></p>
+          </div>
           <div className={styles.profile1}>
             <img src={userInfo.imageUrl ? userInfo.imageUrl : def}/>
             <div className={styles.profileson}>
@@ -431,8 +438,9 @@ export default function UserProfile() {
         )}
         {showServiceContent && (
         <div>
-        <div className={styles.title}>
+        <div className={styles.title1}>
           <p><strong>My services</strong></p>
+          <p className={styles.titlep}>You can <strong className={styles.strong1}>enabled </strong>or <strong className={styles.strong1}>disabled</strong> your services</p>
         </div>
        
           {userInfo.Services && userInfo.Services.map((service, index) => ( 
@@ -471,10 +479,34 @@ export default function UserProfile() {
         )}
         {showMyOrders && (
           <div>
-        <div className={styles.title}>
+        <div className={styles.title1}>
           <p><strong>My orders</strong></p>
+          <p className={styles.titlep}>Check all your <strong className={styles.strong1}>purchases </strong> and ther <strong className={styles.strong1}>status</strong></p>
         </div>
-          <div className={styles.containerOrder}>ORDER
+          <div className={styles.containerOrder}>
+          <strong>
+          <div className={styles.subtitle}>
+            <div className={styles.titlesOrder}>
+                <p>Name Service</p>
+                <p>Type Service</p>
+                <p>Price per hour</p>
+                <p>Status</p>
+            </div>
+          </div>
+          </strong>
+          {userInfo.buys && userInfo.buys.map((service, index) => (
+          <div key={index} className={styles.orderServices}>
+            <p>{service.nameService}</p>
+            <div className={styles.typeServiceorder}>
+              <p>{service.typeService}</p>
+            </div>
+            <div className={styles.payOrder}>
+              <p>${service.pay}</p>
+            </div>
+            <img src={checking} alt="check"/>
+          </div>
+          ))}
+
           
           </div>
           
