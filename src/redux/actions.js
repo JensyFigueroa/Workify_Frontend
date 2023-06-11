@@ -15,6 +15,7 @@ import {
   SET_CART,
   GET_USER,
   GETCART_DATABASE,
+  SEND_CART,
 } from "./types";
 import axios from "axios";
 
@@ -132,5 +133,26 @@ export const loginUser = (uid, name, userPhone, userEmail, imgUrl) => {
 export const cleanSearch = () => {
   return {
     type: CLEAN_SEARCH,
+  };
+};
+
+export const addToCart = (product) => {
+  return (dispatch) => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const existingItem = cartItems.find((item) => item.id === product.id);
+    if (existingItem) {
+      existingItem.quantity += product.quantity;
+    } else {
+      cartItems.push(product);
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    dispatch(sendCart(cartItems));
+  };
+};
+
+export const sendCart = (cart) => {
+  return {
+    type: SEND_CART,
+    payload: cart,
   };
 };

@@ -1,7 +1,7 @@
 import styles from "../Card/Card.module.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { addToCart } from "../../NewCart/NewCart";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/actions";
 
 export function Card({
   id,
@@ -11,13 +11,12 @@ export function Card({
   pricePerHour,
   emailUserService,
   rating,
-  nameUserService
-
+  nameUserService,
 }) {
   const currentUserNameLoggedIn = useSelector(
     (state) => state.currentUserNameLoggedIn
   );
-
+  const dispatch = useDispatch();
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -40,13 +39,15 @@ export function Card({
           <button
             className={styles.addService}
             onClick={() =>
-              addToCart({
-                id,
-                nameService,
-                pricePerHour,
-                emailUserService,
-                quantity: 1,
-              })
+              dispatch(
+                addToCart({
+                  id,
+                  nameService,
+                  pricePerHour,
+                  emailUserService,
+                  quantity: 1,
+                })
+              )
             }
           >
             Add service
