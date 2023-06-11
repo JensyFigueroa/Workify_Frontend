@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: row;
 
+
 }
 
 .containerLeftRight{
@@ -88,6 +89,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.fatherSubtitle1{
+  margin-bottom: 2em;
 }
 
 .profilep2{
@@ -195,6 +200,12 @@ input {
   object-fit: cover;
 }
 
+.titlesOrder{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .inputImage{
   display: flex;
   flex-direction: column;
@@ -240,6 +251,10 @@ input {
   color: white;
 }
 
+.subtitle1 {
+    font-size: 18px;
+}
+
 .newInfo{
   border: 1px solid rgb(209, 209, 209);
   width: 55em;
@@ -259,6 +274,7 @@ input {
   margin-bottom: 2em;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 2em;
 }
 
 .containerService img{
@@ -284,7 +300,29 @@ input {
   padding: 20px;
   border-radius: 20px;
   margin-left: 3em;
-  height: 30em;
+}
+
+.orderServices{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.orderServices img{
+  width: 2em;
+  height: 2em;
+}
+
+.typeServiceorder{
+  position: absolute;
+  right: 45%;
+}
+
+.payOrder{
+  position: absolute;
+  right: 30%;
 }
 
 .title{
