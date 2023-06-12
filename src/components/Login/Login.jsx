@@ -57,7 +57,7 @@ const Login = () => {
 
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
-
+  
     if (Object.keys(errors).length === 0 && currentForm === "formLogin") {
       try {
         const res = await signInWithEmailAndPassword(
@@ -65,19 +65,27 @@ const Login = () => {
           formLogin.email,
           formLogin.password
         );
+  
         if (res && res.user) {
           const uid = res.user.uid;
           const name = res.user.displayName;
-
-          const userPhoneLogin = await (
-            await axios.get(`/user/${uid}`)
-          ).data.phone;
-          const userEmail = await (await axios.get(`/user/${uid}`)).data.email;
-          const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl;
-          dispatch(loginUser(uid, name, userPhoneLogin, userEmail, userImg));
+          const user = (await axios.get(`/user/${uid}`)).data;
+          console.log(user, "user en el signin with email and password");
+          let { enabled, phone, email, imageUrl } = user;
+          
+          console.log(enabled, "enabled login normallll");
+          
+          if (!enabled) {
+            await signOut(auth);
+            toast.error("Please contact Support, your account has been disabled");
+            throw new Error("User not enabled");
+          }
+  
+          dispatch(loginUser(uid, name, phone, email, imageUrl));
           dispatch(getCartDataBase(uid));
           //console.log(res.user, "user en el signin with email and password");
         }
+  
         console.log("Enviando el form Login ", formLogin);
         setFormLogin({ email: "", password: "" });
         setShowModalLogin(false);
@@ -86,10 +94,10 @@ const Login = () => {
       } catch (error) {
         console.log(error.message);
         if (error.message.includes("auth/wrong-password")) {
-          toast.error("Email or Password Incorrect!! Try Agian!");
+          toast.error("Email or Password Incorrect!! Try Again!");
         }
         if (error.message.includes("auth/user-not-found")) {
-          toast.error("Email or Password Incorrect!! Try Agian!");
+          toast.error("Email or Password Incorrect!! Try Again!");
         }
       }
     }
@@ -102,16 +110,22 @@ const Login = () => {
       if (res && res.user) {
         const uid = res.user.uid;
         const name = res.user.displayName;
-        // setUID(uid);
-        // window.localStorage.setItem('uid', res.user.uid);
         console.log(res.user.displayName, "usuario logeado");
+        const userEnabledGoogle = (await axios.get(`/user/${uid}`)).data.enabled;
+        console.log(userEnabledGoogle, "enabled login google");
+        if (!userEnabledGoogle) {
+          await signOut(auth);
+          toast.error("Please contact Support, your account has been disabled");
+          throw new Error("User not enabled");
+        }
+  
         const inputs = {
-          id: res.user.uid,
-          name: res.user.displayName,
+          id: uid,
+          name: name,
           email: res.user.email,
           country: "",
           city: "",
-          phone: res.user.providerData[0].phoneNumber,
+          phone: res.user.providerData[0]?.phoneNumber || "",
           credential: [""],
           imagePublicId: "",
           imageUrl: res.user.photoURL,
@@ -119,14 +133,17 @@ const Login = () => {
           description: "",
           google: true,
         };
+  
         await axios.post("/login/", inputs);
-        const userPhone = await (await axios.get(`/user/${uid}`)).data.phone;
-        const userEmail = await (await axios.get(`/user/${uid}`)).data.email;
-        const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl;
-        //console.log(userImg, "imagen de usarui");
+  
+        const user = (await axios.get(`/user/${uid}`)).data;
+        const userPhone = user.phone;
+        const userEmail = user.email;
+        const userImg = user.imageUrl;
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
         UpdateCartOnLogin(uid);
         toast("Welcome");
+        setShowModalLogin(false);
         setTimeout(() => {
           window.location.reload();
         }, 600);
@@ -134,10 +151,9 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
-
-    setShowModalLogin(false);
+  
   };
-
+  
   if (auth?.currentUser) {
     console.log("usuario esta logeado");
   }
