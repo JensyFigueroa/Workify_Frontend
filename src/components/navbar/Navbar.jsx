@@ -165,7 +165,7 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          <div className="btn-group " role="group">
+          <div className={`btn-group ${styles.boxLogin}`} role="group">
             {userName[0].length > 0 ? (
               <div className={styles.userName}>
                 <p>Welcome</p>
