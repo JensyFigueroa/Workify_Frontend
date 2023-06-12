@@ -95,7 +95,6 @@ export function Cards() {
         </div>
         <button className={styles.btnPagination} onClick={nextHandler}>{' >>'}</button>
       </div>
-
       <div className={styles.cards}>
         {numServicesXpage.length > 0 ? (
           numServicesXpage.map((serv, index) => {
@@ -109,7 +108,7 @@ export function Cards() {
                 pricePerHour={serv.pricePerHour}
                 emailUserService={serv.emailUserService}
                 nameUserService = {serv.nameUserService}
-                enabled={serv.enabled}
+                enabled={serv.enabledS}
                 rating={
                   serv.reviews && serv.reviews.length > 0 ? (
                     <div className={styles.ratings}>

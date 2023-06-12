@@ -42,6 +42,7 @@ export default function UserProfile() {
   
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getUser(idUser));
   }, [dispatch, idUser])
 
@@ -103,7 +104,7 @@ export default function UserProfile() {
       [inputName]: !prevState[inputName] 
     }));
   };
-
+  
   //<--MANEJADOR DE INPUTS-->
   const handleInputChange = async (event) => {
     const { name, value } = event.target;
