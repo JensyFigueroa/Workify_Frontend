@@ -58,6 +58,10 @@
   background-color: transparent;
 }
 
+.buttonItem button:hover{
+  background-color: transparent;
+}
+
 .buttonArrow {
   width: 40px;
   height: 40px;
@@ -195,6 +199,10 @@
 }
 
 .btnFilter {
+  width: 150px;
+  height: 30px;
+  border-radius: 10px;
+  padding: 0;
     background: rgb(28, 181, 224); 
     margin-left: 20px;
     margin-right: 10px;

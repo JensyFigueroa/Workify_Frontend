@@ -155,7 +155,7 @@ const FilterBar = () => {
                 item === items ? styles.selected : ""
               }`}
             >
-              <i class="fa-solid fa-snowflake"></i>
+              <i className="fa-solid fa-snowflake"></i>
 
               <button value={item} onClick={handleItemChange}>
                 {item}
@@ -175,8 +175,6 @@ const FilterBar = () => {
         </div>
       </div>
 
-
-  
             <div className={styles.orderContainer}>
               <div className={styles.selectContainer}>
                 <label className={styles.selectLabel} htmlFor="orderBy">
