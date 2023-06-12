@@ -32,6 +32,14 @@ const Login = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [formLogin, setFormLogin] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
   const hideLogin = () => {
     console.log(showModalLogin);
     setShowModalLogin(false);
@@ -205,7 +213,7 @@ const Login = () => {
               )}
               <div className={styles.field}>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   onChange={handleInputChangeLogin}
                   onBlur={handleBlur}
@@ -213,6 +221,7 @@ const Login = () => {
                   required
                 />
                 <label htmlFor="">Password</label>
+                <i className={`${styles.eye} fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eye'} `} onClick={togglePasswordVisibility}></i>
               </div>
               {errors.password && (
                 <p
