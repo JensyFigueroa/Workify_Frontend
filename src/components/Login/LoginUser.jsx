@@ -73,7 +73,7 @@ const LoginUser = () => {
   //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
   const searchCities = async (countryCode) => {
     try {
-      const response = await axios.get("/location/city", {
+      const response = await axios.get('/location/city', {
         params: {
           q: countryCode,
           username: "joaquinsgro",
