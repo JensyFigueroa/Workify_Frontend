@@ -134,6 +134,7 @@ h1 {
 
 .boxLogin{
     width: 15%;
+    justify-content: flex-end;
 }
 
 /* ###############  navIcon ##########################*/
