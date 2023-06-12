@@ -4,4 +4,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 5em;
+}
+
+.myButton {
+  color: black;
+  background-color: white;
+  margin-top: -50px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.myButton:hover {
+  background-color: black;
+  color: aliceblue;
 }

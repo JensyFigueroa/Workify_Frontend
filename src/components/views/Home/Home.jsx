@@ -11,8 +11,8 @@ const Home = () => {
   const uidHome = useSelector((state) => state.currentUserIdLoggedIn);
   const nameHome = useSelector((state) => state.currentUserNameLoggedIn);
 
-  // console.log(uidHome, "uid desde home con use selector");
-  // console.log(nameHome, "name desde home con use selector");
+  console.log(uidHome, "uid desde home con use selector");
+  console.log(nameHome, "name desde home con use selector");
 
   const allServices = useSelector((state) => state.allServices);
   useEffect(() => {

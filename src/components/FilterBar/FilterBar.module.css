@@ -1,8 +1,9 @@
 .filterBarContainer {
+  padding: 5px;
   width: 100%;
-  height: 5em;
+  height: 8rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   /* justify-content: space-between; */
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
@@ -53,7 +54,12 @@
   background-color: transparent;
 }
 
-.buttonItem button{
+.buttonItem button {
+  background-color: transparent;
+  transition: 0.2s;
+}
+
+.buttonItem button:hover {
   background-color: transparent;
 }
 
@@ -76,7 +82,7 @@
   width: 42px;
   height: 42px;
   background-color: transparent;
-  box-shadow:  2px 4px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .selected {
@@ -131,21 +137,29 @@
 }
 
 .orderContainer {
-  display: contents;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-   margin-top: 10px;
+  justify-content: center;
 }
 
 .selectContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin-top: 10px;
+  justify-content: center;
+  padding: 0px 20px;
 }
 
 .selectLabel {
   margin-right: 10px;
+  font-size: 14px;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .select {
@@ -186,13 +200,17 @@
 }
 
 .btnFilter {
-  
-    background: rgb(28, 181, 224); 
-    margin-top: 40px;
-    margin-right: 10px;
-  
+  font-size: 13px;
+  width: auto;
+  height: 32px;
+  border-radius: 10px;
+  padding: 7px;
+  background: rgb(28, 181, 224);
+
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
-.btn:hover{
+.btn:hover {
   color: white;
 }

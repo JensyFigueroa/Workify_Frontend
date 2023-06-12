@@ -16,6 +16,7 @@ import {
   SET_CART,
   GET_USER,
   GETCART_DATABASE,
+  SEND_CART,
 } from "./types";
 
 const initialState = {
@@ -52,7 +53,7 @@ const rootReducer = (state = initialState, action) => {
       const cities = Array.from(
         new Set(services.map((service) => service.location.ciudad))
       );
-       
+
       return {
         ...state,
         allServices: services,
@@ -93,10 +94,10 @@ const rootReducer = (state = initialState, action) => {
           return 0;
         } else if (orderBy === "typeService") {
           if (a[orderBy] > b[orderBy]) {
-            return -order;
+            return order;
           }
           if (a[orderBy] < b[orderBy]) {
-            return order;
+            return -order;
           }
           return 0;
         } else if (orderBy === "pricePerHour") {
@@ -109,8 +110,20 @@ const rootReducer = (state = initialState, action) => {
           return 0;
         } else if (orderBy === "rating") {
           console.log("rating en reducer");
-          const aRating = a.reviews.length > 0 ? a.reviews[0].rating : 0;
-          const bRating = b.reviews.length > 0 ? b.reviews[0].rating : 0;
+          const accRating =
+            a.reviews?.length > 0
+              ? a.reviews
+                  .map((review) => parseFloat(review.rating))
+                  .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0))
+              : 0;
+          const aRating = accRating / a.reviews?.length;
+          const bccRating =
+            b.reviews?.length > 0
+              ? b.reviews
+                  .map((review) => parseFloat(review.rating))
+                  .reduce((a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0))
+              : 0;
+          const bRating = bccRating / b.reviews?.length;
 
           if (aRating > bRating) {
             return -order;
@@ -219,38 +232,6 @@ const rootReducer = (state = initialState, action) => {
         serviceDetail: {},
       };
 
-    case ADD_SERVICE_IN_CART:
-      action.payload.quantity = 1;
-
-      const inServ = (e) => e.id === action.payload.id;
-
-      if (state.cart.some(inServ)) {
-        toast.error("This product is already in your cart!");
-        return {
-          ...state,
-        };
-      }
-
-      let data = [...state.cart, action.payload];
-
-      window.localStorage.setItem("cart", JSON.stringify(data));
-      toast.success("Product added to cart!");
-      return {
-        ...state,
-        cart: data,
-      };
-    case GET_CART:
-      return {
-        ...state,
-        cart: [...state.cart],
-      };
-
-    case UPDATE_CART:
-      console.log(action.payload, "update reducer");
-      return {
-        ...state,
-        cart: action.payload,
-      };
     case LOGIN_USER:
       return {
         ...state,
@@ -267,13 +248,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         searchServices: [],
       };
-    case SET_CART:
-      window.localStorage.removeItem("cart");
-      return {
-        ...state,
-        cart: [],
-      };
-    case GETCART_DATABASE:
+
+    case SEND_CART:
       return {
         ...state,
         cart: action.payload,

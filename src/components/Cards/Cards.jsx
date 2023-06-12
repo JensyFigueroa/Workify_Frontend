@@ -85,9 +85,16 @@ export function Cards() {
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
     setCurrentPage(nextPage)
   }
-
   return (
     <div className={styles.container}>
+      <div className={styles.containerPagination}>
+      
+        <button className={styles.btnPagination} onClick={prevHandler}>{'<< '}</button>
+        <div>
+          {pageNum.map((num, i) => <button className={currentPage === i ? styles.btnActive : styles.btnPagination} key={i} style={{ marginRight: '5px' }} onClick={(e) => handlerPage(e)} value={num}>{num}</button>)}
+        </div>
+        <button className={styles.btnPagination} onClick={nextHandler}>{' >>'}</button>
+      </div>
       <div className={styles.cards}>
         {numServicesXpage.length > 0 ? (
           numServicesXpage.map((serv, index) => {
@@ -100,7 +107,8 @@ export function Cards() {
                 typeService={serv.typeService}
                 pricePerHour={serv.pricePerHour}
                 emailUserService={serv.emailUserService}
-                enabled={serv.enabled}
+                nameUserService = {serv.nameUserService}
+                enabled={serv.enabledS}
                 rating={
                   serv.reviews && serv.reviews.length > 0 ? (
                     <div className={styles.ratings}>

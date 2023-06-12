@@ -10,13 +10,12 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/actions";
 import toast, { Toaster } from "react-hot-toast";
-import { getCartDataBase } from "../../redux/actions";
 
 const LoginUser = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [showModalUser, setShowModalUser] = useState(false);
   const dispatch = useDispatch();
-
+  const [enabledInput, setEnabledInput] = useState(false);
   const userName = useSelector((state) => state.currentUserNameLoggedIn);
 
   const [formUser, setFormUser] = useState({
@@ -56,15 +55,15 @@ const LoginUser = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/location/country', {
+        const response = await axios.get("/location/country", {
           params: {
-            username: 'joaquinsgro',
-            type: 'json'
-          }
+            username: "joaquinsgro",
+            type: "json",
+          },
         });
         setCountries(response.data);
       } catch (error) {
-        console.error('Error al obtener la lista de países', error);
+        console.error("Error al obtener la lista de países", error);
       }
     };
 
@@ -74,18 +73,18 @@ const LoginUser = () => {
   //<---FUNCIÓN PARA TRAER LAS CIUDADES--->
   const searchCities = async (countryCode) => {
     try {
-      const response = await axios.get('http://localhost:3001/location/city', {
+      const response = await axios.get("/location/city", {
         params: {
           q: countryCode,
-          username: 'joaquinsgro',
-          type: 'json',
+          username: "joaquinsgro",
+          type: "json",
         },
       });
-      
+
       console.log(response.data);
       setCities(response.data);
     } catch (error) {
-      console.error('Error al obtener la lista de estados', error);
+      console.error("Error al obtener la lista de estados", error);
     }
   };
 
@@ -139,7 +138,8 @@ const LoginUser = () => {
           //console.log(userImg, "imagen de usarui");
           dispatch(loginUser(uid, name, userPhoneRegister, userEmail, userImg));
           //console.log(res.user, "user en el signin with email and password")
-          dispatch(getCartDataBase(uid));
+          UpdateCartOnLogin(uid);
+          window.location.reload();
         }
       } catch (error) {
         if (error.code === "auth/email-already-in-use") {
@@ -163,6 +163,11 @@ const LoginUser = () => {
       });
       setShowModalUser(false);
     }
+  };
+
+  //<--MANEJADOR DE CLICK EN COUNTRY PARA HABILITAR CITY-->
+  const handleArrowClick = () => {
+    setEnabledInput(true);
   };
 
   const hideFormUser = (bool) => {
@@ -289,6 +294,7 @@ const LoginUser = () => {
                   aria-describedby="inputGroup-sizing-default"
                   onClick={() => {
                     handleCountryClick(formUser.country);
+                    handleArrowClick();
                   }}
                   required
                 >
@@ -316,6 +322,7 @@ const LoginUser = () => {
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   required
+                  disabled={!enabledInput}
                 >
                   <option value="">{formUser.city}</option>
                   {cities.length > 0 &&

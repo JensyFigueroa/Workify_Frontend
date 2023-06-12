@@ -22,8 +22,7 @@ import LoginUser from "./LoginUser";
 import ForgotPassword from "./ForgotPassword";
 import { set } from "date-fns";
 import toast, { Toaster } from "react-hot-toast";
-import { getCartDataBase } from "../../redux/actions";
-import UpdateCartOnLogin from "../../cart/updateCartOnLogin";
+import UpdateCartOnLogin from "../../NewCart/updateCartOnLogin";
 
 const Login = () => {
   const location = useLocation();
@@ -33,6 +32,14 @@ const Login = () => {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [formLogin, setFormLogin] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
   const hideLogin = () => {
     console.log(showModalLogin);
     setShowModalLogin(false);
@@ -82,6 +89,8 @@ const Login = () => {
         console.log("Enviando el form Login ", formLogin);
         setFormLogin({ email: "", password: "" });
         setShowModalLogin(false);
+        UpdateCartOnLogin(uid);
+        window.location.reload();
       } catch (error) {
         console.log(error.message);
         if (error.message.includes("auth/wrong-password")) {
@@ -124,41 +133,12 @@ const Login = () => {
         const userImg = await (await axios.get(`/user/${uid}`)).data.imageUrl;
         //console.log(userImg, "imagen de usarui");
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
-
-        const cartDB = (await axios.get(`/user/getCart/${uid}`)).data;
-        console.log(cartDB);
-        const cartLS =
-          JSON.parse(window.localStorage.getItem("cartItems")) || [];
-        console.log(cartLS);
-
-        const services = {};
-
-        cartDB.forEach((ele) => {
-          if (services[ele.id]) {
-            services[ele.id].quantity += ele.quantity;
-          } else {
-            services[ele.id] = { ...ele };
-          }
-        });
-
-        cartLS.forEach((ele) => {
-          if (services[ele.id]) {
-            services[ele.id].quantity += ele.quantity;
-          } else {
-            services[ele.id] = { ...ele };
-          }
-        });
-
-        const mergedServices = Object.values(services);
-        console.log(mergedServices);
-
-        window.localStorage.setItem(
-          "cartItems",
-          JSON.stringify(mergedServices)
-        );
+        UpdateCartOnLogin(uid);
+        toast("Welcome");
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
       }
-      console.log(JSON.parse(window.localStorage.getItem("cartItems")));
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -233,7 +213,7 @@ const Login = () => {
               )}
               <div className={styles.field}>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   onChange={handleInputChangeLogin}
                   onBlur={handleBlur}
@@ -241,6 +221,7 @@ const Login = () => {
                   required
                 />
                 <label htmlFor="">Password</label>
+                <i className={`${styles.eye} fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eye'} `} onClick={togglePasswordVisibility}></i>
               </div>
               {errors.password && (
                 <p

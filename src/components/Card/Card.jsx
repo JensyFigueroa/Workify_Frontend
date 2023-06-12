@@ -1,7 +1,7 @@
 import styles from "../Card/Card.module.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { addToCart } from "../../NewCart/NewCart";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/actions";
 
 export function Card({
   id,
@@ -11,17 +11,22 @@ export function Card({
   pricePerHour,
   emailUserService,
   rating,
+  nameUserService,
+  enabled
 }) {
-  const currentUserNameLoggedIn = useSelector(
-    (state) => state.currentUserNameLoggedIn
-  );
-
+  
+  
+  if (!enabled) {
+    return null; // Retorna null si enabled es false para ocultar la carta
+  }
+  const dispatch = useDispatch();
   return (
     <div className={styles.container}>
       <div className={styles.card}>
         <img className={styles.img} src={image} alt="img" />
         <div className={styles.info}>
           <div className={styles.pRating}>
+            
             <p>
               <h5>{nameService}</h5>
             </p>
@@ -31,20 +36,22 @@ export function Card({
             Category: <span>&nbsp;{typeService}</span>{" "}
           </p>
           <p>
-            Service Provider: <span> &nbsp;{currentUserNameLoggedIn[0]}</span>
+            Service Provider: <span> &nbsp;{nameUserService}</span>
           </p>
         </div>
         <div className={styles.buttons}>
           <button
             className={styles.addService}
             onClick={() =>
-              addToCart({
-                id,
-                nameService,
-                pricePerHour,
-                emailUserService,
-                quantity: 1,
-              })
+              dispatch(
+                addToCart({
+                  id,
+                  nameService,
+                  pricePerHour,
+                  emailUserService,
+                  quantity: 1,
+                })
+              )
             }
           >
             Add service

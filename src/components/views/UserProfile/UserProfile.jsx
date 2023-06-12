@@ -3,8 +3,9 @@ import styles from "./UserProfile.module.css";
 import {useDispatch, useSelector} from 'react-redux'
 import { getUser } from "../../../redux/actions";
 import toast, { Toaster } from "react-hot-toast";
-
+import def from "../Detail/Images/default.png";
 import axios from "axios";
+import checking from "./img/check.png";
 
 export default function UserProfile() {
  
@@ -15,13 +16,15 @@ export default function UserProfile() {
   const [initialLoad, setInitialLoad] = useState(true);
   const [selectedImages, setSelectedImages] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const [enabledInputs, setEnabledInputs] = useState({
-    input1: false,
-    input2: false,
-    input3: false,
-    input4: false,
-    input5: false,
-    input6: false,
+    imageUrl: false,
+    name: false, 
+    country: false,
+    city: false,
+    email: false, 
+    description: false,
+    phone: false,
   });
   const idUser = useSelector(state => state.currentUserIdLoggedIn)
   const userInfo = useSelector(state => state.userInfo);
@@ -37,9 +40,9 @@ export default function UserProfile() {
     phone: "",
   });
   
-  console.log(userInfo);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getUser(idUser));
   }, [dispatch, idUser])
 
@@ -82,15 +85,18 @@ export default function UserProfile() {
   };
   
   //<--MANEJADOR DE BOTON SWITCH-->
-  const handleSwitchChange = (serviceId) => {
-    setServices((prevServices) =>
-      prevServices.map((service) =>
-        service.id === serviceId
-          ? { ...service, enabled: !service.enabled }
-          : service
-      )
-    );
+  const handleSwitchChange = async(idService, nameService) => {
+    try {
+      const data = { nameService: nameService };
+      await axios
+      .put(`/profileService/${idService}`, data)
+      .then((response) => toast.success(response.data));
+      window.location.reload();
+    } catch (error) {
+      toast.error("There's an error in your service")
+    }
   };
+
   //<--MANEJADOR DE CLICK EN FLECHA PARA HABILITAR INPUT-->
   const handleArrowClick = (inputName) => {
     setEnabledInputs(prevState => ({
@@ -98,14 +104,14 @@ export default function UserProfile() {
       [inputName]: !prevState[inputName] 
     }));
   };
-
+  
   //<--MANEJADOR DE INPUTS-->
   const handleInputChange = async (event) => {
     const { name, value } = event.target;
     if (name === "imageUrl") {
       const file = event.target.files[0];
       const imageSelected = URL.createObjectURL(file);
-      setSelectedImages([imageSelected]);
+      setSelectedImages(imageSelected);
     
       const formData = new FormData();
       formData.append("file", file);
@@ -123,8 +129,14 @@ export default function UserProfile() {
     
         setInputs({
           ...inputs,
-          imageUrl: [...inputs.imageUrl, imageUrl],
+          imageUrl: imageUrl,
         });
+
+        setEnabledInputs({
+          ...enabledInputs,
+          imageUrl: true,
+        })
+
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -134,23 +146,55 @@ export default function UserProfile() {
         ...inputs,
         [name]: value,
       });
+
+      setEnabledInputs({
+        ...enabledInputs,
+        [name]: true,
+      })
     }
   }
+
+
   //<--MANEJADOR DEL SUBMIT-->
   const handleSubmit = async(event) => {
       event.preventDefault();
 
+
     //<--RUTA DEL POST-->
     try {
+
+  // FILTRAR LOS INPUTS CON TRUE (con valor true)
+  const fieldsToUpdate = Object.keys(enabledInputs).filter(
+    (fieldName) => enabledInputs[fieldName]
+  );
+
+  // GUARDAR LOS CAMPOS CON TRUE PARA MANDARLOS AL PUT
+  const updatedData = {};
+    fieldsToUpdate.forEach((fieldName) => {
+    updatedData[fieldName] = inputs[fieldName];
+  });
       await axios
-        .put(`/${userInfo.id}`, inputs)
+        .put(`/profile/${userInfo.id}`, updatedData)
         .then((response) => toast.success(response.data));
-       
+
+        //SETEAR LOS VALORES CON TRUE Y MANDARLOS PARA MODIFICAR LA INFORMACIÓN
+        setEnabledInputs((prevEnabled) => ({
+          ...prevEnabled,
+          ...Object.keys(updatedData).reduce((acc, key) => {
+            acc[key] = false;
+            return acc;
+          }, {}),
+        }));
+      window.location.reload();
     } catch (error) {
-      toast.error(error.message);
-      console.log(error);
+      toast.error("Can't modified changes, please insert the correct information ");
     }
   }
+
+  //<--TERNARIO PARA MOSTRAR LA IMAGEN DE PERFIL DEL EDIT PROFILE-->
+  const imageUrl = selectedImages.length > 0
+  ? selectedImages[0]
+  : (userInfo.imageUrl || def);
 
   return (
   <div className={styles.containerPrincipal}>
@@ -166,19 +210,22 @@ export default function UserProfile() {
       {(initialLoad) && (
       <div className={styles.infoProfileContainer}>
       <div className={styles.infoProfile}>
-            <h5><strong>My profile</strong></h5>
+          <div className={styles.fatherSubtitle1}>
+            <p className={styles.subtitle1}><strong>My profile</strong></p>
+            <p className={styles.titlep}>Welcome to  <strong className={styles.strong1}>Workify profile,</strong> you can verify all your <strong className={styles.strong1}>information</strong> and modify it, in addition to your <strong className={styles.strong1}>services</strong>  and <strong className={styles.strong1}>purchases</strong></p>
+          </div>
             <div className={styles.profile1}>
-              <img src={userInfo.imageUrl}/>
+              <img src={userInfo.imageUrl ? userInfo.imageUrl : def}/>
               <div className={styles.profileson}>
-                <h5><strong>{userInfo.name}</strong></h5>
+                <h5><strong>{userInfo.name ? userInfo.name : "Please confirm your name"}</strong></h5>
                 <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
               </div>
             </div>
             <div className={styles.profile2}>
               <h5><strong>Personal information</strong></h5>
               <div className={styles.profilep} >
-                <p>Full Name: <strong>{userInfo.name}</strong></p>
-                <p>Email address: <strong>{userInfo.email}</strong></p>
+                <p>Full Name: <strong>{userInfo.name ? userInfo.name : "Please confirm your full name"}</strong></p>
+                <p>Email address: <strong>{userInfo.email ? userInfo.email : "Please confirm your email"}</strong></p>
               </div>
               <div className={styles.profilep1}>
                 <p>Phone: <strong>{userInfo.phone ? userInfo.phone : "Please confirm your phone"}</strong></p>
@@ -198,11 +245,14 @@ export default function UserProfile() {
       <div className={styles.columnRight}>
         {showProfileSection && (
           <div className={styles.infoProfile}>
-          <h5><strong>My profile</strong></h5>
+          <div className={styles.fatherSubtitle1}>
+            <p className={styles.subtitle1}><strong>My profile</strong></p>
+            <p className={styles.titlep}>Welcome to  <strong className={styles.strong1}>Workify profile,</strong> you can verify all your <strong className={styles.strong1}>information</strong> and modify it, in addition to your <strong className={styles.strong1}>services</strong>  and <strong className={styles.strong1}>purchases</strong></p>
+          </div>
           <div className={styles.profile1}>
-            <img src={userInfo.imageUrl}/>
+            <img src={userInfo.imageUrl ? userInfo.imageUrl : def}/>
             <div className={styles.profileson}>
-              <h5><strong>{userInfo.name}</strong></h5>
+              <h5><strong>{userInfo.name ? userInfo.name : "Please confirm your full name"}</strong></h5>
               <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
             </div>
           </div>
@@ -228,7 +278,7 @@ export default function UserProfile() {
         )}
 
         {showEditProfile && (
-          <>
+          <div>
            <form
             className="row g-3 needs-validation"
             onSubmit={handleSubmit}
@@ -236,7 +286,7 @@ export default function UserProfile() {
           >
             <div className={styles.title1}>
               <p><strong>My personal information</strong></p>
-              <p className={styles.titlep}>You can modify the information if you wish by clicking on the arrow</p>
+              <p className={styles.titlep}>You can modify the information if you wish by <strong className={styles.strong1}>clicking on the arrow</strong></p>
 
             </div>
             <div className={styles.containerEditProfile}>
@@ -249,12 +299,14 @@ export default function UserProfile() {
                 <div className={styles.imageProfile}>
                   <p><strong>Profile Image</strong> </p>
                   <p>A profile photo helps personalize your account</p>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('imageUrl')}></i>
                   <div className={styles.inputImage}>
-                    <img src={selectedImages.length > 0 ? selectedImages[0] : userInfo.imageUrl} alt="Profile" />
+                    <img src={imageUrl} alt="Profile" />
                     <input
                       name="imageUrl"
                       type="file" 
                       onChange={handleInputChange}
+                      disabled={!enabledInputs.imageUrl}
                     />
                 </div>
               
@@ -262,25 +314,29 @@ export default function UserProfile() {
                 </div>
                 <div className={styles.imageProfile}>
                   <p><strong>Name</strong></p>
-                  <p>{userInfo.name}</p>
-                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input1')}></i>
+                  <div className={styles.nameUser}>
+                    <p>{userInfo.name && userInfo.name}</p>
+                  </div>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('name')}></i>
                   <input
                   name="name" 
                   value={inputs.name}
                   onChange={handleInputChange}
-                  type="name" 
+                  type="text" 
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New name"
-                  disabled={!enabledInputs.input1}
+                  disabled={!enabledInputs.name}
                   >
                   </input>
                 </div>
 
                 <div className={styles.imageProfile}>
                   <p><strong>Country</strong></p>
-                  <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
-                  <i className={`${styles.arrow5} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input2')}></i>
+                  <div className={styles.nameUser}>
+                    <p>{userInfo.country ? userInfo.country : "Please confirm your country"}</p>
+                  </div>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('country')}></i>
                   <input 
                   name="country" 
                   value={inputs.country}
@@ -289,13 +345,15 @@ export default function UserProfile() {
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New country"
-                  disabled={!enabledInputs.input2}></input>
+                  disabled={!enabledInputs.country}></input>
                 </div>
 
                 <div className={styles.imageProfileCity}>
                   <p><strong>City</strong></p>
-                  <p>{userInfo.city ? userInfo.city : "Please confirm your country"}</p>
-                  <i className={`${styles.arrow1} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input3')} ></i>
+                  <div className={styles.nameUser}>
+                    <p>{userInfo.city ? userInfo.city : "Please confirm your country"}</p>
+                  </div>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('city')} ></i>
                   <input 
                   name="city" 
                   value={inputs.city}
@@ -304,7 +362,7 @@ export default function UserProfile() {
                   className={`${styles.inputControl1} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New city"
-                  disabled={!enabledInputs.input3}></input>
+                  disabled={!enabledInputs.city}></input>
                 </div>
 
               </div>
@@ -316,8 +374,10 @@ export default function UserProfile() {
                 </div>
                 <div className={styles.imageProfile}>
                   <p><strong>Email</strong></p>
-                  <p>{userInfo.email}</p>
-                  <i className={`${styles.arrow2} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input4')} ></i>
+                  <div className={styles.nameUser}>
+                    <p>{userInfo.email}</p>
+                  </div>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('email')} ></i>
                   <input 
                   name="email" 
                   value={inputs.email}
@@ -326,13 +386,15 @@ export default function UserProfile() {
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New email"
-                  disabled={!enabledInputs.input4}></input>
+                  disabled={!enabledInputs.email}></input>
                 </div>
 
                 <div className={styles.imageProfile}>
                   <p><strong>Description</strong></p>
-                  <p className={styles.pAlign}>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
-                  <i className={`${styles.arrow3} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input5')} ></i>
+                  <div className={styles.nameUser}>
+                    <p className={styles.pAlign}>{userInfo.description ? userInfo.description : "Please confirm a description"}</p>
+                  </div>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('description')} ></i>
                   <input 
                   name="description" 
                   value={inputs.description}
@@ -341,22 +403,24 @@ export default function UserProfile() {
                   className={`${styles.inputControl} && form-control`} 
                   id="exampleFormControlInput1" 
                   placeholder="New description"
-                  disabled={!enabledInputs.input5}></input>
+                  disabled={!enabledInputs.description}></input>
                 </div>
 
                 <div className={styles.imageProfileCity}>
                   <p><strong>Phone</strong></p>
-                  <p>{userInfo.phone ? userInfo.phone: "Please confirm your phone"}</p>
-                  <i className={`${styles.arrow4} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('input6')}></i>
+                  <div className={styles.nameUser}>
+                    <p>{userInfo.phone ? userInfo.phone: "Please confirm your phone"}</p>
+                  </div>
+                  <i className={`${styles.arrow} && bi bi-caret-right-fill`} onClick={() => handleArrowClick('phone')}></i>
                   <input 
                   name="phone" 
                   value={inputs.phone}
                   onChange={handleInputChange}
-                  type="name" 
+                  type="phone" 
                   className={`${styles.inputControl1} && form-control`} 
                   id="exampleFormControlInput1"
                   placeholder="New phone"
-                  disabled={!enabledInputs.input6}></input>
+                  disabled={!enabledInputs.phone}></input>
                 </div>
 
                 </div>
@@ -371,12 +435,13 @@ export default function UserProfile() {
           </div>
           <Toaster position="bottom-right" reverseOrder={false} />
               </form>
-          </>
+          </div>
         )}
         {showServiceContent && (
-        <>
-        <div className={styles.title}>
+        <div>
+        <div className={styles.title1}>
           <p><strong>My services</strong></p>
+          <p className={styles.titlep}>You can <strong className={styles.strong1}>enabled </strong>or <strong className={styles.strong1}>disabled</strong> your services</p>
         </div>
        
           {userInfo.Services && userInfo.Services.map((service, index) => ( 
@@ -394,14 +459,15 @@ export default function UserProfile() {
                 className="form-check-input"
                 type="checkbox"
                 id={`switchButton-${service.id}`}
-                checked={service.enabled}
-                onChange={() => handleSwitchChange(service.id)}
+                checked={service.enabledS}
+                onChange={() => handleSwitchChange(service.id, service.nameService)}
+               
               />
               <label
                 className="form-check-label"
                 htmlFor={`switchButton-${service.id}`}
               >
-                {service.enabled ? 'Enabled' : 'Disabled'}
+                {service.enabledS ? 'Enabled' : 'Disabled'}
               </label>
             </div>
                   
@@ -410,18 +476,42 @@ export default function UserProfile() {
         
           
           
-         </>
+         </div>
         )}
         {showMyOrders && (
-          <>
-        <div className={styles.title}>
+          <div>
+        <div className={styles.title1}>
           <p><strong>My orders</strong></p>
+          <p className={styles.titlep}>Check all your <strong className={styles.strong1}>purchases </strong> and ther <strong className={styles.strong1}>status</strong></p>
         </div>
-          <div className={styles.containerOrder}>ORDER
+          <div className={styles.containerOrder}>
+          <strong>
+          <div className={styles.subtitle}>
+            <div className={styles.titlesOrder}>
+                <p>Name Service</p>
+                <p>Type Service</p>
+                <p>Price per hour</p>
+                <p>Status</p>
+            </div>
+          </div>
+          </strong>
+          {userInfo.buys && userInfo.buys.map((service, index) => (
+          <div key={index} className={styles.orderServices}>
+            <p>{service.nameService}</p>
+            <div className={styles.typeServiceorder}>
+              <p>{service.typeService}</p>
+            </div>
+            <div className={styles.payOrder}>
+              <p>${service.pay}</p>
+            </div>
+            <img src={checking} alt="check"/>
+          </div>
+          ))}
+
           
           </div>
           
-          </>
+          </div>
         )}
         
         </div>

@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: row;
 
+
 }
 
 .containerLeftRight{
@@ -90,6 +91,10 @@
   justify-content: space-between;
 }
 
+.fatherSubtitle1{
+  margin-bottom: 2em;
+}
+
 .profilep2{
   display: flex;
   flex-direction: row;
@@ -114,9 +119,11 @@
 }
 
 .profile1 img{
-  border-radius: 50px;
+  border-radius: 60px;
   object-fit: cover;
   border: 1px solid rgb(8, 147, 240);
+  width: 7em;
+  height: 7em;
 }
 
 .columnLeft button{
@@ -126,10 +133,11 @@
 input {
   color: #0d0d0d;
   font-size: 1.2rem;
-  
 }
 
-
+.strong1{
+  color: rgb(8, 147, 240);
+}
 .infoProfile{
   padding: 20px;
   margin-left: 2em;
@@ -186,10 +194,16 @@ input {
 }
 
 .inputImage img{
-  border-radius: 50px;
-  width: 5em;
-  height: 5em;
+  border-radius: 60px;
+  width: 7em;
+  height: 7em;
   object-fit: cover;
+}
+
+.titlesOrder{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .inputImage{
@@ -237,6 +251,10 @@ input {
   color: white;
 }
 
+.subtitle1 {
+    font-size: 18px;
+}
+
 .newInfo{
   border: 1px solid rgb(209, 209, 209);
   width: 55em;
@@ -256,6 +274,7 @@ input {
   margin-bottom: 2em;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 2em;
 }
 
 .containerService img{
@@ -281,7 +300,29 @@ input {
   padding: 20px;
   border-radius: 20px;
   margin-left: 3em;
-  height: 30em;
+}
+
+.orderServices{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.orderServices img{
+  width: 2em;
+  height: 2em;
+}
+
+.typeServiceorder{
+  position: absolute;
+  right: 45%;
+}
+
+.payOrder{
+  position: absolute;
+  right: 30%;
 }
 
 .title{
@@ -317,37 +358,13 @@ input {
   background-color: rgb(48, 91, 156);
 }
 
+
 .arrow{
-  margin-left: 6em;
   cursor: pointer;
-}
-
-.arrow1{
-  margin-left: 1.4em;
-  cursor: pointer;
-
-}
-
-.arrow2{
-  margin-left: 3.5em;
-  cursor: pointer;
-
-}
-
-.arrow3{
-  margin-left: -1.4em;
-  cursor: pointer;
-
-}
-
-.arrow4{
-  margin-left: 1em;
-  cursor: pointer;
-
-}
-.arrow5{
-  cursor: pointer;
-
+  color: rgb(8, 147, 240);
+  font-size: 20px;
+  position: absolute;
+  right: 33%;
 }
 
 .columnLeft input {

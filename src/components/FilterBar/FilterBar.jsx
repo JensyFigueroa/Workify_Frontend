@@ -12,7 +12,6 @@ import {
 import styles from "./FilterBar.module.css";
 
 const FilterBar = () => {
-
   const dispatch = useDispatch();
 
   const [items, setItems] = useState(null);
@@ -22,7 +21,7 @@ const FilterBar = () => {
   const [orderType, setOrderType] = useState("up");
   const [isFiltersCleared, setIsFiltersCleared] = useState(false);
   const [carouselPosition, setCarouselPosition] = useState(0);
-  const [buttonWidth, setButtonWidth] = useState(100);
+  // const [buttonWidth, setButtonWidth] = useState(100);
   const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(false);
   const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
 
@@ -31,28 +30,27 @@ const FilterBar = () => {
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
 
+  // useEffect(() => {
+  //   const updateButtonWidth = () => {
+  //     if (itemContainerRef.current) {
+  //       const containerWidth = itemContainerRef.current.offsetWidth;
+  //       const buttonCount = Math.floor(containerWidth / 100);
 
-  useEffect(() => {
-    const updateButtonWidth = () => {
-      if (itemContainerRef.current) {
-        const containerWidth = itemContainerRef.current.offsetWidth;
-        const buttonCount = Math.floor(containerWidth / 100);
+  //       if (buttonCount === 0) {
+  //         setButtonWidth(100);
+  //       } else {
+  //         setButtonWidth(containerWidth / buttonCount);
+  //       }
+  //     }
+  //   };
 
-        if (buttonCount === 0) {
-          setButtonWidth(100);
-        } else {
-          setButtonWidth(containerWidth / buttonCount);
-        }
-      }
-    };
+  //   window.addEventListener("resize", updateButtonWidth);
+  //   updateButtonWidth();
 
-    window.addEventListener("resize", updateButtonWidth);
-    updateButtonWidth();
-
-    return () => {
-      window.removeEventListener("resize", updateButtonWidth);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", updateButtonWidth);
+  //   };
+  // }, []);
 
   const visibleItems = allItems
     .sort()
@@ -61,7 +59,10 @@ const FilterBar = () => {
   const handleItemChange = (e) => {
     const { value } = e.target;
     setItems(value);
+    setIsFiltersOpen(true);
     dispatch(selectItem(value));
+    if (value === "ALL" && (location === "ALL" || location === null))
+      setIsFiltersOpen(false);
   };
 
   const handleCarouselLeft = () => {
@@ -76,20 +77,28 @@ const FilterBar = () => {
     setCarouselPosition(carouselPosition + 5);
     setIsLeftArrowVisible(true);
 
-    console.log(carouselPosition)
+    console.log(carouselPosition);
 
-    if (carouselPosition + 5 === allItems.length - 1 || carouselPosition + 5 > allItems.length - 1) {
+    if (carouselPosition + 5 >= allItems.length - 4) {
       setIsRightArrowVisible(false);
     }
   };
 
-  const handleToggleFilters = () => {
-    setIsFiltersOpen(!isFiltersOpen);
-  };
+  // const handleToggleFilters = () => {
+  //   setIsFiltersOpen(!isFiltersOpen);
+  // };
 
-  const handleCloseFilters = () => {
-    setIsFiltersOpen(false);
-  };
+  // const handleFilters = (e) => {
+  //   const { value } = e.target;
+  //   if (value === "location") {
+  //     setLocation("ALL");
+  //   }
+
+  //   if (value === "items") {
+  //     setItems("ALL");
+  //     dispatch(selectItem(value));
+  //   }
+  // };
 
   const handleOrderByName = (e) => {
     const { value } = e.target;
@@ -121,14 +130,15 @@ const FilterBar = () => {
   const handleLocation = (e) => {
     const { value } = e.target;
     setLocation(value);
+    setIsFiltersOpen(true);
     dispatch(selectLocation(value));
+    if (value === "ALL" && (items === "ALL" || items === null))
+      setIsFiltersOpen(false);
   };
 
   const handlePopupClick = (e) => {
     e.stopPropagation();
   };
-
-  console.log(items)
 
   return (
     <div className={styles.filterBarContainer}>
@@ -151,14 +161,15 @@ const FilterBar = () => {
             All Categories
           </button> */}
           {visibleItems?.map((item, index) => (
-            <label key={index}className={`${styles.buttonItem} ${item === items ? styles.selected : ""
-              }`}>
-               <i class="fa-solid fa-snowflake"></i>
-              
-              <button
-                value={item}
-                onClick={handleItemChange}
-              >
+            <label
+              key={index}
+              className={`${styles.buttonItem} ${
+                item === items ? styles.selected : ""
+              }`}
+            >
+              <i className="fa-solid fa-snowflake"></i>
+
+              <button value={item} onClick={handleItemChange}>
                 {item}
               </button>
             </label>
@@ -175,91 +186,96 @@ const FilterBar = () => {
           )}
         </div>
       </div>
-      <div className={styles.filterButtonsContainer}>
-        <button className={styles.filterButton} onClick={handleToggleFilters}>
-          <i className="ri-equalizer-line"></i>
-          &nbsp; Filter
-        </button>
-      </div>
-      
-      {isFiltersOpen && (
-        <div className={styles.filterPopup} onClick={handleCloseFilters}>
-          <div className={styles.filterContent} onClick={handlePopupClick}>
-            <button className={styles.closeButton} onClick={handleCloseFilters}>
-              <MdOutlineClose />
-            </button>
-            <div className={styles.orderContainer}>
+      <div className={styles.orderContainer}>
+        <div className={styles.selectContainer}>
+          <label className={styles.selectLabel} htmlFor="orderBy">
+            City:
+          </label>
+          <select
+            id="location"
+            value={isFiltersCleared ? "ALL" : location || ""}
+            onChange={handleLocation}
+            className={styles.select}
+          >
+            <option key="ALL" value="ALL">
+              All Cities
+            </option>
 
-              <div className={styles.selectContainer}>
-                <label className={styles.selectLabel} htmlFor="orderBy">
-                  City by:
-                </label>
-                <select
-                  id="location"
-                  value={isFiltersCleared ? "ALL" : location || ""}
-                  onChange={handleLocation}
-                  className={styles.select}
-                >
-                  <option key="ALL" value="ALL">
-                    All Cities
-                  </option>
+            {allcities?.map((city, index) => (
+              <option key={index} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={styles.selectContainer}>
+          <label className={styles.selectLabel} htmlFor="orderBy">
+            Order by:
+          </label>
+          <select
+            id="orderBy"
+            value={orderBy}
+            onChange={handleOrderByName}
+            className={styles.select}
+          >
+            <option value="nameService">Name</option>
+            <option value="typeService">Type Service</option>
+            <option value="pricePerHour">Price</option>
 
-                  {allcities?.map((city, index) => (
-                    <option key={index} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.selectContainer}>
-                <label className={styles.selectLabel} htmlFor="orderBy">
-                  Order by:
-                </label>
-                <select
-                  id="orderBy"
-                  value={orderBy}
-                  onChange={handleOrderByName}
-                  className={styles.select}
-                >
-                  <option value="nameService">Name</option>
-                  <option value="typeService">Type Service</option>
-                  <option value="pricePerHour">Price</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+        <div className={styles.selectContainer}>
+          <label className={styles.selectLabel} htmlFor="orderType">
+            Order direction:
+          </label>
+          <select
+            id="orderType"
+            value={orderType}
+            onChange={handleOrderType}
+            className={styles.select}
+          >
+            <option value="up">Up</option>
+            <option value="down">Down</option>
+          </select>
+        </div>
+        <div className={styles.selectContainer}>
+          {/* <button
+            className={styles.btnFilter}
+            key="ALL"
+            value="ALL"
+            onClick={handleItemChange}
+          >
+            All Categories
+          </button> */}
 
-                  <option value="raiting">Rating</option>
-                </select>
-              </div>
-              <div className={styles.selectContainer}>
-                <label className={styles.selectLabel} htmlFor="orderType">
-                  Order direction:
-                </label>
-                <select
-                  id="orderType"
-                  value={orderType}
-                  onChange={handleOrderType}
-                  className={styles.select}
-                >
-                  <option value="up">Up</option>
-                  <option value="down">Down</option>
-                </select>
-              </div>
-              <div className={styles.selectContainer}>
+          <button className={styles.btnFilter} onClick={handleClearfilter}>
+            Clean
+          </button>
+          {isFiltersOpen && (
+            <div>
+              {location !== "ALL" && location !== null && (
                 <button
                   className={styles.btnFilter}
-                  key="ALL"
+                  value="ALL"
+                  onClick={handleLocation}
+                >
+                  X {location}
+                </button>
+              )}
+              {items !== "ALL" && items !== null && (
+                <button
+                  className={styles.btnFilter}
                   value="ALL"
                   onClick={handleItemChange}
                 >
-                  All Categories
+                  X {items}
                 </button>
-
-                <button className={styles.btnFilter} onClick={handleClearfilter}>
-                  Clean
-                </button>
-              </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

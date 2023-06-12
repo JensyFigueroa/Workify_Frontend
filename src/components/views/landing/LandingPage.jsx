@@ -6,8 +6,8 @@ import styles from "./LandingPage.module.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
-import {FiMenu} from 'react-icons/fi'
-import {AiOutlineClose} from 'react-icons/ai'
+import { FiMenu } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
 
 const LandingPage = () => {
   const [clickMenu, setClickMenu] = useState(false);
@@ -15,20 +15,26 @@ const LandingPage = () => {
   const handleClick = () => {
     setClickMenu(!clickMenu);
   };
-  console.log(clickMenu)
-
+  console.log(clickMenu);
 
   return (
     <div className={styles.containerPrincipal}>
       <div className={styles.header}>
         <nav className={styles.nav}>
-          <Link to="#" id="menu" className={styles.menu} >
-            {clickMenu ? <AiOutlineClose className={styles.icoMenu} onClick={handleClick}/> : <FiMenu className={styles.icoMenu} onClick={handleClick}/> }
-                
+          <Link to="#" id="menu" className={styles.menu}>
+            {clickMenu ? (
+              <AiOutlineClose
+                className={styles.icoMenu}
+                onClick={handleClick}
+              />
+            ) : (
+              <FiMenu className={styles.icoMenu} onClick={handleClick} />
+            )}
           </Link>
           <div
-            className={`${styles.links} ${clickMenu ? styles.open : styles.close
-              }  ${styles.close}`}
+            className={`${styles.links} ${
+              clickMenu ? styles.open : styles.close
+            }  ${styles.close}`}
             id="links"
           >
             <Link to="/home" className={`${styles.link} ${styles.top}`}>
@@ -66,8 +72,10 @@ const LandingPage = () => {
                 interval={4000}
                 showThumbs={false}
                 infiniteLoop
+                showStatus={false}
+                width={600}
               >
-                <div>
+                <div className={styles.info}>
                   <p className={styles.comment}>
                     Contrate a un servicio de Pintura y la verdad estupendo
                   </p>
@@ -81,7 +89,7 @@ const LandingPage = () => {
                     <span>*</span>
                   </div>
                 </div>
-                <div>
+                <div className={styles.info}>
                   <p className={styles.comment}>
                     Me recomendo un amigo para contratar a un plomero y me
                     destapo la cañeria
@@ -96,7 +104,7 @@ const LandingPage = () => {
                     <span>*</span>
                   </div>
                 </div>
-                <div>
+                <div className={styles.info}>
                   <p className={styles.comment}>
                     Muy buenos servicios la verdad
                   </p>
