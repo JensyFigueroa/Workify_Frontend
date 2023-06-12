@@ -12,10 +12,13 @@ export function Card({
   emailUserService,
   rating,
   nameUserService,
+  enabled
 }) {
-  const currentUserNameLoggedIn = useSelector(
-    (state) => state.currentUserNameLoggedIn
-  );
+  
+  
+  if (!enabled) {
+    return null; // Retorna null si enabled es false para ocultar la carta
+  }
   const dispatch = useDispatch();
   return (
     <div className={styles.container}>
@@ -23,6 +26,7 @@ export function Card({
         <img className={styles.img} src={image} alt="img" />
         <div className={styles.info}>
           <div className={styles.pRating}>
+            
             <p>
               <h5>{nameService}</h5>
             </p>

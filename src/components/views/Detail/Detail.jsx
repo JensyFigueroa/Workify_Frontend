@@ -3,6 +3,7 @@ import {
   getServiceDetail,
   cleanDetail,
   addToCart,
+  getUser,
 } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -21,8 +22,11 @@ export function Detail() {
   const currentUserNameLoggedIn = useSelector(
     (state) => state.currentUserNameLoggedIn
   );
+ 
+  const currentUserIdLoggedIn = useSelector(state => state.currentUserIdLoggedIn)
   const serviceDetail = useSelector((state) => state.serviceDetail);
   const userInfo = useSelector(state => state.userInfo);
+  
   let arrImage = Array.isArray(serviceDetail.imageUrl)
     ? [...serviceDetail.imageUrl]
     : [serviceDetail.imageUrl];
@@ -38,6 +42,8 @@ export function Detail() {
     rating: "",
     comment: "",
   });
+
+
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
       if (prevLikes[index]) {
@@ -53,7 +59,7 @@ export function Detail() {
   //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
     window.scrollTo(0, 0);
-
+    dispatch(getUser(currentUserIdLoggedIn));
     dispatch(getServiceDetail(id));
     return () => {
       dispatch(cleanDetail());
@@ -83,9 +89,9 @@ export function Detail() {
         comment: "",
       });
     } 
-    // else if (userInfo.buys.includes(id)){
-
-    // }
+    else if (!userInfo.buys.some(obj => obj.nameService === serviceDetail.nameService)) {
+      toast.error("You must pay for this service to comment on it")
+    }
     else{
       try {
         await axios
