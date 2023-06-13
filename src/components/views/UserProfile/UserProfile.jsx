@@ -193,7 +193,7 @@ export default function UserProfile() {
 
   //<--TERNARIO PARA MOSTRAR LA IMAGEN DE PERFIL DEL EDIT PROFILE-->
   const imageUrl = selectedImages.length > 0
-  ? selectedImages[0]
+  ? selectedImages
   : (userInfo.imageUrl || def);
 
   return (
@@ -444,7 +444,7 @@ export default function UserProfile() {
           <p className={styles.titlep}>You can <strong className={styles.strong1}>enabled </strong>or <strong className={styles.strong1}>disabled</strong> your services</p>
         </div>
        
-          {userInfo.Services && userInfo.Services.map((service, index) => ( 
+          {userInfo.Services.length > 0 ? userInfo.Services.map((service, index) => ( 
           <div key={index} className={styles.containerService}>
               <img src={service.imageUrl[0]}/>
               <div>
@@ -472,7 +472,12 @@ export default function UserProfile() {
             </div>
                   
                 </div>
-          </div>))}
+          </div>)) : (
+          <div className={styles.containerNone}>
+              <p>You do not have services yet, publish some</p>
+              <button className={`${styles.myButton1} btn btn-outline-secondary`}  >Go to create a service</button>
+          </div>
+          )}
         
           
           
@@ -484,7 +489,9 @@ export default function UserProfile() {
           <p><strong>My orders</strong></p>
           <p className={styles.titlep}>Check all your <strong className={styles.strong1}>purchases </strong> and ther <strong className={styles.strong1}>status</strong></p>
         </div>
-          <div className={styles.containerOrder}>
+        {userInfo.buys && userInfo.buys.length > 0 ? 
+        <div className={styles.containerOrder}>
+            
           <strong>
           <div className={styles.subtitle}>
             <div className={styles.titlesOrder}>
@@ -509,7 +516,12 @@ export default function UserProfile() {
           ))}
 
           
-          </div>
+          </div>: ( 
+            <div className={styles.containerNone}>
+              <p>You haven't bought anything yet, make a purchase</p>
+              <button className={`${styles.myButton1} btn btn-outline-secondary`}  >Go to buy something</button>
+            </div>)}
+          
           
           </div>
         )}

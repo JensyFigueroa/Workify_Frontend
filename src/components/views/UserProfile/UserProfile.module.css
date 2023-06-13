@@ -298,16 +298,25 @@ input {
   border: 1px solid rgb(209, 209, 209);
   width: 55em;
   padding: 20px;
-  border-radius: 20px;
   margin-left: 3em;
+  border-radius: 20px;
+  height: fit-content;
 }
 
+.containerNone{
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 55em;
+  align-items: center;
+}
 .orderServices{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
-  border-bottom: 1px solid rgb(209, 209, 209);
+  border-top: 1px solid rgb(209, 209, 209);
 }
 
 .orderServices img{

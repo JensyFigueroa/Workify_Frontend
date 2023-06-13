@@ -26,7 +26,8 @@ export function Detail() {
   const currentUserIdLoggedIn = useSelector(state => state.currentUserIdLoggedIn)
   const serviceDetail = useSelector((state) => state.serviceDetail);
   const userInfo = useSelector(state => state.userInfo);
-  
+  const allServices = useSelector(state => state.allServices);
+
   let arrImage = Array.isArray(serviceDetail.imageUrl)
     ? [...serviceDetail.imageUrl]
     : [serviceDetail.imageUrl];
@@ -91,6 +92,9 @@ export function Detail() {
     } 
     else if (!userInfo.buys.some(obj => obj.nameService === serviceDetail.nameService)) {
       toast.error("You must pay for this service to comment on it")
+    }
+    else if(serviceDetail.reviews.some(obj => obj.name === userInfo.name)){
+      toast.error("You have already commented on this service");
     }
     else{
       try {
@@ -181,7 +185,9 @@ export function Detail() {
               <h2 className={style.serviceDescriptionTitle}>
                 Service Provider
               </h2>
-              <p>{currentUserNameLoggedIn[0]}</p>
+              {allServices.find(obj => obj.nameService === serviceDetail.nameService) && (
+                <p>{allServices.find(obj => obj.nameService === serviceDetail.nameService).nameUserService}</p>
+              )}
             </div>
           </div>
           <button
