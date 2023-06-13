@@ -119,14 +119,7 @@ const Login = () => {
         const uid = res.user.uid;
         const name = res.user.displayName;
         console.log(res.user.displayName, "usuario logeado");
-        const userEnabledGoogle = (await axios.get(`/user/${uid}`)).data.enabled;
-        console.log(userEnabledGoogle, "enabled login google");
-        if (!userEnabledGoogle) {
-          await signOut(auth);
-          toast.error("Please contact Support, your account has been disabled");
-          throw new Error("User not enabled");
-        }
-  
+        
         const inputs = {
           id: uid,
           name: name,
@@ -141,13 +134,21 @@ const Login = () => {
           description: "",
           google: true,
         };
-  
+        
         await axios.post("/login/", inputs);
-  
+       
+        
         const user = (await axios.get(`/user/${uid}`)).data;
         const userPhone = user.phone;
         const userEmail = user.email;
         const userImg = user.imageUrl;
+        const userEnabledGoogle = user.enabled;
+        console.log(userEnabledGoogle, "enabled login google");
+        if (!userEnabledGoogle) {
+          await signOut(auth);
+          toast.error("Please contact Support, your account has been disabled");
+          throw new Error("User not enabled");
+        }
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
         UpdateCartOnLogin(uid);
         toast("Welcome");
