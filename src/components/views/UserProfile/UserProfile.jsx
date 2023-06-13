@@ -6,6 +6,9 @@ import toast, { Toaster } from "react-hot-toast";
 import def from "../Detail/Images/default.png";
 import axios from "axios";
 import checking from "./img/check.png";
+import box from "./img/caja.png";
+import { NavLink } from "react-router-dom";
+import buy from "./img/buys.png";
 
 export default function UserProfile() {
  
@@ -475,7 +478,10 @@ export default function UserProfile() {
           </div>)) : (
           <div className={styles.containerNone}>
               <p>You do not have services yet, publish some</p>
+              <img src={box} alt="box"/>
+              <NavLink to="/createService">
               <button className={`${styles.myButton1} btn btn-outline-secondary`}  >Go to create a service</button>
+              </NavLink>
           </div>
           )}
         
@@ -519,7 +525,10 @@ export default function UserProfile() {
           </div>: ( 
             <div className={styles.containerNone}>
               <p>You haven't bought anything yet, make a purchase</p>
-              <button className={`${styles.myButton1} btn btn-outline-secondary`}  >Go to buy something</button>
+              <img className={styles.imgBuy} src={buy} alt="buys"/>
+              <NavLink to="/home">
+                <button className={`${styles.myButton1} btn btn-outline-secondary`}  >Go to buy something</button>
+              </NavLink>
             </div>)}
           
           

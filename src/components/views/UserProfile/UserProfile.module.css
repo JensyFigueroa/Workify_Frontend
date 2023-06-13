@@ -311,6 +311,21 @@ input {
   width: 55em;
   align-items: center;
 }
+
+.containerNone img{
+  width: 7em;
+  height: 7em;
+  margin-bottom: 1em;
+}
+
+.myButton1:hover{
+  background-color: rgb(8, 147, 240);
+}
+
+.containerNone img.imgBuy{
+  width: 12em;
+  height: 8em;
+}
 .orderServices{
   display: flex;
   flex-direction: row;
