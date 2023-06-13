@@ -66,6 +66,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchServices: action.payload,
+        allServices : action.payload
       };
     case GET_SERVICESDETAIL:
       return {

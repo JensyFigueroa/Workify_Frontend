@@ -13,13 +13,6 @@ export function Cards() {
   const filterItem = useSelector((state) => state.selectedItem);
   const searchServices = useSelector((state) => state.searchServices);
 
-  // let services = [];
-
-  // if (searchServices.length > 0) {
-  //   services = searchServices;
-  // } else {
-  //   services = allServices;
-  // }
   let services = searchServices.length > 0 ? searchServices : allServices;
 
   useEffect(() => {
@@ -35,7 +28,7 @@ export function Cards() {
   const totalPages = Math.ceil(services.length / cardsXpage);
 
   useEffect(() => {
-    
+
     setCurrentPage(0);
     setNumServicesXpage([...services].splice(0, cardsXpage));
   }, [services, cardsXpage]);
@@ -85,17 +78,19 @@ export function Cards() {
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
     setCurrentPage(nextPage)
   }
+
   return (
     <div className={styles.container}>
-      <div className={styles.containerPagination}>
       
+      {numServicesXpage.length > 0 && <div className={styles.containerPagination}>
         <button className={styles.btnPagination} onClick={prevHandler}>{'<< '}</button>
         <div>
           {pageNum.map((num, i) => <button className={currentPage === i ? styles.btnActive : styles.btnPagination} key={i} style={{ marginRight: '5px' }} onClick={(e) => handlerPage(e)} value={num}>{num}</button>)}
         </div>
         <button className={styles.btnPagination} onClick={nextHandler}>{' >>'}</button>
-      </div>
+      </div>}
       <div className={styles.cards}>
+
         {numServicesXpage.length > 0 ? (
           numServicesXpage.map((serv, index) => {
             return (
@@ -107,7 +102,7 @@ export function Cards() {
                 typeService={serv.typeService}
                 pricePerHour={serv.pricePerHour}
                 emailUserService={serv.emailUserService}
-                nameUserService = {serv.nameUserService}
+                nameUserService={serv.nameUserService}
                 enabled={serv.enabledS}
                 rating={
                   serv.reviews && serv.reviews.length > 0 ? (
@@ -164,14 +159,14 @@ export function Cards() {
         )}
       </div>
 
-
-      <div className={styles.containerPagination}>
+      {numServicesXpage.length > 0 && <div className={styles.containerPagination}>
         <button className={styles.btnPagination} onClick={prevHandler}>{'<< '}</button>
         <div>
           {pageNum.map((num, i) => <button className={currentPage === i ? styles.btnActive : styles.btnPagination} key={i} style={{ marginRight: '5px' }} onClick={(e) => handlerPage(e)} value={num}>{num}</button>)}
         </div>
         <button className={styles.btnPagination} onClick={nextHandler}>{' >>'}</button>
-      </div>
+      </div>}
+
 
     </div>
   );
