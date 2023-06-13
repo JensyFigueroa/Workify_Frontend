@@ -460,7 +460,7 @@ export default function UserProfile() {
                 type="checkbox"
                 id={`switchButton-${service.id}`}
                 checked={service.enabledS}
-                onChange={() => handleSwitchChange(service.id, service.nameService)}
+                onChange={() => handleSwitchChange(service.UserId, service.nameService)}
                
               />
               <label

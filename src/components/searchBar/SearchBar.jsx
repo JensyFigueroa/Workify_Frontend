@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './SearchBar.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch  } from 'react-redux';
 import {getServicesByName} from '../../redux/actions'
 import { useNavigate } from 'react-router';
 
@@ -18,14 +18,14 @@ const SearchBar = () => {
     e.preventDefault()
     navigate('/home')
     dispatch(getServicesByName(name))
+    setName('')
   }
-
 
   return (
     <>
       <form onSubmit={handleSearch } className={styles.search}>
         <div className="input-group">
-          <input type="text" className={`${styles.inputSearch} form-control`} placeholder="Search service" aria-label="Server" onChange={handleChange} />
+          <input type="text" className={`${styles.inputSearch} form-control`} placeholder="Search service" aria-label="Server" onChange={handleChange} value={name} />
           <span className={`${styles.inputGroupText} input-group-text`}><button className={styles.location} type='submit'><i className="fa-solid fa-magnifying-glass"></i></button></span>
         </div>
       </form>
