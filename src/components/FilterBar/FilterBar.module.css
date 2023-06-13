@@ -57,7 +57,6 @@
   background-color: transparent;
   transition: 0.2s;
   font-weight: 600;
-  color: #252525;
 }
 
 .buttonItem button:hover {
@@ -84,10 +83,6 @@
   background-color: transparent;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
 }
-
-/* .buttonItem span {
-  font-size: 10px;
-} */
 
 .filterButtonsContainer {
   width: 20%;
@@ -141,12 +136,13 @@
 .selectLabel {
   margin-right: 10px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .select {
@@ -154,7 +150,8 @@
   padding: 5px;
   font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  outline: none;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -190,14 +187,17 @@
   font-size: 13px;
   width: auto;
   height: 32px;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 7px;
-  background: rgb(28, 181, 224);
-
-  margin-left: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-left: 10px;
   margin-right: 10px;
+  transition: all 0.3s;
 }
-
+.btnFilter:hover {
+  background-color: #f8f7f7;
+}
 .btn:hover {
   color: white;
 }
