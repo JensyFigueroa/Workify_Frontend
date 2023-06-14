@@ -186,6 +186,18 @@ const LoginUser = () => {
     setErrors({});
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = (e) => {
+    console.log(e.targe)
+    setShowPassword(!showPassword);
+  };
+
+  const [showPasswordConfirm, setSshowPasswordConfirm] = useState(false);
+  const togglePasswordConfirmVisibility = (e) => {
+    console.log(e.targe)
+    setSshowPasswordConfirm(!showPasswordConfirm);
+  };
+
   return (
     <>
       <Link
@@ -373,7 +385,7 @@ const LoginUser = () => {
 
             <div className={styles.field}>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="passwordUser"
                 onChange={handleInputChangeUser}
                 onBlur={handleBlur}
@@ -381,6 +393,12 @@ const LoginUser = () => {
                 value={formUser.passwordUser}
               />
               <label htmlFor="">Password</label>
+              {formUser.passwordUser.length > 0 && <i
+                  className={`${styles.eye} fa-regular ${
+                    showPassword ? "fa-eye-slash" : "fa-eye"
+                  } `}
+                  onClick={togglePasswordVisibility}
+                ></i>}
             </div>
             {errors.passwordUser && (
               <p
@@ -391,14 +409,20 @@ const LoginUser = () => {
             )}
             <div className={styles.field}>
               <input
-                type="password"
+                type={showPasswordConfirm ? "text" : "password"}
                 name="passwordConfirm"
                 onChange={handleInputChangeUser}
                 onBlur={handleBlur}
                 required
                 value={formUser.passwordConfirm}
               />
-              <label htmlFor="">Confirm Password</label>
+              <label htmlFor="">Confirm Password</label>  
+              {formUser.passwordConfirm.length > 0 && <i
+                  className={`${styles.eye} fa-regular ${
+                    showPasswordConfirm ? "fa-eye-slash" : "fa-eye"
+                  } `}
+                  onClick={togglePasswordConfirmVisibility}
+                ></i>}      
             </div>
             {errors.passwordConfirm && (
               <p
