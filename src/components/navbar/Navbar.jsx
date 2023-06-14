@@ -5,7 +5,7 @@ import SearchBar from "../searchBar/SearchBar";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { MdHomeRepairService } from "react-icons/md";
 import { useLocation } from "react-router-dom";
-import logo from "../views/landing/img/logo.png";
+import logoNav from "../views/landing/img/LogoNav.png";
 import LoginUser from "../Login/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../Login/Login";
@@ -108,7 +108,7 @@ const Navbar = () => {
       <>
         <nav className={navbarClasses}>
           <Link to="/" className={styles.logo}>
-            <img src={logo} alt="logo" />
+            <img src={logoNav} alt="logo" />
           </Link>
 
           <div className={styles.search}>
