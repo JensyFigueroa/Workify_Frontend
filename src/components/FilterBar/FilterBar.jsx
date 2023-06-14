@@ -11,6 +11,8 @@ import {
 } from "../../redux/actions";
 import styles from "./FilterBar.module.css";
 
+import services from "../views/CreateService/Services";
+
 const FilterBar = () => {
   const dispatch = useDispatch();
 
@@ -29,6 +31,90 @@ const FilterBar = () => {
 
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
+
+  const icoCategory = [
+    {
+      name: 'Plumbing',
+      ico: '<i class="fa-solid fa-wrench"></i>'
+    },
+    {
+      name: 'Electricity',
+      ico: '<i class="fa-solid fa-plug"></i>'
+    },
+    {
+      name: 'Gardening',
+      ico: '<i class="fa-solid fa-tree-city"></i>'
+    },
+    {
+      name:'Home Cleaning',
+      ico:'<i class="fa-solid fa-broom"></i>'
+    },
+    {
+      name:'Carpentry',
+      ico:'<i class="fa-solid fa-screwdriver-wrench"></i>'
+    },
+    {
+      name:'Painting',
+      ico:'<i class="fa-solid fa-brush"></i>'
+    },
+    {
+      name:'Masonry',
+      ico:'<i class="fa-solid fa-trowel-bricks"></i>'
+    },
+    {
+      name:'Childcare',
+      ico:'<i class="fa-solid fa-children"></i>'
+    },
+    {
+      name:'Pet Care',
+      ico:'<i class="fa-solid fa-paw"></i>'
+    },
+    {
+      name:'Appliance Repair',
+      ico:'<i class="fa-solid fa-toolbox"></i>'
+    },
+    {
+      name:'Moving Service',
+      ico:'<i class="fa-solid fa-truck"></i>'
+    },
+    {
+      name:'Window Cleaning',
+      ico:'<i class="fa-brands fa-windows"></i>'
+    },
+    {
+      name:'Laundry and Ironing',
+      ico:'<i class="fa-solid fa-jug-detergent"></i>'
+    },
+    {
+      name:'Computer and Electronics Repair',
+      ico:'<i class="fa-solid fa-computer"></i>'
+    },
+    {
+      name:'Interior Design and Decoration',
+      ico:'<i class="fa-solid fa-holly-berry"></i>'
+    },
+    {
+      name:'Security System Installation',
+      ico:'<i class="fa-solid fa-shield-halved"></i>'
+    },
+    {
+      name:'Automobile Repair',
+      ico:'<i class="fa-solid fa-car"></i>'
+    },
+    {
+      name:'Catering and Event Service',
+      ico:'<i class="fa-solid fa-wand-sparkles"></i>'
+    },
+    {
+      name:'Personal Training and Fitness',
+      ico:'<i class="fa-solid fa-dumbbell"></i>'
+    },
+    {
+      name:'Translation and Interpretation Service',
+      ico:'<i class="fa-solid fa-book-open-reader"></i>'
+    },
+
+  ]
 
   // useEffect(() => {
   //   const updateButtonWidth = () => {
@@ -163,12 +249,15 @@ const FilterBar = () => {
           {visibleItems?.map((item, index) => (
             <label
               key={index}
-              className={`${styles.buttonItem} ${
-                item === items ? styles.selected : ""
-              }`}
+              className={`${styles.buttonItem} ${item === items ? styles.selected : ""
+                }`}
             >
-              <i className="fa-solid fa-snowflake"></i>
 
+              {/* {icoCategory.find(category => category.name === item && category.ico)} */}
+              {/* {icoCategory.find(category => category.name === item)?.ico} */}
+              <span className={styles.icon} dangerouslySetInnerHTML={{ __html: icoCategory.find(category => category.name === item)?.ico }} />
+
+              {console.log(icoCategory[item], 'filterbar') }
               <button value={item} onClick={handleItemChange}>
                 {item}
               </button>
