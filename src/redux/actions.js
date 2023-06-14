@@ -17,6 +17,8 @@ import {
   GET_USER,
   GETCART_DATABASE,
   SEND_CART,
+  ADMIN,
+  CLEAN_ADMIN,
 } from "./types";
 import axios from "axios";
 
@@ -156,5 +158,25 @@ export const sendCart = (cart) => {
   return {
     type: SEND_CART,
     payload: cart,
+  };
+};
+
+export const getAdmin = (obj) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post("user/admin", obj);
+      return dispatch({
+        type: ADMIN,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const cleanAdmin = () => {
+  return {
+    type: CLEAN_ADMIN,
   };
 };
