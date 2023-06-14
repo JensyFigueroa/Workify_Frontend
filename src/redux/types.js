@@ -15,3 +15,5 @@ export const SET_CART = "SET_CART";
 export const GET_USER = "GET_USER";
 export const GETCART_DATABASE = "GETCART_DATABASE";
 export const SEND_CART = "SEND_CART";
+export const ADMIN = "ADMIN";
+export const CLEAN_ADMIN = "CLEAN_ADMIN";

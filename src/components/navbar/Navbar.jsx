@@ -9,27 +9,17 @@ import logoNav from "../views/landing/img/LogoNav.png";
 import LoginUser from "../Login/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../Login/Login";
-import { loginUser } from "../../redux/actions";
+import { cleanAdmin, loginUser } from "../../redux/actions";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase-config.js";
 import axios from "axios";
-// import {cantCart} from '../../NewCart/NewCart'
 
 const Navbar = () => {
   let location = useLocation();
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-
-  // const [cantCart, setCantCart] = useState(
-  //   JSON.parse(window.localStorage.getItem("cartItems"))
-  // );
-
-  // console.log(cantCart)
-
-  // useEffect(() => {
-  //   setCantCart(JSON.parse(window.localStorage.getItem("cartItems")));
-  // }, []);
+  const admin = useSelector((state) => state.admin);
 
   const [clickBurguer, setClickBurguer] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,7 +42,6 @@ const Navbar = () => {
     window.addEventListener("resize", handleResize);
   }, []);
 
-  // const cart = useSelector((state) => state.cart);
   const userName = useSelector((state) => state.currentUserNameLoggedIn);
   const idUser = useSelector((state) => state.currentUserIdLoggedIn);
 
@@ -82,6 +71,7 @@ const Navbar = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
+      dispatch(cleanAdmin());
       const cartItems = JSON.parse(window.localStorage.getItem("cartItems")); //aca estoy mandando el carrito al back cuando me deslogueo
       console.log("saliendo", cartItems);
       axios
@@ -163,6 +153,24 @@ const Navbar = () => {
 
               <MdHomeRepairService style={{ fontSize: "40px" }} />
             </NavLink>
+            {admin.bolean === true ? (
+              <a
+                href={admin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${
+                  location.pathname === admin.url ? styles.active : styles.link
+                }`}
+                onClick={handleClick}
+              >
+                <i
+                  style={{ fontSize: "25px" }}
+                  className="fa-solid fa-chart-line"
+                ></i>
+              </a>
+            ) : (
+              " "
+            )}
           </div>
 
           <div className={`btn-group ${styles.boxLogin}`} role="group">

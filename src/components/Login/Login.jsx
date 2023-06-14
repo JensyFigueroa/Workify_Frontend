@@ -17,7 +17,7 @@ import {
   setPersistence,
   browserSessionPersistence,
 } from "firebase/auth";
-import { loginUser } from "../../redux/actions";
+import { getAdmin, loginUser } from "../../redux/actions";
 import LoginUser from "./LoginUser";
 import ForgotPassword from "./ForgotPassword";
 import { set } from "date-fns";
@@ -35,11 +35,10 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  
+
   const hideLogin = () => {
     console.log(showModalLogin);
     setShowModalLogin(false);
@@ -65,7 +64,7 @@ const Login = () => {
 
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
-  
+
     if (Object.keys(errors).length === 0 && currentForm === "formLogin") {
       try {
         const res = await signInWithEmailAndPassword(
@@ -73,27 +72,29 @@ const Login = () => {
           formLogin.email,
           formLogin.password
         );
-  
+
         if (res && res.user) {
           const uid = res.user.uid;
           const name = res.user.displayName;
           const user = (await axios.get(`/user/${uid}`)).data;
           console.log(user, "user en el signin with email and password");
           let { enabled, phone, email, imageUrl } = user;
-          
+
           console.log(enabled, "enabled login normallll");
-          
+
           if (!enabled) {
             await signOut(auth);
-            toast.error("Please contact Support, your account has been disabled");
+            toast.error(
+              "Please contact Support, your account has been disabled"
+            );
             throw new Error("User not enabled");
           }
-  
+
           dispatch(loginUser(uid, name, phone, email, imageUrl));
           dispatch(getCartDataBase(uid));
           //console.log(res.user, "user en el signin with email and password");
         }
-  
+
         console.log("Enviando el form Login ", formLogin);
         setFormLogin({ email: "", password: "" });
         setShowModalLogin(false);
@@ -119,7 +120,7 @@ const Login = () => {
         const uid = res.user.uid;
         const name = res.user.displayName;
         console.log(res.user.displayName, "usuario logeado");
-        
+
         const inputs = {
           id: uid,
           name: name,
@@ -134,10 +135,9 @@ const Login = () => {
           description: "",
           google: true,
         };
-        
+
         await axios.post("/login/", inputs);
-       
-        
+
         const user = (await axios.get(`/user/${uid}`)).data;
         const userPhone = user.phone;
         const userEmail = user.email;
@@ -151,6 +151,7 @@ const Login = () => {
         }
         dispatch(loginUser(uid, name, userPhone, userEmail, userImg));
         UpdateCartOnLogin(uid);
+        dispatch(getAdmin({ id: uid }));
         toast("Welcome");
         setShowModalLogin(false);
         setTimeout(() => {
@@ -160,9 +161,8 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
-  
   };
-  
+
   if (auth?.currentUser) {
     console.log("usuario esta logeado");
   }
@@ -230,7 +230,7 @@ const Login = () => {
               )}
               <div className={styles.field}>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   onChange={handleInputChangeLogin}
                   onBlur={handleBlur}
@@ -238,7 +238,12 @@ const Login = () => {
                   required
                 />
                 <label htmlFor="">Password</label>
-                <i className={`${styles.eye} fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eye'} `} onClick={togglePasswordVisibility}></i>
+                <i
+                  className={`${styles.eye} fa-regular ${
+                    showPassword ? "fa-eye-slash" : "fa-eye"
+                  } `}
+                  onClick={togglePasswordVisibility}
+                ></i>
               </div>
               {errors.password && (
                 <p
