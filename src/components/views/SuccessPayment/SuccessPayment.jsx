@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
 import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SuccessPayment = () => {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.currentUserNameLoggedIn);
   const mailUser = user[1];
 
