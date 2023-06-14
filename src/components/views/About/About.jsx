@@ -27,7 +27,7 @@ const About = () => {
             alt="Team Member"
             className={styles.memberImage}
           />
-          <h3 className={styles.memberName}>Gonzalo </h3>
+          <h3 className={styles.memberName}>Gonzalo Leguiza</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://www.facebook.com/profile.php?id=100009931907774">
@@ -50,7 +50,7 @@ const About = () => {
             alt="Team Member"
             className={styles.memberImage}
           />
-          <h3 className={styles.memberName}>Diame</h3>
+          <h3 className={styles.memberName}>Diamela Villalba</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/Diam29">
@@ -69,7 +69,7 @@ const About = () => {
         </div>
         <div className={styles.teamMember}>
           <img src={imgDani} alt="Team Member" className={styles.memberImage} />
-          <h3 className={styles.memberName}>Dani</h3>
+          <h3 className={styles.memberName}>Daniel Ocampo Carvajal</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/Danieltm95">
@@ -89,7 +89,7 @@ const About = () => {
             alt="Team Member"
             className={styles.memberImage}
           />
-          <h3 className={styles.memberName}>Charli</h3>
+          <h3 className={styles.memberName}>Carlos Saúl Nahuel Lovey</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/Carlitossaul">
@@ -112,7 +112,7 @@ const About = () => {
             alt="Team Member"
             className={styles.memberImage}
           />
-          <h3 className={styles.memberName}>Jensy</h3>
+          <h3 className={styles.memberName}>Jensy José Figueroa Durán</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/JensyFigueroa">
@@ -128,7 +128,7 @@ const About = () => {
         </div>
         <div className={styles.teamMember}>
           <img src={imgLuis} alt="Team Member" className={styles.memberImage} />
-          <h3 className={styles.memberName}>Luis</h3>
+          <h3 className={styles.memberName}>Luis María Haedo</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/luishaedo">
@@ -149,7 +149,7 @@ const About = () => {
             alt="Team Member"
             className={styles.memberImage}
           />
-          <h3 className={styles.memberName}>David</h3>
+          <h3 className={styles.memberName}>David Augusto Moreno Cárdenas</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/DavidMC2410">
@@ -169,7 +169,7 @@ const About = () => {
             alt="Team Member"
             className={styles.memberImage}
           />
-          <h3 className={styles.memberName}>Joaquin</h3>
+          <h3 className={styles.memberName}>Jesús Joaquín Guerrero García</h3>
           <p className={styles.memberRole}>Full Stack Developer</p>
           <div className={styles.redes}>
             <a href="https://github.com/Joaquingro">
