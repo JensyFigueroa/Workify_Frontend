@@ -17,6 +17,8 @@ import {
   GET_USER,
   GETCART_DATABASE,
   SEND_CART,
+  ADMIN,
+  CLEAN_ADMIN,
 } from "./types";
 
 const initialState = {
@@ -35,6 +37,7 @@ const initialState = {
   currentUserIdLoggedIn: "",
   currentUserNameLoggedIn: ["", "", "", ""],
   userInfo: [],
+  admin: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -66,7 +69,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchServices: action.payload,
-        allServices : action.payload
+        allServices: action.payload,
       };
     case GET_SERVICESDETAIL:
       return {
@@ -254,6 +257,17 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
+      };
+
+    case ADMIN:
+      return {
+        ...state,
+        admin: action.payload,
+      };
+    case CLEAN_ADMIN:
+      return {
+        ...state,
+        admin: {},
       };
 
     default:

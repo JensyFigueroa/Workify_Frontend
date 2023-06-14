@@ -11,6 +11,7 @@ const persistConfig = {
     "currentUserIdLoggedIn",
     "currentUserNameLoggedIn",
     "allServices",
+    "admin",
   ],
 };
 
