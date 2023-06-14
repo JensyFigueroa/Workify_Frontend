@@ -259,6 +259,12 @@ const rootReducer = (state = initialState, action) => {
         cart: action.payload,
       };
 
+    case GET_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+
     case ADMIN:
       return {
         ...state,

@@ -144,13 +144,13 @@ export const addToCart = (product) => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const existingItem = cartItems.find((item) => item.id === product.id);
     if (existingItem) {
-      existingItem.quantity += product.quantity;
+      toast.error("You already have this service added!");
     } else {
       cartItems.push(product);
+      toast.success("Service successfully added");
     }
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     dispatch(sendCart(cartItems));
-    toast.success("Service successfully added");
   };
 };
 
@@ -178,5 +178,14 @@ export const getAdmin = (obj) => {
 export const cleanAdmin = () => {
   return {
     type: CLEAN_ADMIN,
+  };
+};
+
+export const getCart = () => {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  return {
+    type: GET_CART,
+    payload: cartItems,
   };
 };
