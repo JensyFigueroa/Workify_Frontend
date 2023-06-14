@@ -63,10 +63,7 @@ export function Cards() {
 
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
     setCurrentPage(nextPage);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo(0, 0);
   };
 
   const nextHandler = () => {
@@ -79,7 +76,7 @@ export function Cards() {
 
     const firstIndex = nextPage * cardsXpage;
     if (firstIndex === services.length) {
-      setCurrentPage(5);
+      setCurrentPage(totalPages);
       return;
     }
 
@@ -95,9 +92,10 @@ export function Cards() {
     <div className={styles.container}>
       {numServicesXpage.length > 0 && (
         <div className={styles.containerPagination}>
-          <button className={styles.btnPagination} onClick={prevHandler}>
+          {currentPage === 0 ? '' : <button className={styles.btnPagination} onClick={prevHandler}>
             {"<< "}
-          </button>
+          </button>}
+
           <div>
             {pageNum.map((num, i) => (
               <button
@@ -113,9 +111,10 @@ export function Cards() {
               </button>
             ))}
           </div>
-          <button className={styles.btnPagination} onClick={nextHandler}>
+          {currentPage === (totalPages - 1) ? '' : <button className={styles.btnPagination} onClick={nextHandler}>
             {" >>"}
-          </button>
+          </button>}
+
         </div>
       )}
       <div className={styles.cards}>
@@ -190,9 +189,10 @@ export function Cards() {
 
       {numServicesXpage.length > 0 && (
         <div className={styles.containerPagination}>
-          <button className={styles.btnPagination} onClick={prevHandler}>
+          {currentPage === 0 ? '' : <button className={styles.btnPagination} onClick={prevHandler}>
             {"<< "}
-          </button>
+          </button>}
+
           <div>
             {pageNum.map((num, i) => (
               <button
@@ -208,9 +208,10 @@ export function Cards() {
               </button>
             ))}
           </div>
-          <button className={styles.btnPagination} onClick={nextHandler}>
+          {currentPage === (totalPages - 1) ? '' : <button className={styles.btnPagination} onClick={nextHandler}>
             {" >>"}
-          </button>
+          </button>}
+
         </div>
       )}
     </div>
