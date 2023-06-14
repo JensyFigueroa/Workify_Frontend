@@ -4,6 +4,7 @@ import FilterBar from "../../FilterBar/FilterBar";
 import styles from "./Home.module.css";
 import { Loading } from "../../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../../redux/actions";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,9 @@ const Home = () => {
   console.log(nameHome, "name desde home con use selector");
 
   const allServices = useSelector((state) => state.allServices);
+
+  if (uidHome) dispatch(getCart());
+
   useEffect(() => {
     setTimeout(() => setLoading(false), 4000);
     window.scrollTo(0, 0);

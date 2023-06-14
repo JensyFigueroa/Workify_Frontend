@@ -1,50 +1,50 @@
-.container{
-    width: 28em;
-    height: 25em;
-    z-index: 0;
-    position: relative;
+.container {
+  width: 28em;
+  height: 25em;
+  z-index: 0;
+  position: relative;
 }
 
-.carousel{
-  width: 25em; 
+.carousel {
+  width: 25em;
   height: 25em;
   object-fit: cover;
   border-radius: 5px;
 }
 
 .customPrevButton {
-    margin-left: 0;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 5px;
-    border: none;
-    padding: 30px;
-    transform: scale(0.7);
-    
-  }
-  
-  .customNextButton {
-    margin-right: 3em;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 5px;
-    border: none;
-    padding: 30px;
-    transform: scale(0.7);
-
-
-    
-  }
- 
-
-.thumb{
-    width: 6em;
-    height: 6em;
-    border-radius: 5px;
-    object-fit: cover;
-    cursor: pointer;
-
+  margin-left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  border: none;
+  padding: 30px;
+  transform: scale(0.7);
 }
 
-.thumbsContainer{
-    margin-top: 0.5em;
+.customNextButton {
+  margin-right: 3em;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  border: none;
+  padding: 30px;
+  transform: scale(0.7);
 }
 
+.thumb {
+  width: 6em;
+  height: 6em;
+  border-radius: 5px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.thumbsContainer {
+  margin-top: 0.5em;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

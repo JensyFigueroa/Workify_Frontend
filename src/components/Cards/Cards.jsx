@@ -26,28 +26,34 @@ export function Cards() {
   const totalPages = Math.ceil(services.length / cardsXpage);
 
   useEffect(() => {
-
     setCurrentPage(0);
     setNumServicesXpage([...services].splice(0, cardsXpage));
   }, [services, cardsXpage]);
 
   let pageNum = [];
   for (let i = 1; i <= totalPages; i++) {
-    pageNum.push(i)
+    pageNum.push(i);
   }
 
-  const [numServicesXpage, setNumServicesXpage] = useState([...services].splice(0, cardsXpage));
+  const [numServicesXpage, setNumServicesXpage] = useState(
+    [...services].splice(0, cardsXpage)
+  );
   const [currentPage, setCurrentPage] = useState(0);
 
   const prevHandler = () => {
     const prevPage = currentPage - 1;
+
     if (prevPage < 0) return;
 
     const firstIndex = prevPage * cardsXpage;
 
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
-    setCurrentPage(prevPage)
-  }
+    setCurrentPage(prevPage);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const handlerPage = (e) => {
     const nextPage = e.target.value - 1;
@@ -56,39 +62,63 @@ export function Cards() {
     if (firstIndex === services.length) return;
 
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
-    setCurrentPage(nextPage)
-  }
+    setCurrentPage(nextPage);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const nextHandler = () => {
     let nextPage;
     if (currentPage < totalPages) {
-      nextPage = totalPages - 1
+      nextPage = totalPages - 1;
     } else {
-      nextPage = currentPage + 1
+      nextPage = currentPage + 1;
     }
 
     const firstIndex = nextPage * cardsXpage;
     if (firstIndex === services.length) {
       setCurrentPage(5);
-      return
+      return;
     }
 
     setNumServicesXpage([...services].splice(firstIndex, cardsXpage));
-    setCurrentPage(nextPage)
-  }
+    setCurrentPage(nextPage);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className={styles.container}>
-      
-      {numServicesXpage.length > 0 && <div className={styles.containerPagination}>
-        <button className={styles.btnPagination} onClick={prevHandler}>{'<< '}</button>
-        <div>
-          {pageNum.map((num, i) => <button className={currentPage === i ? styles.btnActive : styles.btnPagination} key={i} style={{ marginRight: '5px' }} onClick={(e) => handlerPage(e)} value={num}>{num}</button>)}
+      {numServicesXpage.length > 0 && (
+        <div className={styles.containerPagination}>
+          <button className={styles.btnPagination} onClick={prevHandler}>
+            {"<< "}
+          </button>
+          <div>
+            {pageNum.map((num, i) => (
+              <button
+                className={
+                  currentPage === i ? styles.btnActive : styles.btnPagination
+                }
+                key={i}
+                style={{ marginRight: "5px" }}
+                onClick={(e) => handlerPage(e)}
+                value={num}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
+          <button className={styles.btnPagination} onClick={nextHandler}>
+            {" >>"}
+          </button>
         </div>
-        <button className={styles.btnPagination} onClick={nextHandler}>{' >>'}</button>
-      </div>}
+      )}
       <div className={styles.cards}>
-
         {numServicesXpage.length > 0 ? (
           numServicesXpage.map((serv, index) => {
             return (
@@ -122,7 +152,8 @@ export function Cards() {
                           const sum = serv.reviews
                             .map((review) => parseFloat(review.rating))
                             .reduce(
-                              (a, b) => (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0)
+                              (a, b) =>
+                                (!isNaN(a) ? a : 0) + (!isNaN(b) ? b : 0)
                             );
                           const averageRating = sum / serv.reviews.length;
                           return isNaN(averageRating) ? 0 : averageRating;
@@ -157,15 +188,31 @@ export function Cards() {
         )}
       </div>
 
-      {numServicesXpage.length > 0 && <div className={styles.containerPagination}>
-        <button className={styles.btnPagination} onClick={prevHandler}>{'<< '}</button>
-        <div>
-          {pageNum.map((num, i) => <button className={currentPage === i ? styles.btnActive : styles.btnPagination} key={i} style={{ marginRight: '5px' }} onClick={(e) => handlerPage(e)} value={num}>{num}</button>)}
+      {numServicesXpage.length > 0 && (
+        <div className={styles.containerPagination}>
+          <button className={styles.btnPagination} onClick={prevHandler}>
+            {"<< "}
+          </button>
+          <div>
+            {pageNum.map((num, i) => (
+              <button
+                className={
+                  currentPage === i ? styles.btnActive : styles.btnPagination
+                }
+                key={i}
+                style={{ marginRight: "5px" }}
+                onClick={(e) => handlerPage(e)}
+                value={num}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
+          <button className={styles.btnPagination} onClick={nextHandler}>
+            {" >>"}
+          </button>
         </div>
-        <button className={styles.btnPagination} onClick={nextHandler}>{' >>'}</button>
-      </div>}
-
-
+      )}
     </div>
   );
 }
