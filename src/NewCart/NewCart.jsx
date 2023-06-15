@@ -8,6 +8,7 @@ import axios from "axios";
 import Login from "../components/Login/Login";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { sendCart } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const promiseStripe = loadStripe(
   "pk_test_51NBQA0BpeRt7rcmet7zt0iDB39vFiEWAF1fC9g0mXU9UWuG5E50VE5j5o8AgcsZkeUv9iD4fWK4cUu9kKOqwhzKn00aWDy85Vh"
@@ -15,12 +16,17 @@ const promiseStripe = loadStripe(
 
 const NewCart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userId = useSelector((state) => state.currentUserIdLoggedIn);
   const [payActive, setPayActive] = useState(false);
 
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
@@ -135,8 +141,11 @@ const NewCart = () => {
             <div className={styles.totalContainer}>
               <h2>Total: ${calculateTotal()}</h2>
               {userId ? (
-                <button className={styles.pay} onClick={handleNewViewPay}>
-                  Pay
+                // <button className={styles.pay} onClick={handleNewViewPay}>
+                //   Pay
+                // </button>
+                <button onClick={() => navigate("/payment/success")}>
+                  Ir al SuccesPayment
                 </button>
               ) : (
                 <>
@@ -151,13 +160,13 @@ const NewCart = () => {
             {payActive && (
               <div className={styles.popUp} onClick={handlePopupClick}>
                 <div className={styles.pasarela}>
-                  <Elements stripe={promiseStripe}>
+                  {/* <Elements stripe={promiseStripe}>
                     <Pasarela
                       userId={userId}
                       cartItems={cartItems}
                       totalPay={calculateTotal()}
                     />
-                  </Elements>
+                  </Elements> */}
                 </div>
               </div>
             )}

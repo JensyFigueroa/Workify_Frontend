@@ -62,9 +62,13 @@ export function CreateService() {
 
   //<---SE MONTAN LOS PAISES-->
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('/location/country', {
+        const response = await axios.get("/location/country", {
           params: {
             username: "joaquinsgro",
             type: "json",
@@ -100,7 +104,7 @@ export function CreateService() {
   const handleCountryClick = (countryName) => {
     searchCities(countryName);
   };
-  
+
   //<--MANEJADOR DE CLICK EN COUNTRY PARA HABILITAR CITY-->
   const handleArrowClick = () => {
     setEnabledInput(true);
@@ -300,7 +304,6 @@ export function CreateService() {
                 aria-describedby="inputGroup-sizing-default"
                 required
                 disabled={!enabledInput}
-
               >
                 <option disabled value="">
                   Your city

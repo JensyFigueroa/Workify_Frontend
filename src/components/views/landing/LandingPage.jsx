@@ -77,7 +77,8 @@ const LandingPage = () => {
               >
                 <div className={styles.info}>
                   <p className={styles.comment}>
-                    Contrate a un servicio de Pintura y la verdad estupendo
+                    I hired the catering service, and it went really well.
+                    Everything was in order.
                   </p>
                   <p className={styles.author}>- John Doe</p>
                   <div className={styles.stars}>
@@ -86,13 +87,12 @@ const LandingPage = () => {
                     <span>*</span>
                     <span>*</span>
                     <span>*</span>
-                    <span>*</span>
                   </div>
                 </div>
                 <div className={styles.info}>
                   <p className={styles.comment}>
-                    Me recomendo un amigo para contratar a un plomero y me
-                    destapo la cañeria
+                    The lawyer provided valuable advice and resolved my legal
+                    issues.
                   </p>
                   <p className={styles.author}>- Jane Smith</p>
                   <div className={styles.stars}>
@@ -101,16 +101,16 @@ const LandingPage = () => {
                     <span>*</span>
                     <span>*</span>
                     <span>*</span>
-                    <span>*</span>
                   </div>
                 </div>
                 <div className={styles.info}>
                   <p className={styles.comment}>
-                    Muy buenos servicios la verdad
+                    I needed a tutor for my son, and I hired this service. Now I
+                    can be at ease knowing that he is studying and understanding
+                    things.
                   </p>
                   <p className={styles.author}>- David Johnson</p>
                   <div className={styles.stars}>
-                    <span>*</span>
                     <span>*</span>
                     <span>*</span>
                     <span>*</span>
