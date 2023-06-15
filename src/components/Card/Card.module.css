@@ -6,19 +6,19 @@
   align-items: center;
   border-radius: 15px;
   text-decoration: none;
-  box-shadow: 0 8px 16px 8px rgba(0, 0, 70, .1);
+  box-shadow: 0 8px 16px 8px rgba(0, 0, 70, 0.1);
   /* background: rgb(28, 181, 224, .7); */
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   transition: all 0.3s;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 8px rgba(0, 0, 70, .3);
-  
+  box-shadow: 0 8px 16px 8px rgba(0, 0, 70, 0.3);
+
   transform: translateY(-2px);
   /* background-color: #1CB5E0; */
 }
- 
+
 .img {
   width: 100%;
   height: 300px;
@@ -26,7 +26,8 @@
   aspect-ratio: 4/3;
   margin-top: 0px;
   margin-bottom: 10px;
-  border-radius: 15px 15px 15px 15px;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn {
@@ -46,29 +47,30 @@
   text-shadow: 0 0 2px black;
 }
 
-.btn:hover{
+.btn:hover {
   background-color: white;
   border: 1px solid #000046;
   color: #000046;
 }
 
-.buttons{
+.buttons {
   margin-top: -5.5em;
+  padding-bottom: 10px;
 }
-.buttons button{
+.buttons button {
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 15px;
   border: none;
 }
 
-.addService{
-  background: rgb(28, 181, 224); 
+.addService {
+  background: rgb(28, 181, 224);
   margin-top: 40px;
   margin-right: 10px;
 }
 
-.addService:hover{
+.addService:hover {
   color: white;
 }
 
@@ -78,10 +80,9 @@
   display: flex;
   flex-direction: column;
   height: 12em;
-
 }
 
-.pRating{
+.pRating {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -112,6 +113,6 @@
   color: #000046;
 }
 
-.info p span{
+.info p span {
   font-weight: normal;
 }
