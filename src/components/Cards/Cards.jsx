@@ -68,14 +68,14 @@ export function Cards() {
 
   const nextHandler = () => {
     let nextPage;
-    if (currentPage < totalPages) {
-      nextPage = totalPages - 1;
-    } else {
+    if (currentPage < totalPages - 1) {
       nextPage = currentPage + 1;
+    } else {
+      nextPage = totalPages;
     }
 
     const firstIndex = nextPage * cardsXpage;
-    if (firstIndex === services.length) {
+    if (firstIndex >= services.length) {
       setCurrentPage(totalPages);
       return;
     }
@@ -92,9 +92,13 @@ export function Cards() {
     <div className={styles.container}>
       {numServicesXpage.length > 0 && (
         <div className={styles.containerPagination}>
-          {currentPage === 0 ? '' : <button className={styles.btnPagination} onClick={prevHandler}>
-            {"<< "}
-          </button>}
+          {currentPage === 0 ? (
+            ""
+          ) : (
+            <button className={styles.btnPagination} onClick={prevHandler}>
+              {"<< "}
+            </button>
+          )}
 
           <div>
             {pageNum.map((num, i) => (
@@ -111,10 +115,13 @@ export function Cards() {
               </button>
             ))}
           </div>
-          {currentPage === (totalPages - 1) ? '' : <button className={styles.btnPagination} onClick={nextHandler}>
-            {" >>"}
-          </button>}
-
+          {currentPage === totalPages - 1 ? (
+            ""
+          ) : (
+            <button className={styles.btnPagination} onClick={nextHandler}>
+              {" >>"}
+            </button>
+          )}
         </div>
       )}
       <div className={styles.cards}>
@@ -182,16 +189,24 @@ export function Cards() {
         ) : (
           <div className={styles.msgBox}>
             <p className={styles.msg}>No services found with that name</p>
-            <img src={faceThink} style={{width:'105%', marginTop: '21px'}} alt="" />
+            <img
+              src={faceThink}
+              style={{ width: "105%", marginTop: "21px" }}
+              alt=""
+            />
           </div>
         )}
       </div>
 
       {numServicesXpage.length > 0 && (
         <div className={styles.containerPagination}>
-          {currentPage === 0 ? '' : <button className={styles.btnPagination} onClick={prevHandler}>
-            {"<< "}
-          </button>}
+          {currentPage === 0 ? (
+            ""
+          ) : (
+            <button className={styles.btnPagination} onClick={prevHandler}>
+              {"<< "}
+            </button>
+          )}
 
           <div>
             {pageNum.map((num, i) => (
@@ -208,10 +223,13 @@ export function Cards() {
               </button>
             ))}
           </div>
-          {currentPage === (totalPages - 1) ? '' : <button className={styles.btnPagination} onClick={nextHandler}>
-            {" >>"}
-          </button>}
-
+          {currentPage === totalPages - 1 ? (
+            ""
+          ) : (
+            <button className={styles.btnPagination} onClick={nextHandler}>
+              {" >>"}
+            </button>
+          )}
         </div>
       )}
     </div>
