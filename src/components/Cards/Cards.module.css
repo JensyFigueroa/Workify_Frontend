@@ -3,13 +3,14 @@
   flex-direction: column  ;
   align-items: center;
   /* justify-content: center; */
-  /* margin-top: 30px; */
+  margin-top: -1px;
   gap: 2em;
   width: 100%;
+  background-color: white;
 }
 
 .cards{
-  margin: 0 20px;
+  margin: -17px 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
@@ -37,9 +38,12 @@
 }
 
 .msg{
+  position: absolute;
+  margin: 60px;
   font-size: 30px;
   font-style: italic;
-  color: #0D6EFD;;
+  color: #0D6EFD;
+  font-weight: 600;
 }
 
 .msgBox img{
@@ -51,11 +55,13 @@
 
 .containerPagination{
   display: flex ;
+  margin: 0;
 }
 .btnPagination {
   width: 90px;
   height: 30px;
   margin-top: 40px;
+  margin-bottom: 20px;
   margin-right: 10px;
   color: rgb(28, 181, 224);;
   background-color: #00007a;
@@ -80,12 +86,6 @@
   font-style: italic;
 }
 
-.msg{
-  margin: 60px;
-  color:red;
-  font-size: 25px;
-  font-style:italic;
-  font-weight: 600;
-}
+
 
 
