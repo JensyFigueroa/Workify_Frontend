@@ -141,13 +141,13 @@ const NewCart = () => {
             <div className={styles.totalContainer}>
               <h2>Total: ${calculateTotal()}</h2>
               {userId ? (
-                // <button className={styles.pay} onClick={handleNewViewPay}>
-                //   Pay
-                // </button>
-                <button onClick={() => navigate("/payment/success")}>
-                  Ir al SuccesPayment
+                <button className={styles.pay} onClick={handleNewViewPay}>
+                  Pay
                 </button>
               ) : (
+                // <button onClick={() => navigate("/payment/success")}>
+                //   Ir al SuccesPayment
+                // </button>
                 <>
                   <button className={styles.login}>
                     <span>Must</span> &nbsp;
@@ -160,13 +160,13 @@ const NewCart = () => {
             {payActive && (
               <div className={styles.popUp} onClick={handlePopupClick}>
                 <div className={styles.pasarela}>
-                  {/* <Elements stripe={promiseStripe}>
+                  <Elements stripe={promiseStripe}>
                     <Pasarela
                       userId={userId}
                       cartItems={cartItems}
                       totalPay={calculateTotal()}
                     />
-                  </Elements> */}
+                  </Elements>
                 </div>
               </div>
             )}

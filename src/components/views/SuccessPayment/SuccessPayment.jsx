@@ -89,6 +89,11 @@ const SuccessPayment = () => {
   return (
     <div className={styles.container}>
       {/* <h2>Your payment has been successfully processed</h2> */}
+
+      <img
+        className={styles.animation}
+        src="https://cdn.dribbble.com/users/422385/screenshots/1762044/media/8c5787d2ef3df0d27daac4fce23c17b2.gif"
+      ></img>
       <h3>Congratulations! You have paid for the following services:</h3>
       <div className={styles.cartItems}>
         <ul className={styles.list}>
