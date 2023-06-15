@@ -22,11 +22,13 @@ export function Detail() {
   const currentUserNameLoggedIn = useSelector(
     (state) => state.currentUserNameLoggedIn
   );
- 
-  const currentUserIdLoggedIn = useSelector(state => state.currentUserIdLoggedIn)
+
+  const currentUserIdLoggedIn = useSelector(
+    (state) => state.currentUserIdLoggedIn
+  );
   const serviceDetail = useSelector((state) => state.serviceDetail);
-  const userInfo = useSelector(state => state.userInfo);
-  const allServices = useSelector(state => state.allServices);
+  const userInfo = useSelector((state) => state.userInfo);
+  const allServices = useSelector((state) => state.allServices);
 
   let arrImage = Array.isArray(serviceDetail.imageUrl)
     ? [...serviceDetail.imageUrl]
@@ -44,7 +46,6 @@ export function Detail() {
     comment: "",
   });
 
-
   const handleLikeClick = (index) => {
     setLikes((prevLikes) => {
       if (prevLikes[index]) {
@@ -59,7 +60,10 @@ export function Detail() {
 
   //<--CARGA DE ESTADO GLOBAL DETAIL-->
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     dispatch(getUser(currentUserIdLoggedIn));
     dispatch(getServiceDetail(id));
     return () => {
@@ -89,14 +93,17 @@ export function Detail() {
         rating: "",
         comment: "",
       });
-    } 
-    else if (!userInfo.buys.some(obj => obj.nameService === serviceDetail.nameService)) {
-      toast.error("You must pay for this service to comment on it")
-    }
-    else if(serviceDetail.reviews.some(obj => obj.name === userInfo.name)){
+    } else if (
+      !userInfo.buys.some(
+        (obj) => obj.nameService === serviceDetail.nameService
+      )
+    ) {
+      toast.error("You must pay for this service to comment on it");
+    } else if (
+      serviceDetail.reviews.some((obj) => obj.name === userInfo.name)
+    ) {
       toast.error("You have already commented on this service");
-    }
-    else{
+    } else {
       try {
         await axios
           .post("/service/review", inputs)
@@ -185,8 +192,16 @@ export function Detail() {
               <h2 className={style.serviceDescriptionTitle}>
                 Service Provider
               </h2>
-              {allServices.find(obj => obj.nameService === serviceDetail.nameService) && (
-                <p>{allServices.find(obj => obj.nameService === serviceDetail.nameService).nameUserService}</p>
+              {allServices.find(
+                (obj) => obj.nameService === serviceDetail.nameService
+              ) && (
+                <p>
+                  {
+                    allServices.find(
+                      (obj) => obj.nameService === serviceDetail.nameService
+                    ).nameUserService
+                  }
+                </p>
               )}
             </div>
           </div>

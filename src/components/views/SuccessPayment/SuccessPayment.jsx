@@ -13,6 +13,8 @@ const SuccessPayment = () => {
 
   const idUser = useSelector((state) => state.currentUserIdLoggedIn);
 
+  const cartItems = useSelector((state) => state.cart);
+
   useEffect(() => {
     axios
       .get(`/user/vacateCart/${idUser}`)
@@ -68,13 +70,47 @@ const SuccessPayment = () => {
       .catch((error) => {
         console.error("Error al enviar el correo electrónico", error);
       });
+    return () => {
+      window.localStorage.removeItem("cartItems");
+    };
   }, []);
 
-  window.localStorage.removeItem("cartItems");
+  const calculateSubtotal = (item) => {
+    return item.quantity * item.pricePerHour;
+  };
+
+  const calculateTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + calculateSubtotal(item),
+      0
+    );
+  };
 
   return (
     <div className={styles.container}>
-      <h1>"Your payment has been successfully processed."</h1>
+      {/* <h2>Your payment has been successfully processed</h2> */}
+      <h3>Congratulations! You have paid for the following services:</h3>
+      <div className={styles.cartItems}>
+        <ul className={styles.list}>
+          <li className={styles.listHeader}>
+            <span>Name</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Subtotal</span>
+          </li>
+          {cartItems.map((item) => (
+            <li key={item.id} className={styles.listItem}>
+              <span>{item.nameService}</span>
+              <span>${item.pricePerHour}</span>
+              <span>{item.quantity}</span>
+              <span>${calculateSubtotal(item)}</span>
+            </li>
+          ))}
+        </ul>
+        <div className={styles.totalContainer}>
+          <h2>Total: ${calculateTotal()}</h2>
+        </div>
+      </div>
       <button className={styles.myButton} onClick={() => navigate("/home")}>
         {" "}
         Return to home{" "}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./About.module.css";
 
 import imgGonza from "./img/gonza.png";
@@ -11,6 +11,12 @@ import imgDavid from "./img/david.png";
 import imgJoaquin from "./img/joaquin.png";
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.contTtitle}>
@@ -137,7 +143,7 @@ const About = () => {
             <a href="https://www.linkedin.com/in/luis-haedo/">
               <i class="fa-brands fa-linkedin"></i>
             </a>
-            
+
             <a href="https://instagram.com/luishaedo_7?igshid=MzNlNGNkZWQ4Mg==">
               <i class="fa-brands fa-instagram"></i>
             </a>
