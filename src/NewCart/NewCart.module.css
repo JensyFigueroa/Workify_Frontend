@@ -12,6 +12,28 @@
   padding: 10px;
 }
 
+.titleContainer {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.titleContainer h2 {
+  border-bottom: 2px solid var(--blueLight);
+  font-weight: 500;
+}
+.notServices {
+  width: 100%;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2em;
+  padding: 2em;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+}
+
 .list {
   list-style-type: none;
   padding: 0;
@@ -41,7 +63,7 @@
 
 .clearButton {
   margin-top: 10px;
-  padding: 10px 20px;
+  padding: 10px 10px;
   background-color: #f44336;
   color: #fff;
   border: none;
