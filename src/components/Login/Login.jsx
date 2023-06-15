@@ -92,6 +92,7 @@ const Login = () => {
 
           dispatch(loginUser(uid, name, phone, email, imageUrl));
           dispatch(getCartDataBase(uid));
+          dispatch(getAdmin({ id: uid }));
           //console.log(res.user, "user en el signin with email and password");
         }
 
