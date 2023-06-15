@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
 import { useEffect, useState } from "react";
-import faceThink from "./face-think.png";
+import faceThink from "./face-think.gif";
 import RatingStars from "react-rating-stars-component";
 
 export function Cards() {
@@ -182,7 +182,7 @@ export function Cards() {
         ) : (
           <div className={styles.msgBox}>
             <p className={styles.msg}>No services found with that name</p>
-            <img src={faceThink} alt="" />
+            <img src={faceThink} style={{width:'105%', marginTop: '21px'}} alt="" />
           </div>
         )}
       </div>

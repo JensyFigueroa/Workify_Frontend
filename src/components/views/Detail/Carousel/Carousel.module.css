@@ -48,3 +48,7 @@
   align-items: center;
   height: 100%;
 }
+
+.precarga {
+  background: transparent url(images/ajaxload.gif) center no-repeat;
+}
