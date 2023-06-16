@@ -1,7 +1,7 @@
 import styles from "../Card/Card.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/actions";
+import { addToCart, removeService, restoreService } from "../../redux/actions";
 
 export function Card({
   id,
@@ -14,12 +14,18 @@ export function Card({
   nameUserService,
   enabled
 }) {
-  
-  
-  if (!enabled) {
-    return null; // Retorna null si enabled es false para ocultar la carta
-  }
   const dispatch = useDispatch();
+  const deletedServices = useSelector(state => state.deletedServices);
+  if (enabled === false){
+    dispatch(removeService(id)); // Retorna null si enabled es false para ocultar la carta
+  } else{
+    dispatch(restoreService(deletedServices))
+  }
+
+  // if(!enabled){
+  //   return null
+  // }
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>

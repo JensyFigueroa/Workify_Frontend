@@ -17,3 +17,5 @@ export const GETCART_DATABASE = "GETCART_DATABASE";
 export const SEND_CART = "SEND_CART";
 export const ADMIN = "ADMIN";
 export const CLEAN_ADMIN = "CLEAN_ADMIN";
+export const REMOVE_SERVICE = "REMOVE_SERVICE";
+export const RESTORE_SERVICE = "RESTORE_SERVICE";

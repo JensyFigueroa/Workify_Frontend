@@ -19,6 +19,8 @@ import {
   SEND_CART,
   ADMIN,
   CLEAN_ADMIN,
+  REMOVE_SERVICE,
+  RESTORE_SERVICE
 } from "./types";
 import axios from "axios";
 
@@ -189,3 +191,13 @@ export const getCart = () => {
     payload: cartItems,
   };
 };
+
+export const removeService = (serviceId) => ({
+  type: REMOVE_SERVICE,
+  payload: serviceId,
+});
+
+export const restoreService = (service) => ({
+  type: RESTORE_SERVICE,
+  payload: service,
+});
