@@ -13,6 +13,7 @@ export function Cards() {
   const filterItem = useSelector((state) => state.selectedItem);
   const searchServices = useSelector((state) => state.searchServices);
   let services = searchServices.length > 0 ? searchServices : allServices;
+
   useEffect(() => {
     if (filterLocation === null && filterItem === null) {
       dispatch(getServices());
