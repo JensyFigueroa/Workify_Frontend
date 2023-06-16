@@ -34,12 +34,11 @@ const NewCart = () => {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     dispatch(sendCart(cartItems));
   }, [cartItems]);
 
   const updateQuantity = (product, quantity) => {
-    if (quantity >= 1) {
+    if (quantity >= 0) {
       const updatedCart = cartItems.map((item) => {
         if (item.id === product.id) {
           return { ...item, quantity };
@@ -99,21 +98,15 @@ const NewCart = () => {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <h2>SERVICES TO ACQUIRE</h2>
-        {cartItems.length > 0 && (
-          <button onClick={clearCart} className={styles.clearButton}>
-            <BsFillTrash3Fill />
-            Delete Cart
-          </button>
-        )}
+        <h1>Services Cart</h1>
+        <button onClick={clearCart} className={styles.clearButton}>
+          <BsFillTrash3Fill />
+          Delete Cart
+        </button>
       </div>
       <div className={styles.cartContainer}>
         {cartItems.length === 0 ? (
-          <div className={styles.notServices}>
-            <h2>
-              The products that you add to the cart will appear in this place.
-            </h2>
-          </div>
+          <p>There are no products in the cart.</p>
         ) : (
           <div className={styles.cartItems}>
             <ul className={styles.list}>
@@ -185,3 +178,4 @@ const NewCart = () => {
 };
 
 export default NewCart;
+// export { addToCart };

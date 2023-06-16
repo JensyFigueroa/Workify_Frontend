@@ -15,6 +15,7 @@ const SuccessPayment = () => {
 
   const cartItems = useSelector((state) => state.cart);
 
+  console.log(cartItems, "cartitems en payment");
   useEffect(() => {
     axios
       .get(`/user/vacateCart/${idUser}`)
