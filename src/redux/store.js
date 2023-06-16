@@ -12,6 +12,7 @@ const persistConfig = {
     "currentUserNameLoggedIn",
     "allServices",
     "admin",
+    "cart",
   ],
 };
 
