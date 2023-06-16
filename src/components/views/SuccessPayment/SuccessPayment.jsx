@@ -13,7 +13,7 @@ const SuccessPayment = () => {
 
   const idUser = useSelector((state) => state.currentUserIdLoggedIn);
 
-  const cartItems = JSON.parse(window.localStorage.get("cartItems"));
+  const cartItems = JSON.parse(localStorage.getItem("cartItems"));
 
   console.log(cartItems, "cartitems en payment");
   useEffect(() => {
