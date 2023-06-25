@@ -40,7 +40,7 @@ const Carousel = ({ images }) => {
           />
         </div>
       ) : (
-        <div>
+        <div className={style.father}>
           <Swiper
             spaceBetween={10}
             slidesPerView={1}

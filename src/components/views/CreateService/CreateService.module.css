@@ -75,3 +75,40 @@
     margin-top: 15px;
     object-fit: cover;
 }
+
+@media (max-width: 391px) {
+}
+@media (min-width: 391px) and (max-width: 768px) {
+  /* Estilos para pantallas con ancho máximo de 768px */
+  .brother{
+    display: none;
+  }
+  
+  .form{
+    width: 21em;
+  }
+
+  .form h1{
+    font-size: 2em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  /* Estilos para pantallas con ancho entre 768px y 992px */
+  .brother{
+    width: 16em;
+  }
+  
+  .form{
+    width: 25em;
+  }
+
+  .form h1{
+    font-size: 3em;
+  }
+
+}
+
+@media (min-width: 992px) {
+  /* Estilos para pantallas con ancho mínimo de 992px */
+}
