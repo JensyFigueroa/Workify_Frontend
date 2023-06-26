@@ -52,3 +52,36 @@
 .precarga {
   background: transparent url(images/ajaxload.gif) center no-repeat;
 }
+
+@media (max-width: 391px) {
+}
+@media (min-width: 391px) and (max-width: 768px) {
+  /* Estilos para pantallas con ancho máximo de 768px */
+
+
+ .customPrevButton {
+  transform: scale(0.5);
+  margin-left: 2em;
+
+}
+
+.customNextButton {
+ margin-right: 7em;
+ transform: scale(0.5);
+
+} 
+.father{
+  transform: scale(0.7);
+  margin-top: -5em;
+  margin-right: 5em;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  /* Estilos para pantallas con ancho entre 768px y 992px */
+}
+
+@media (min-width: 992px) {
+  /* Estilos para pantallas con ancho mínimo de 992px */
+}

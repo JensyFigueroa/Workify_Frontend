@@ -281,7 +281,7 @@ export function Detail() {
           </Form.Group>
           <textarea
             id="validationTextarea"
-            className={`form-control`}
+            className={`form-control ${style.textareaComment}`}
             placeholder="Comment"
             value={inputs.comment}
             name="comment"

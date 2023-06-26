@@ -38,7 +38,7 @@ const NewCart = () => {
   }, [cartItems]);
 
   const updateQuantity = (product, quantity) => {
-    if (quantity >= 0) {
+    if (quantity >= 1) {
       const updatedCart = cartItems.map((item) => {
         if (item.id === product.id) {
           return { ...item, quantity };
@@ -98,15 +98,21 @@ const NewCart = () => {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <h1>Services Cart</h1>
-        <button onClick={clearCart} className={styles.clearButton}>
-          <BsFillTrash3Fill />
-          Delete Cart
-        </button>
+        <h2>SERVICES TO ACQUIRE</h2>
+        {cartItems.length > 0 && (
+          <button onClick={clearCart} className={styles.clearButton}>
+            <BsFillTrash3Fill />
+            Delete Cart
+          </button>
+        )}
       </div>
       <div className={styles.cartContainer}>
         {cartItems.length === 0 ? (
-          <p>There are no products in the cart.</p>
+          <div className={styles.notServices}>
+            <h2>
+              The products that you add to the cart will appear in this place.
+            </h2>
+          </div>
         ) : (
           <div className={styles.cartItems}>
             <ul className={styles.list}>
