@@ -404,3 +404,183 @@ input {
   height: 110%;
 }
 
+
+@media (max-width: 391px) {
+}
+@media (min-width: 391px) and (max-width: 768px) {
+  /* Estilos para pantallas con ancho máximo de 768px */
+  .containerSecundary{
+    flex-direction: column;
+    width: 22.6em;
+    /* margin-left: -2em; */
+
+  }
+  .containerPrincipal{
+    align-items: center;
+  }
+  .columnLeft{
+    flex-direction: row;
+    margin-left: -2em;
+    border: none;
+    border-bottom: 1px solid rgb(209, 209, 209);
+    width: fit-content;
+    position: relative;
+  }
+  .buttonLeft{
+    width: fit-content;
+    height: 4em;
+    font-size: 12.5px;
+  }
+
+
+
+  .subtitle1{
+    font-size: 16px;
+    margin-top: -8em;
+    margin-left: -4em;
+  }
+
+  .title1{
+    font-size: 16px;
+    margin-top: -8em;
+    margin-left: -2em;
+  }
+  .titlep{
+    font-size: 12px;
+
+  }
+
+  .titleFather{
+    margin-left: -4em;
+    text-align: justify;
+    width: 15em;
+  }
+
+  .profile1{
+    transform: scale(0.65);
+    margin-left: -10em;
+    width: 30em;
+
+  }
+
+  .profile2{
+    transform: scale(0.65);
+    margin-left: -10em;
+    width: 30em;
+    margin-top: -2em;
+    
+  
+  }
+
+  .profile3{
+      transform: scale(0.65);
+      margin-left: -10em;
+      width: 30em;
+      margin-top: -2em;
+
+    
+  }
+
+  .containerEditProfile{
+    transform: scale(0.4);
+    margin-left: -7em;
+    margin-top: -10em;
+    width: fit-content;
+    border: none;
+
+  }
+
+  .newInfo{
+    transform: scale(0.4);
+    margin-left: -7em;
+    margin-top: -10em;
+    border: none;
+  }
+  .imageProfile{
+    width: 50em;
+  }
+  .imageProfile p{
+    font-size: 1.7em;
+  }
+
+  .imageProfileCity p{
+    font-size: 1.7em;
+
+  }
+  .imageProfileCity{
+    width: 50em;
+  }
+
+  .subtitle p{
+    font-size: 1.7em;
+  
+  }
+
+  .arrow{
+    font-size: 25px;
+    left: 192%;
+  
+  }
+
+  .containerService{
+    transform: scale(0.5);
+    margin-left: -14em;
+    width: 45em;
+    
+  }
+  .containerService p{
+    font-size: 1.5em;
+    width: 10em;
+  
+  }
+  .containerService img{
+    border-radius: 40px;
+    border: 2px solid rgb(8, 147, 240);
+  }
+
+  .containerOrder{
+    transform: scale(0.4);
+    margin-left: -11em;
+    width: 30em;
+    border: none;
+    margin-top: -3em;
+  }
+
+  .containerNone{
+    transform: scale(0.7);
+    margin-left: -14em;
+    width: 45em;
+    margin-top: -3em;
+  }
+
+  .infoProfileContainer{
+    margin-left: -16em;
+    margin-top: -0.5em;
+  }
+
+  .orderServices{
+    width: 50em;
+    justify-content: space-between;
+  }
+
+  .orderServices p{
+    font-size: 1.8em;
+  }
+
+  .typeServiceorder{
+    right: 12%;
+
+  }
+
+  .payOrder{
+    left: 120%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  /* Estilos para pantallas con ancho entre 768px y 992px */
+}
+
+@media (min-width: 992px) {
+  /* Estilos para pantallas con ancho mínimo de 992px */
+}

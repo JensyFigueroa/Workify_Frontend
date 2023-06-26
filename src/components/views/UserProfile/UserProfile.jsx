@@ -235,6 +235,7 @@ export default function UserProfile() {
                   <p className={styles.subtitle1}>
                     <strong>My profile</strong>
                   </p>
+                  <div className={styles.titleFather}>
                   <p className={styles.titlep}>
                     Welcome to{" "}
                     <strong className={styles.strong1}>Workify profile,</strong>{" "}
@@ -244,6 +245,7 @@ export default function UserProfile() {
                     <strong className={styles.strong1}>services</strong> and{" "}
                     <strong className={styles.strong1}>purchases</strong>
                   </p>
+                  </div>
                 </div>
                 <div className={styles.profile1}>
                   <img src={userInfo.imageUrl ? userInfo.imageUrl : def} />
@@ -329,6 +331,7 @@ export default function UserProfile() {
                 <p className={styles.subtitle1}>
                   <strong>My profile</strong>
                 </p>
+                <div className={styles.titleFather}>
                 <p className={styles.titlep}>
                   Welcome to{" "}
                   <strong className={styles.strong1}>Workify profile,</strong>{" "}
@@ -338,6 +341,7 @@ export default function UserProfile() {
                   <strong className={styles.strong1}>services</strong> and{" "}
                   <strong className={styles.strong1}>purchases</strong>
                 </p>
+                </div>
               </div>
               <div className={styles.profile1}>
                 <img src={userInfo.imageUrl ? userInfo.imageUrl : def} />
