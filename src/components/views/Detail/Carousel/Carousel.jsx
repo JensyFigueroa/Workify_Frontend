@@ -40,6 +40,7 @@ const Carousel = ({ images }) => {
           />
         </div>
       ) : (
+        <div className={style.fatherContainer}>
         <div className={style.father}>
           <Swiper
             spaceBetween={10}
@@ -81,6 +82,7 @@ const Carousel = ({ images }) => {
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
         </div>
       )}
       <button

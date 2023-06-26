@@ -279,6 +279,7 @@ export function Detail() {
               />
             </div>
           </Form.Group>
+          <div className={style.textareaFather}>
           <textarea
             id="validationTextarea"
             className={`form-control ${style.textareaComment}`}
@@ -288,6 +289,7 @@ export function Detail() {
             onChange={handleInputChange}
             required
           ></textarea>
+          </div>
           <button
             className={`${style.myButton} btn btn-outline-secondary`}
             type="submit"

@@ -77,6 +77,19 @@
 }
 
 @media (max-width: 391px) {
+  .brother{
+    display: none;
+  }
+  
+  .form{
+    width: 18em;
+  }
+
+  .form h1{
+    font-size: 1.8em;
+    width: 7em;
+  }
+  
 }
 @media (min-width: 391px) and (max-width: 768px) {
   /* Estilos para pantallas con ancho máximo de 768px */

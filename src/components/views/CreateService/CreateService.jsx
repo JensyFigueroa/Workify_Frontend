@@ -228,7 +228,7 @@ export function CreateService() {
             onSubmit={handleSubmit}
             novalidate
           >
-            <div className="mb-3">
+            <div className={`mb-3 ${style.form1}`}>
               <label htmlFor="validationDefault04" className="form-label">
                 Categories
               </label>

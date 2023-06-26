@@ -300,6 +300,70 @@
 }
 
 @media (max-width: 391px) {
+  .serviceInfoContainer{
+    margin-top: 4em;
+
+  }
+  .nameServiceContainer{
+    flex-direction: column;
+    width: 20em;
+    justify-content: space-evenly;
+  }
+
+  .serviceTypeContainer{
+    flex-direction: column;
+    margin-top: 0;
+    width: 20em;
+
+  }
+
+  .serviceDescriptionContainer{
+    font-size: 12px;
+  }
+
+  .form{
+    margin-left: 0;
+  }
+  
+  .spanComent{
+    width: 19em;
+  }
+
+  .fatherComments{
+    flex-direction: column;
+    width: 20em;
+  }
+  .name{
+    display: flex;
+    flex-direction: column;
+  }
+  .name p{
+    text-align: start;
+  }
+
+  .ratingComment{
+    margin-left: 0;
+  }
+
+  .textareaComment{
+    width: 10em;
+  }
+
+  .inputs{
+    margin-left: -2em;
+  }
+
+  .otherServices{
+    margin-left: 0;
+  }
+
+  .textareaFather{
+    width: 19em;
+  }
+
+  .serviceDescription{
+    width: 19em;
+  }
 }
 @media (min-width: 391px) and (max-width: 768px) {
   /* Estilos para pantallas con ancho máximo de 768px */
