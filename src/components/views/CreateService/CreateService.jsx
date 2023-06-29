@@ -5,7 +5,7 @@ import services from "./Services";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import service1 from "../CreateService/Images/Services (1).png";
 import service2 from "../CreateService/Images/Services (2).png";
 import service3 from "../CreateService/Images/Services (3).png";
@@ -13,9 +13,11 @@ import service4 from "../CreateService/Images/Services (4).png";
 import service5 from "../CreateService/Images/Services (5).png";
 import service6 from "../CreateService/Images/Services (6).png";
 import service7 from "../CreateService/Images/Services (7).png";
+import { getServices } from "../../../redux/actions";
 
 export function CreateService() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [countries, setCountries] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cities, setCities] = useState([]);
@@ -191,6 +193,7 @@ export function CreateService() {
         await axios
           .post("/service/", inputs)
           .then((response) => toast.success(response.data));
+        dispatch(getServices());
         setIsSubmitting(true);
         setTimeout(() => {
           navigate("/home");

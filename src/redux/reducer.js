@@ -20,7 +20,7 @@ import {
   ADMIN,
   CLEAN_ADMIN,
   REMOVE_SERVICE,
-  RESTORE_SERVICE
+  RESTORE_SERVICE,
 } from "./types";
 
 const initialState = {
@@ -280,23 +280,31 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case REMOVE_SERVICE:
-      const removedService = state.allServices.find(service => service.id === action.payload);
-        if (removedService) {
-          return {
-            ...state,
-            allServices: state.allServices.filter(service => service.id !== action.payload),
-            deletedServices: [...state.deletedServices, removedService],
-          };
-        }
+      const removedService = state.allServices.find(
+        (service) => service.id === action.payload
+      );
+      if (removedService) {
+        return {
+          ...state,
+          allServices: state.allServices.filter(
+            (service) => service.id !== action.payload
+          ),
+          deletedServices: [...state.deletedServices, removedService],
+        };
+      }
     case RESTORE_SERVICE:
-      const restoredService = state.deletedServices.find(service => service.id === action.payload);
-        if (restoredService) {
-          return {
-         ...state,
-         allServices: [...state.allServices, restoredService],
-         deletedServices: state.deletedServices.filter(service => service.id !== action.payload),
-          };
-          }
+      const restoredService = state.deletedServices.find(
+        (service) => service.id === action.payload
+      );
+      if (restoredService) {
+        return {
+          ...state,
+          allServices: [...state.allServices, restoredService],
+          deletedServices: state.deletedServices.filter(
+            (service) => service.id !== action.payload
+          ),
+        };
+      }
 
     default:
       return {

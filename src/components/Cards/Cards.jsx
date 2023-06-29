@@ -1,6 +1,6 @@
 import styles from "./Cards.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getServices } from "../../redux/actions";
+import { cleanSearch, getServices } from "../../redux/actions";
 import { Card } from "../Card/Card";
 import { useEffect, useState } from "react";
 import faceThink from "./face-think.gif";
@@ -18,12 +18,15 @@ export function Cards() {
     if (filterLocation === null && filterItem === null) {
       dispatch(getServices());
     }
+    return () => {
+      dispatch(cleanSearch());
+    };
     // setNumServicesXpage([...services].splice(0, cardsXpage))
   }, []);
 
   /* ================== PAGINACION ======================*/
 
-  const cardsXpage = 10;
+  const cardsXpage = 9;
   const totalPages = Math.ceil(services.length / cardsXpage);
 
   useEffect(() => {

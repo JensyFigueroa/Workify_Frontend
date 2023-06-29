@@ -31,6 +31,8 @@ const FilterBar = () => {
 
   const allcities = useSelector((state) => state.allCities);
   const allItems = useSelector((state) => state.allItems);
+  const selectedItem = useSelector((state)=> state.selectedItem)
+  const selectedLocation = useSelector((state)=> state.selectedLocation)
 
   const icoCategory = [
     {
@@ -115,6 +117,16 @@ const FilterBar = () => {
     },
 
   ]
+
+  useEffect(()=>{
+    if(selectedItem !== "ALL" && selectedItem){
+      setItems(selectedItem)
+      setIsFiltersOpen(true)}
+    if(selectedLocation !== "ALL" && selectedLocation){
+      setLocation(selectedLocation)
+      setIsFiltersOpen(true)
+    }
+  },[])
 
   // useEffect(() => {
   //   const updateButtonWidth = () => {
